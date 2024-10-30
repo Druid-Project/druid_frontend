@@ -8,3 +8,5 @@ This is the frontend repo of druid project built with React and connected to a D
 Hi, this is Quan.
 
 Kajol sutra dhar
+
+Commit from Betty.
