@@ -1,9 +1,10 @@
+// src/store.js
 import { configureStore } from "@reduxjs/toolkit";
-import homeReducer from "./homeSlice";
+import homepageReducer from "./homeSlice";
 
 const store = configureStore({
   reducer: {
-    home: homeReducer,
+    homepage: homepageReducer, // Make sure this matches the selector's name
   },
 });
 
