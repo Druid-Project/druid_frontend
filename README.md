@@ -197,16 +197,14 @@ Team contribution and collaboration instruction can be found [here in jira](http
 
 ## Contributors
 
+[![Contributors](https://img.shields.io/github/contributors/Druid-Project/druid_frontend?style=flat-square)](https://github.com/Druid-Project/druid_frontend/graphs/contributors)  
 <a href="https://github.com/Druid-Project/druid_frontend/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Druid-Project/druid_frontend" />
+<img src="https://contrib.rocks/image?repo=Druid-Project/druid_frontend" />
 </a>
 
-[![Contributors](https://img.shields.io/github/contributors/Druid-Project/druid_frontend?style=flat-square)](https://github.com/Druid-Project/druid_frontend/graphs/contributors)
-
-- [Teodor](https://github.com/benteo)
-- [Quan](https://github.com/quanvuongday)
-- [Baty](https://github.com/Betty033)
-- [Kajol](https://github.com/the-sankari)
+|                                         |                                         |                                     |                                     |
+| --------------------------------------- | --------------------------------------- | ----------------------------------- | ----------------------------------- |
+| [Kajol](https://github.com/the-sankari) | [Quan](https://github.com/quanvuongday) | [Baty](https://github.com/Betty033) | [Teodor](https://github.com/benteo) |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -221,8 +219,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 
 ## Contact
+
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kajol-sutra-dhar)  
-[![GitHub](https://img.shields.io/badge/GitHub-gray?style=for-the-badge&logo=github&logoColor=white)](https://github.com/the-sankari)  
+[![GitHub](https://img.shields.io/badge/GitHub-gray?style=for-the-badge&logo=github&logoColor=white)](https://github.com/the-sankari)
 
 Project Link: [https://github.com/Druid-Project/druid_frontend](https://github.com/Druid-Project/druid_frontend)
 
