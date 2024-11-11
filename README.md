@@ -20,9 +20,14 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Druid-Project/druid_frontend">
-    <img src="./src/assets/img/druid_logo.png" alt="Logo" width="200" height="80">
-  </a>
+ <a href="https://github.com/Druid-Project/druid_frontend">
+    <img src="./src/assets/img/druid_logo.png"
+         alt="Logo"
+         width="200"
+         height="80"
+         style="background-color: #999;padding:20px; border-radius:5px">
+</a>
+
 
   <h3 align="center">REACT24K TEAM-5</h3>
 
