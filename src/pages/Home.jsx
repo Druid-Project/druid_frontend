@@ -1,8 +1,8 @@
 import React from "react";
-import { Container } from "react-bootstrap";
-import Hero from "./Hero";
-import ServicesSections from "./ServicesSections";
-import Feature from "./Feature";
+import Hero from "../components/homepage/Hero";
+import ServicesSections from "../components/homepage/ServicesSections";
+import Feature from "../components/homepage/Feature";
+import { Container } from "@mui/material";
 const Home = () => {
   return (
     <div>
