@@ -1,64 +1,44 @@
+// src/pages/Home.jsx
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHomeData } from "../redux/homeSlice";
-import { Button, CircularProgress, Container, Typography } from "@mui/material";
-import Hero from "../components/homepage/Hero";
+import { Container, Typography, Grid2 } from "@mui/material"; // Use Grid instead of Grid2
+import Hero from "../components/homepage/Hero"; // Import the Hero component
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { homeData, heroSection, status, error } = useSelector(
-    (state) => state.home
-  );
+  const { data, status, error } = useSelector((state) => state.home);
 
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchHomeData());
     }
-  }, [status, dispatch]);
+  }, [dispatch, status]);
 
   if (status === "loading") {
-    return <CircularProgress />;
+    return <Typography>Loading...</Typography>;
   }
 
   if (status === "failed") {
-    return (
-      <Typography variant="h1" color="error">
-        Error: {error}
-      </Typography>
-    );
+    return <Typography color="error">Error: {error}</Typography>;
   }
 
-  // Get content from homeData and heroSection
-  const homeContent = homeData?.data[0]?.attributes;
-  const heroContent = heroSection?.data?.attributes;
+  // Safeguard for cases where data is still null
+  if (!data) {
+    return <Typography>No data available.</Typography>;
+  }
 
   return (
-    <Container maxWidth="xl">
-      {/* Display the Hero Section */}
-      {heroContent && <Hero data={heroContent} />}
-
-      {/* Display other home data */}
-      <Typography variant="h4">{homeContent?.title}</Typography>
-      <Typography variant="body1">
-        {homeContent?.field_short_description}
-      </Typography>
-      <Typography variant="h4" color="initial">
-        {homeContent?.field_long_description}
-      </Typography>
-      <Button variant="contained" color="primary">
-        Learn More
-      </Button>
-      <Button>
-        <a
-          href={homeContent?.field_cta_link}
-          target="_blank"
-          rel="noopener
-        noreferrer"
-        >
-          {homeContent?.field_cta_button}
-        </a>
-      </Button>
-      <Typography variant="body1">{homeContent?.field_long_desc}</Typography>
+    <Container style={{ paddingTop: "20px" }}>
+      {/* Use Grid container to layout the hero sections */}
+      <Grid2 container spacing={4}>
+        {data?.map((hero) => (
+          <Grid2 item xs={12} sm={6} md={4} key={hero.id}>
+            <Hero hero={hero} /> {/* Use Hero component */}
+          </Grid2>
+        ))}
+      </Grid2>
     </Container>
   );
 };

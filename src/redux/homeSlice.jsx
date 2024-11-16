@@ -1,48 +1,78 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+// src/redux/homeSlice.jsx
+
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Fetch home data along with nested relationships
-export const fetchHomeData = createAsyncThunk(
-  "home/fetchHomeData",
-  async () => {
-    try {
-      const response = await axios.get(
-        "https://druid-backend.lndo.site/jsonapi/node/home"
-      );
-      const homeData = response.data;
-      // Fetch the related field_hero_section data
-      if (homeData.data[0].relationships.field_hero_section) {
-        const heroSectionId =
-          homeData.data[0].relationships.field_hero_section.data[0].id;
-        const heroResponse = await axios.get(
-          `https://druid-backend.lndo.site/jsonapi/paragraph/card/${heroSectionId}`
+// Get base URL from environment variable
+const baseUrl =
+  import.meta.env.VITE_DRUPAL_HOST_URL || "https://druid-backend.lndo.site"; // default fallback
+
+const endpoint =
+  "/jsonapi/node/home?include=field_hero_section.field_image.field_media_image";
+
+// Async thunk for fetching data
+export const fetchHomeData = createAsyncThunk("home/fetchData", async () => {
+  const response = await axios.get(`${baseUrl}${endpoint}`);
+  const data = response.data;
+
+  // Transform data
+  return {
+    baseUrl, // Store the base URL in state
+    heroSections: data.included
+      .filter((item) => item.type === "paragraph--card")
+      .map((section) => {
+        const mediaId = section.relationships.field_image?.data?.id;
+        const media = data.included.find(
+          (includedItem) =>
+            includedItem.id === mediaId && includedItem.type === "media--image"
         );
-        return { home: homeData, heroSection: heroResponse.data };
-      }
-      return { home: homeData, heroSection: null };
-    } catch (error) {
-      throw new Error("Failed to fetch home data", error);
-    }
-  }
-);
+
+        const fileId = media?.relationships?.field_media_image?.data?.id;
+        const file = data.included.find(
+          (includedItem) =>
+            includedItem.id === fileId && includedItem.type === "file--file"
+        );
+
+        return {
+          id: section.id,
+          shortDescription: section.attributes.field_short_description,
+          longDescription: section.attributes.field_long_description,
+          buttonText:
+            section.attributes.field_cta_button?.title || "Learn More",
+          buttonLink: section.attributes.field_cta_button?.uri || "#",
+          image: file
+            ? {
+                alt: media?.attributes?.field_media_image?.meta?.alt || "",
+                url: file.attributes.uri.url,
+                width:
+                  media?.attributes?.field_media_image?.meta?.width || null,
+                height:
+                  media?.attributes?.field_media_image?.meta?.height || null,
+              }
+            : null,
+        };
+      }),
+  };
+});
 
 const homeSlice = createSlice({
   name: "home",
   initialState: {
-    homeData: null,
-    heroSection: null,
+    data: null,
     status: "idle",
     error: null,
+    baseUrl: "", // Store the base URL here
   },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchHomeData.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchHomeData.fulfilled, (state, action) => {
-        state.status = "success";
-        state.homeData = action.payload.home;
-        state.heroSection = action.payload.heroSection;
+        state.status = "succeeded";
+        state.data = action.payload.heroSections;
+        state.baseUrl = action.payload.baseUrl; // Save base URL to state
       })
       .addCase(fetchHomeData.rejected, (state, action) => {
         state.status = "failed";
