@@ -108,8 +108,6 @@ const About = () => {
           ))}
         </Box>
       </Box>
-
-      {/* New Section */}
       <Box
         sx={{
           backgroundColor: "#fff",
@@ -126,7 +124,6 @@ const About = () => {
             mb: 4,
           }}
         >
-          {/* Text on the Left */}
           <Box
             sx={{
               flex: 1,
@@ -174,8 +171,6 @@ const About = () => {
             </Button>
           </Box>
         </Box>
-
-        {/* Image Below */}
         <Box
           sx={{
             display: "flex",
