@@ -7,7 +7,7 @@ import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
-// Fix for Leaflet default icon
+
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -35,7 +35,7 @@ const Contact = () => {
         style={{
           marginBottom: "1rem",
           fontWeight: 700,
-          color: "#d10000", // Strong red
+          color: "#d10000", 
         }}
       >
         Get in <span style={{ color: "#000" }}>Touch</span>
@@ -51,7 +51,6 @@ const Contact = () => {
         Any question or remarks? Just write us a message!
       </Typography>
       <Grid container spacing={4}>
-        {/* Left Column - Form */}
         <Grid item xs={12} md={6}>
           <Box component="form" noValidate autoComplete="off">
             <TextField
@@ -103,7 +102,6 @@ const Contact = () => {
               SEND
             </Button>
           </Box>
-          {/* Footer Contact Info - Phone and Email */}
           <Box
             style={{
               display: "flex",
@@ -112,7 +110,6 @@ const Contact = () => {
               marginTop: "1rem",
             }}
           >
-            {/* Phone Info */}
             <Box style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
               <Box
                 style={{
@@ -135,7 +132,6 @@ const Contact = () => {
                 (Mon-Fri 9-17)
               </Typography>
             </Box>
-            {/* Email Info */}
             <Box style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
               <Box
                 style={{
@@ -159,8 +155,6 @@ const Contact = () => {
             </Box>
           </Box>
         </Grid>
-
-        {/* Right Column - Map */}
         <Grid item xs={12} md={6} style={{ position: "relative" }}>
           <Box
             style={{
@@ -169,7 +163,6 @@ const Contact = () => {
               overflow: "hidden",
             }}
           >
-            {/* Red accent on the top-right corner */}
             <Box
               style={{
                 position: "absolute",
@@ -180,7 +173,6 @@ const Contact = () => {
                 backgroundColor: "#d10000", // Strong red
               }}
             />
-            {/* Red accent on the bottom-right corner */}
             <Box
               style={{
                 position: "absolute",
