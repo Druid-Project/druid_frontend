@@ -4,7 +4,10 @@ import "./Footer.css";
 
 function Footer() {
   return (
-    <footer className="bg-white text-dark py-5 border-top">
+    <footer
+      className="text-dark py-5 border-top"
+      style={{ backgroundColor: "#F6F6F6" }} // Updated background color
+    >
       <Container>
         <Row className="align-items-center">
           <Col md={4} className="d-flex align-items-center mb-4 mb-md-0">
@@ -71,4 +74,5 @@ function Footer() {
     </footer>
   );
 }
+
 export default Footer;
