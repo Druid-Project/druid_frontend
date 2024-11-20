@@ -1,14 +1,57 @@
-import React from "react";
+import React from 'react';
+import { Container, Typography, Box, Card, Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import ViewInArOutlinedIcon from '@mui/icons-material/ViewInArOutlined';
+
+// Styled components
+const StyledCard = styled(Card)({
+  padding: '25px',
+  borderRadius: '12px',
+  display: 'flex',
+  alignItems: 'center',
+  backgroundColor: 'white',
+  boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.05)',
+  transition: 'transform 0.2s ease-in-out',
+  width: '100%',
+  maxWidth: '1000px',
+  '&:hover': {
+    transform: 'translateY(-4px)',
+    boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.1)',
+  },
+});
+
+const IconBox = styled(Box)({
+  width: '48px',
+  height: '48px',
+  borderRadius: '50%',
+  backgroundColor: '#FF5733',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginRight: '24px',
+});
+
+const ReadMoreButton = styled(Button)({
+  backgroundColor: '#FF5733',
+  color: 'white',
+  borderRadius: '20px',
+  padding: '8px 20px',
+  '&:hover': {
+    backgroundColor: '#E64A2E',
+  },
+});
 import { Box, Typography, Button } from "@mui/material";
 
 const About = () => {
+
+
   const cards = [
-    "We are a dedicated software house, crafting high-quality digital solutions with passion and expertise.",
-    "A more functional world, from one line of code to the next.",
-    "Knowledge and passion.",
-    "Big picture. Small details.",
-    "Close and flexible cooperation.",
-    "A smooth ride from one technology to another.",
+    { icon: <ViewInArOutlinedIcon sx={{ color: 'white' }} />, text: 'We are a regulated software house working with complex projects including payments and regulated environments.' },
+    { icon: <ViewInArOutlinedIcon sx={{ color: 'white' }} />, text: 'A trusted technological partner, here to help all of clients for the best.' },
+    { icon: <ViewInArOutlinedIcon sx={{ color: 'white' }} />, text: 'A knowledge-first approach.' },
+    { icon: <ViewInArOutlinedIcon sx={{ color: 'white' }} />, text: 'High-quality, tested solution.' },
+    { icon: <ViewInArOutlinedIcon sx={{ color: 'white' }} />, text: 'Focus on long-term partnerships.' },
+    { icon: <ViewInArOutlinedIcon sx={{ color: 'white' }} />, text: "A company that's been ever-developing new products." }
   ];
 
   return (
