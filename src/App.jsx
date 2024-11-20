@@ -6,6 +6,8 @@ import Services from "./pages/Services";
 import Blogs from "./pages/Blogs";
 import Career from "./pages/Career";
 import Contact from "./pages/Contact";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const App = () => {
   return (
