@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Typography, Box, Card, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ViewInArOutlinedIcon from '@mui/icons-material/ViewInArOutlined';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 // Styled components
 const StyledCard = styled(Card)({
@@ -40,7 +41,6 @@ const ReadMoreButton = styled(Button)({
     backgroundColor: '#E64A2E',
   },
 });
-import { Box, Typography, Button } from "@mui/material";
 
 const About = () => {
 
@@ -78,7 +78,7 @@ const About = () => {
         </Typography>
 
         <Box>
-          {cards.map((title, index) => (
+          {cards.map((card, index) => (
             <Box
               key={index}
               sx={{
@@ -113,10 +113,7 @@ const About = () => {
                     mr: 3,
                   }}
                 >
-                  <i
-                    className="bi bi-envelope"
-                    style={{ fontSize: "1.5rem", color: "#fff" }}
-                  ></i>
+                  {card.icon}
                 </Box>
                 <Typography
                   variant="body1"
@@ -127,7 +124,7 @@ const About = () => {
                     lineHeight: "1.5rem",
                   }}
                 >
-                  {title}
+                  {card.text}
                 </Typography>
                 <Button
                   variant="contained"
@@ -142,7 +139,7 @@ const About = () => {
                       backgroundColor: "#a80000",
                     },
                   }}
-                  endIcon={<i className="bi bi-arrow-right"></i>}
+                  endIcon={<ArrowForwardIcon />}
                 >
                   Read More
                 </Button>
@@ -161,58 +158,44 @@ const About = () => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "center",
             alignItems: "center",
-            flexWrap: "wrap",
+            gap: 4,
             mb: 4,
           }}
         >
-          <Box
+          <Typography
+            variant="h4"
+            component="h2"
             sx={{
-              flex: 1,
-              pr: 4,
+              fontFamily: "'Port Lligat Slab', serif",
+              fontWeight: "bold",
+              lineHeight: "1.5",
+              fontSize: "2rem", 
+              color: "#333",
+              whiteSpace: "pre-line",
+              textAlign: "center",
             }}
           >
-            <Typography
-              variant="h4"
-              component="h2"
-              sx={{
-                fontFamily: "'Port Lligat Slab', serif",
-                fontWeight: "bold",
-                lineHeight: "1.5",
-                fontSize: "2rem", 
-                color: "#333",
-                textAlign: "left",
-              }}
-            >
-              We design and implement high-quality digital solutions with
-              passion and technological expertise.
-            </Typography>
-          </Box>
-          <Box
+            {"We design and implement\nhigh-quality digital\nsolutions with passion and\ntechnological expertise."}
+          </Typography>
+          
+          <Button
+            variant="contained"
             sx={{
-              display: "flex",
-              alignItems: "center", 
-              justifyContent: "center",
+              backgroundColor: "#d10000",
+              color: "#fff",
+              textTransform: "none",
+              borderRadius: "1rem",
+              padding: "0.5rem 1.5rem",
+              "&:hover": {
+                backgroundColor: "#a80000",
+              },
             }}
+            endIcon={<ArrowForwardIcon />}
           >
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#d10000",
-                color: "#fff",
-                textTransform: "none",
-                borderRadius: "1rem",
-                padding: "0.5rem 1.5rem",
-                "&:hover": {
-                  backgroundColor: "#a80000",
-                },
-              }}
-              endIcon={<i className="bi bi-arrow-right"></i>}
-            >
-              Read More
-            </Button>
-          </Box>
+            Read More
+          </Button>
         </Box>
         <Box
           sx={{
