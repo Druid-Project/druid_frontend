@@ -140,7 +140,7 @@ const About = () => {
                 fontFamily: "'Port Lligat Slab', serif",
                 fontWeight: "bold",
                 lineHeight: "1.5",
-                fontSize: "2rem", // Larger font size
+                fontSize: "2rem", 
                 color: "#333",
                 textAlign: "left",
               }}
@@ -149,12 +149,10 @@ const About = () => {
               passion and technological expertise.
             </Typography>
           </Box>
-
-          {/* Button on the Right */}
           <Box
             sx={{
               display: "flex",
-              alignItems: "center", // Center vertically relative to the text
+              alignItems: "center", 
               justifyContent: "center",
             }}
           >
