@@ -14,16 +14,9 @@ const Home = () => {
 
   useEffect(() => {
     if (status === "idle") {
-      console.log("Dispatching fetchHomeData");
       dispatch(fetchHomeData());
     }
   }, [dispatch, status]);
-
-  useEffect(() => {
-    console.log("Home component status:", status);
-    console.log("Home component data:", data);
-    console.log("Home component error:", error);
-  }, [status, data, error]);
 
   if (status === "loading") {
     return <Typography>Loading...</Typography>;
@@ -43,11 +36,10 @@ const Home = () => {
       {/* Use Grid container to layout the sections */}
       <Grid container spacing={4}>
         {data?.map((section) => {
-          console.log("Rendering section:", section);
           switch (section.type) {
             case "paragraph--hero_section":
               return (
-                <Grid item xs={12} sm={6} md={4} key={section.id}>
+                <Grid item xs={12} sm={12} md={12} key={section.id}>
                   <Hero hero={section} /> {/* Use Hero component */}
                 </Grid>
               );
