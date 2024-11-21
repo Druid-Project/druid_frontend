@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import careerImage from '../layout/Carrer-image.jpg';
+import careerImage from "../assets/img/Career-image.jpg"; // Ensure this matches the exact file name and path
 
 const Career = () => {
   return (
@@ -111,7 +111,7 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: #D84315;
+  background-color: #d84315;
   color: white;
   border: none;
   padding: 12px 32px;
@@ -123,16 +123,15 @@ const Button = styled.button`
 const CircleContainer = styled.div`
   width: 400px;
   height: 400px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2); /* Main circle background */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  padding: 40px;
   margin: 0 auto;
-  backdrop-filter: blur(5px);
-  
+
+  /* Removed all padding and effects to ensure only the big circle remains */
   p {
     text-align: center;
     font-size: 18px;
@@ -164,7 +163,7 @@ const PerkItem = styled.div`
 `;
 
 const PerkLabel = styled.span`
-  color: #D84315;
+  color: #d84315;
   font-weight: 500;
   margin-right: 8px;
 `;
@@ -172,7 +171,7 @@ const PerkLabel = styled.span`
 const JoinSection = styled.div`
   text-align: center;
   margin-top: 100px;
-  
+
   h2 {
     font-size: 36px;
     color: #000;
@@ -191,14 +190,14 @@ const JobItem = styled.div`
   text-align: center;
   padding: 20px;
   border-bottom: 1px solid #eee;
-  
+
   &:last-child {
     border-bottom: none;
   }
 `;
 
 const JobTitle = styled.h3`
-  color: #D84315;
+  color: #d84315;
   font-size: 18px;
   margin-bottom: 8px;
   font-weight: normal;
@@ -210,7 +209,7 @@ const JobLocation = styled.p`
 `;
 
 const AllJobsButton = styled.button`
-  background-color: #D84315;
+  background-color: #d84315;
   color: white;
   border: none;
   padding: 12px 32px;
