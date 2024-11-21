@@ -68,6 +68,32 @@ const Services = () => {
           </div>
         ))}
       </div>
+
+      <section className="contact-section">
+        <h2>Get in Touch</h2>
+        <div className="contact-wrapper">
+          <div className="contact-form">
+            <form>
+              <label>
+                Name:
+                <input type="text" placeholder="Your Name" />
+              </label>
+              <label>
+                Email:
+                <input type="email" placeholder="Your Email" />
+              </label>
+              <label>
+                Message:
+                <textarea placeholder="Your Message"></textarea>
+              </label>
+              <button type="submit">Send Message</button>
+            </form>
+          </div>
+          <div className="contact-image">
+            <img src="your-contact-image-path-here.png" alt="Contact Us" />
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
