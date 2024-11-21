@@ -1,5 +1,7 @@
 import React from 'react'
 import "../layout/Services.css";
+import heroImage from "../layout/services-hero.png";
+
 
 const servicesData = [
   {
@@ -30,7 +32,27 @@ const servicesData = [
 
 const Services = () => {
   return (
+    
     <div className="services">
+    <section className="hero-section">
+        <div className="hero-content">
+          <div className="hero-text">
+            <h1>We help you make better digital business</h1>
+            <p>
+              We are warm-hearted experts of agile software development and digital
+              design. We build high-quality, high-performance digital services that the
+              users love from the idea to the complete service. With us, you can
+              develop your digital business in a controlled, agile manner.
+            </p>
+            <button className="read-more-btn">Read More</button>
+          </div>
+          <div className="hero-image">
+            <img src="../layout/services-hero.png" alt="Agile Development" />
+            <div className="border-overlay"></div>
+          </div>
+        </div>
+      </section>
+
       <h2 className="services-header">OUR SERVICES</h2>
       <div className="services-list">
         {servicesData.map((service, index) => (
