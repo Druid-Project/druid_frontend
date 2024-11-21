@@ -11,7 +11,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import { Link } from "react-router-dom";
 import druidLogo from "../assets/img/druid_logo.png";
 import MenuIcon from '@mui/icons-material/Menu';
-function Feature() {
+
+const Header = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   const toggleDrawer = (open) => (event) => {
@@ -53,7 +54,7 @@ function Feature() {
       </AppBar>
       <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
         <Box
-          sx={{ width: 250 }}
+          sx={{ width: 250, bgcolor: 'background.paper' }}
           role="presentation"
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
@@ -76,4 +77,4 @@ function Feature() {
   );
 }
 
-export default Feature;
+export default Header;

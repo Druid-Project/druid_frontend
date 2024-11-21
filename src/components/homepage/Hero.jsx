@@ -6,6 +6,7 @@ import {
   CardContent,
   Typography,
   Button,
+  Box,
 } from "@mui/material";
 import { useSelector } from "react-redux"; // Import useSelector
 
@@ -13,34 +14,48 @@ const Hero = ({ hero }) => {
   // Fetch the baseUrl from the Redux state
   const { baseUrl } = useSelector((state) => state.home);
 
-  console.log("Rendering Hero component with hero:", hero);
-
   return (
-    <Card>
-      {hero.image && (
-        <CardMedia
-          component="img"
-          image={`${baseUrl}${hero.image.url}`} // Dynamic image URL from Redux state
-          alt={hero.image.alt}
-        />
-      )}
-      <CardContent>
-        <Typography variant="h5" gutterBottom>
+    <Box
+      sx={{
+        position: 'relative',
+        height: '60vh',
+        backgroundImage: `url(${baseUrl}${hero.image.url})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#fff',
+        textAlign: 'center',
+      }}
+    >
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        }}
+      />
+      <CardContent sx={{ position: 'relative', zIndex: 1, maxWidth: 800 }}>
+        <Typography variant="h2" gutterBottom sx={{ fontWeight: 'bold' }}>
           {hero.attributes.field_short_description}
         </Typography>
-        <Typography variant="body2">
+        <Typography variant="h5" sx={{ marginBottom: 3 }}>
           {hero.attributes.field_long_description}
         </Typography>
         <Button
           variant="contained"
           color="primary"
           href={hero.attributes.field_cta_button?.uri || "#"}
-          sx={{ mt: 2 }}
+          sx={{ padding: '10px 20px', fontSize: '16px' }}
         >
           {hero.attributes.field_cta_button?.title || "Learn More"}
         </Button>
       </CardContent>
-    </Card>
+    </Box>
   );
 };
 
