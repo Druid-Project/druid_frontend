@@ -3,10 +3,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHomeData } from "../redux/homeSlice";
-import { Container, Typography, Grid } from "@mui/material"; // Use Grid instead of Grid2
-import Hero from "../components/homepage/Hero"; // Import the Hero component
-import ServicesSections from "../components/homepage/ServicesSections"; // Import the ServicesSections component
-import Feature from "../components/homepage/Feature"; // Import the Feature component
+import { Container, Typography, Grid } from "@mui/material";
+import Hero from "../components/homepage/Hero";
+import ServicesSections from "../components/homepage/ServicesSections";
+import Feature from "../components/homepage/Feature";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -26,34 +26,31 @@ const Home = () => {
     return <Typography color="error">Error: {error}</Typography>;
   }
 
-  // Safeguard for cases where data is still null
   if (!data) {
     return <Typography>No data available.</Typography>;
   }
 
   return (
     <Container style={{ paddingTop: "20px" }}>
-      {/* Use Grid container to layout the sections */}
       <Grid container spacing={4}>
-        {data?.map((section) => {
+        {data?.included?.map((section) => {
           switch (section.type) {
             case "paragraph--hero_section":
               return (
                 <Grid item xs={12} sm={12} md={12} key={section.id}>
-                  <Hero hero={section} /> {/* Use Hero component */}
+                  <Hero hero={section} />
                 </Grid>
               );
-            case "paragraph--blo":
+            case "paragraph--our_services_section":
               return (
                 <Grid item xs={12} key={section.id}>
-                  <ServicesSections section={section} />{" "}
-                  {/* Use ServicesSections component */}
+                  <ServicesSections section={section} />
                 </Grid>
               );
             case "paragraph--feature_section":
               return (
                 <Grid item xs={12} key={section.id}>
-                  <Feature section={section} /> {/* Use Feature component */}
+                  <Feature section={section} />
                 </Grid>
               );
             default:

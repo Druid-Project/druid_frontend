@@ -1,26 +1,20 @@
+// src/api/api.js
 import axios from "axios";
-import { baseURL } from "../config";
+import { baseUrl } from "../config";
 
-const API_URL = `${baseURL}/jsonapi`;
+const apiClient = axios.create({
+  baseURL: baseUrl,
+  headers: {
+    "Content-Type": "application/vnd.api+json",
+  },
+});
 
-export const fetchContent = async (contentType) => {
+export const fetchContent = async (endpoint, params = {}) => {
   try {
-    const response = await axios.get(`${API_URL}/${contentType}`);
-    console.log(`Respsonse: ${response}`);
+    const response = await apiClient.get(endpoint, { params });
     return response.data;
   } catch (e) {
-    console.error(`Error fetching ${contentType}: ${e}`);
-    throw e;
-  }
-};
-
-export const fetchContentById = async (contentType, id) => {
-  try {
-    const response = await axios.get(`${API_URL}/${contentType}/${id}`);
-    console.log(`Respsonse: ${response}`);
-    return response.data;
-  } catch (e) {
-    console.error(`Error fetching ${contentType} by ID: ${e}`);
+    console.error(`Error fetching ${endpoint}: ${e}`);
     throw e;
   }
 };
