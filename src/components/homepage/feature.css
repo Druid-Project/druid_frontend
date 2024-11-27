@@ -1,0 +1,43 @@
+.feature-container {
+  padding: 20px;
+}
+
+.custom-slider .slider-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.custom-slider .slider-card {
+  width: 100%;
+  max-width: 300px;
+  height: 450px; /* Set a fixed height for the cards */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.5s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for better appearance */
+  border-radius: 10px; /* Rounded corners */
+  overflow: hidden; /* Ensure content stays within the card */
+}
+
+.custom-slider .slider-card img {
+  object-fit: cover;
+}
+
+.custom-slider .slider-card .MuiCardContent-root {
+  flex-grow: 1;
+}
+
+.custom-slider .slider-card .MuiCardActions-root {
+  justify-content: flex-end;
+}
+
+.card-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

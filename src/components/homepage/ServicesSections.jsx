@@ -4,84 +4,69 @@ import {
   Card,
   CardContent,
   CardMedia,
+  CardActions,
   Button,
 } from "@mui/material";
-import { useSelector } from "react-redux"; // Import useSelector
+import { useSelector } from "react-redux";
+import { fetchCards } from "../../utils/fetchCards";
 
 const ServicesSections = ({ section }) => {
-  // Fetch the baseUrl from the Redux state
   const { baseUrl } = useSelector((state) => state.home);
-  const [blogCards, setBlogCards] = useState([]);
+  const [serviceCards, setServiceCards] = useState([]);
 
   useEffect(() => {
-    // Function to fetch card details by ID
-    const fetchCardDetails = async (cardId) => {
-      const response = await fetch(
-        `${baseUrl}/jsonapi/paragraph/card/${cardId}`
+    const fetchServiceCards = async () => {
+      const cards = await fetchCards(
+        section,
+        baseUrl,
+        "field_services_section_cards"
       );
-      const data = await response.json();
-      return data.data.attributes;
+      setServiceCards(cards);
     };
 
-    // Populate blogCards with full details
-    const fetchBlogCards = async () => {
-      if (section.relationships && section.relationships.field_blog_cards) {
-        const cardDetailsPromises =
-          section.relationships.field_blog_cards.data.map((card) =>
-            fetchCardDetails(card.id)
-          );
-        const cardDetails = await Promise.all(cardDetailsPromises);
-        setBlogCards(cardDetails);
-      }
-    };
-
-    fetchBlogCards();
+    fetchServiceCards();
   }, [section, baseUrl]);
 
   return (
     <div>
       <Typography variant="h4" gutterBottom>
-        {section.attributes.field_section_titile} {/* Typo is okay */}
+        {section.attributes.field_title}
       </Typography>
-      {blogCards && blogCards.length > 0 ? (
-        blogCards.map((card, index) => (
-          <Card key={index} style={{ marginBottom: "20px" }}>
-            {card?.field_image && (
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+        {serviceCards.map((card, index) => (
+          <Card key={index} style={{ width: "300px", marginBottom: "20px" }}>
+            {card.imageUrl && (
               <CardMedia
                 component="img"
-                image={`${baseUrl}${card.field_image.url}`} // Dynamic image URL from Redux state
-                alt={card.field_image.alt}
+                height="140"
+                image={card.imageUrl}
+                alt={
+                  card.attributes.field_card_image?.data?.meta?.alt ||
+                  "Service Image"
+                }
               />
             )}
             <CardContent>
-              <Typography variant="body2">
-                {card?.field_long_description ||
-                  "No long description available"}
+              <Typography variant="h5" component="div">
+                {card.attributes.field_card_title}
               </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                href={card?.field_cta_button?.uri || "#"}
-                sx={{ mt: 2 }}
-              >
-                {card?.field_cta_button?.title || "Read more"}
-              </Button>
-              {card?.nestedParagraphs?.map((nested, nestedIndex) => (
-                <div key={nestedIndex}>
-                  <Typography variant="h6">
-                    {nested?.field_title || "No title available"}
-                  </Typography>
-                  <Typography variant="body2">
-                    {nested?.field_description || "No description available"}
-                  </Typography>
-                </div>
-              ))}
+              <Typography variant="body2" color="text.secondary">
+                {card.attributes.field_card_description}
+              </Typography>
             </CardContent>
+            <CardActions>
+              {card.attributes.field_card_cta_button && (
+                <Button
+                  size="small"
+                  href={card.attributes.field_card_cta_button.uri}
+                >
+                  {card.attributes.field_card_cta_button.title}
+                </Button>
+              )}
+            </CardActions>
           </Card>
-        ))
-      ) : (
-        <Typography variant="body2">No cards available</Typography>
-      )}
+        ))}
+      </div>
     </div>
   );
 };
