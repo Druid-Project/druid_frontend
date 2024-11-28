@@ -1,4 +1,3 @@
-// src/components/homepage/Hero.jsx
 import React, { useEffect } from "react";
 import { CardContent, Typography, Button, Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
@@ -38,6 +37,7 @@ const Hero = ({ hero }) => {
         justifyContent: "center",
         color: "#fff",
         textAlign: "center",
+        marginBottom: 0, // Remove bottom margin
       }}
     >
       <Box
