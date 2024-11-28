@@ -1,0 +1,60 @@
+.custom-card {
+  width: 100%;
+  max-width: 300px;
+  height: 500px; /* Set a fixed height for the cards */
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for better appearance */
+  border-radius: 10px; /* Rounded corners */
+  overflow: hidden; /* Ensure content stays within the card */
+  background-color: #fff; /* White background */
+}
+
+.custom-card:hover {
+  transform: translateY(-10px); /* Lift the card on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+
+.card-image {
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.card-description {
+  flex-grow: 1;
+}
+
+.card-actions {
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cta-button {
+  color: #111;
+  text-transform: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  transition:color 0.3s ease;
+}
+
+.cta-button:hover {
+ color: #0071e3;
+}
+
+.arrow-icon {
+  margin-left: 8px; /* Add some space between the text and the arrow */
+  font-size: 1.2em; /* Adjust the size of the arrow */
+}
