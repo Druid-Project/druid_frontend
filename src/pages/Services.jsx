@@ -103,7 +103,16 @@ export default Services
 
 // src/pages/Services.js
 import React from "react";
-import { Box, Typography, Grid, Button, Paper } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Grid,
+  Button,
+  Paper,
+  TextField,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
 import { Tour, DesignServices, Code, Build, ArrowForward } from "@mui/icons-material";
 
 // Data for Services Section
@@ -230,7 +239,6 @@ const Services = () => {
         </Typography>
       </Box>
 
-      {/* Services List */}
       <Box sx={{ backgroundColor: "#CECECE", padding: "2rem 0" }}>
         <Grid
           container
@@ -253,7 +261,6 @@ const Services = () => {
                   backgroundColor: "#fff",
                 }}
               >
-                {/* Left Content: Icon and Text */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
                   {service.icon}
                   <Box>
@@ -273,7 +280,7 @@ const Services = () => {
                         color: "#666",
                         fontFamily: "Poppins, sans-serif",
                         lineHeight: "1.5",
-                        marginBottom: "2rem", // Increased space below paragraph
+                        marginBottom: "2rem",
                       }}
                     >
                       {service.description}
@@ -281,21 +288,20 @@ const Services = () => {
                   </Box>
                 </Box>
 
-                {/* Button on the Right */}
                 <Button
                   variant="contained"
                   endIcon={<ArrowForward />}
                   sx={{
-                    backgroundColor: "#d10000", // Strong red color
+                    backgroundColor: "#d10000",
                     color: "#fff",
                     fontWeight: "bold",
                     textTransform: "uppercase",
-                    fontSize: "0.75rem", // Smaller font size
-                    padding: "0.4rem 1rem", // Reduced padding for a smaller button
-                    minWidth: "100px", // Ensures consistent small button size
-                    borderRadius: "5px", // Slightly rounded corners
+                    fontSize: "0.75rem",
+                    padding: "0.4rem 1rem",
+                    minWidth: "100px",
+                    borderRadius: "5px",
                     ":hover": {
-                      backgroundColor: "#b30000", // Darker red on hover
+                      backgroundColor: "#b30000",
                     },
                   }}
                 >
@@ -306,6 +312,124 @@ const Services = () => {
           ))}
         </Grid>
       </Box>
+
+      {/* Get In Touch Section */}
+      <Box sx={{ padding: "4rem 2rem", backgroundColor: "#fff" }}>
+  <Typography
+    variant="h4"
+    sx={{
+      textAlign: "center",
+      fontWeight: "bold",
+      marginBottom: "2rem",
+    }}
+  >
+    Get In Touch
+  </Typography>
+  <Grid container spacing={4} alignItems="stretch">
+    {/* Left Side: Text and Form */}
+    <Grid
+      item
+      xs={12}
+      md={6}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Typography
+        variant="body1"
+        sx={{
+          marginBottom: "2rem",
+          lineHeight: "1.6",
+          color: "#333",
+        }}
+      >
+        Strong technical skills and 100% agility are our forte. We specialize in
+        building comprehensive, customized web services and online stores. We do
+        our job with an uncompromising attitude but a relaxed approach,
+        challenging you to do better business online. Check out our services
+        below and if you want to know more, get in touch.
+      </Typography>
+      <form style={{ flex: 1 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <TextField label="Name" fullWidth required />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField label="Email Address" fullWidth required />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField label="Phone" fullWidth required />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Requested Completion Date"
+              type="date"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField label="Company/Project Name" fullWidth required />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Project Description"
+              fullWidth
+              multiline
+              rows={4}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={<Checkbox color="primary" />}
+              label="You agree to our friendly privacy policy."
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#d10000",
+                color: "#fff",
+                padding: "0.8rem 1.5rem",
+                ":hover": { backgroundColor: "#b30000" },
+              }}
+              fullWidth
+            >
+              Send Message
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </Grid>
+
+    {/* Right Side: Image */}
+    <Grid
+      item
+      xs={12}
+      md={6}
+      sx={{
+        display: "flex",
+        alignItems: "stretch",
+      }}
+    >
+      <Box
+        component="img"
+        src="/src/layout/Services.png"
+        alt="Contact Illustration"
+        sx={{
+          width: "100%",
+          height: "auto", // Maintain aspect ratio
+          borderRadius: "8px",
+          objectFit: "cover", // Ensures the image fits nicely within the container
+          maxHeight: "100%", // Ensures it doesn’t exceed the form height
+        }}
+      />
+    </Grid>
+  </Grid>
+</Box>
     </div>
   );
 };
