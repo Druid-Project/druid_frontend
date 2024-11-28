@@ -101,100 +101,210 @@ const Services = () => {
 export default Services
 */
 
+// src/pages/Services.js
 import React from "react";
-import { Box, Typography, Grid, Button } from "@mui/material";
+import { Box, Typography, Grid, Button, Paper } from "@mui/material";
+import { Tour, DesignServices, Code, Build, ArrowForward } from "@mui/icons-material";
 
-// Hero Section Component
-const HeroSection = ({ title, subtitle, buttonText, imageUrl }) => (
-  <Box
-    sx={{
-      backgroundColor: "#fff",
-      padding: "3rem 2rem",
-    }}
-  >
-    <Grid container spacing={4} alignItems="center">
-      {/* Left Content */}
-      <Grid item xs={12} md={6}>
-        <Typography
-          variant="h3"
-          component="h1"
-          sx={{
-            fontWeight: "bold",
-            marginBottom: "1rem",
-            fontSize: { xs: "2rem", md: "2.5rem" },
-            textAlign: { xs: "center", md: "left" },
-          }}
-        >
-          {title}
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            fontSize: { xs: "1rem", md: "1.2rem" },
-            marginBottom: "2rem",
-            textAlign: { xs: "center", md: "left" },
-          }}
-        >
-          {subtitle}
-        </Typography>
-        <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#e55332",
-              padding: "0.8rem 1.5rem",
-              fontSize: "1rem",
-              ":hover": {
-                backgroundColor: "#c44428",
-              },
-            }}
-          >
-            {buttonText}
-          </Button>
-        </Box>
-      </Grid>
-
-      {/* Right Image */}
-      <Grid item xs={12} md={6}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: { xs: "center", md: "flex-end" },
-            alignItems: "center",
-            border: "5px solid #e55332",
-            width: "100%",
-            height: "100%", // Ensures it fills the container
-          }}
-        >
-          <img
-            src={imageUrl}
-            alt="Agile Development Illustration"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover", // Ensures the image covers the container without distortion
-            }}
-          />
-        </Box>
-      </Grid>
-    </Grid>
-  </Box>
-);
+// Data for Services Section
+const services = [
+  {
+    title: "Discovery Tour",
+    description:
+      "Is your web service in need of improvements, but you are unsure where to start or what to do? The Druid Discovery Tour will show you the direction — in just one week.",
+    icon: <Tour fontSize="large" sx={{ color: "#E55332" }} />,
+  },
+  {
+    title: "Digital Design",
+    description:
+      "An intuitive user experience is the key to success in the digital world. Our refined design process helps you make better decisions. We experiment with new features with rapid prototypes and design in a scalable way, ensuring a unified user experience for your service.",
+    icon: <DesignServices fontSize="large" sx={{ color: "#E55332" }} />,
+  },
+  {
+    title: "Software Development",
+    description:
+      "We offer reliable and long-lasting solutions for developing your digital business. Our customized implementations are based on pre-established open source products and solutions.",
+    icon: <Code fontSize="large" sx={{ color: "#E55332" }} />,
+  },
+  {
+    title: "Support and Maintenance",
+    description:
+      "Active maintenance is one of the cornerstones of a long-lasting web service. We take care of the operation and security of your web service with a response time of mere hours and improve the service according to your needs. We can also handle security audits for you.",
+    icon: <Build fontSize="large" sx={{ color: "#E55332" }} />,
+  },
+];
 
 const Services = () => {
   return (
     <div>
       {/* Hero Section */}
-      <HeroSection
-        title="We help you make better digital business"
-        subtitle="We are warm-hearted experts of agile software development and digital design. We build high-quality, high-performance digital services that the users love."
-        buttonText="Read More"
-        imageUrl="/src/layout/services-hero.png" // Replace with your actual image path
-      />
+      <Box
+        sx={{
+          backgroundColor: "#fff",
+          padding: "3rem 2rem",
+          fontFamily: "Roboto, sans-serif",
+        }}
+      >
+        <Grid container spacing={4} alignItems="center">
+          <Grid item xs={12} md={6}>
+            <Typography
+              variant="h3"
+              component="h1"
+              sx={{
+                fontWeight: "bold",
+                marginBottom: "1rem",
+                fontSize: { xs: "2rem", md: "2.5rem" },
+                textAlign: { xs: "center", md: "left" },
+              }}
+            >
+              We help you make better digital business
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: { xs: "1rem", md: "1.2rem" },
+                fontFamily: "Poppins, sans-serif",
+                marginBottom: "2rem",
+                textAlign: { xs: "center", md: "left" },
+              }}
+            >
+              We are warm-hearted experts of agile software development and digital design. We build high-quality, high-performance digital services that the users love.
+            </Typography>
+            <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#d10000", // Strong red color
+                  color: "#fff",
+                  padding: "0.5rem 1rem",
+                  fontSize: "0.8rem",
+                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                  ":hover": {
+                    backgroundColor: "#b30000",
+                  },
+                }}
+              >
+                Read More
+              </Button>
+            </Box>
+          </Grid>
 
-      {/* Additional Services Content */}
-      <Box sx={{ padding: "2rem" }}>
-        {/* Add other content for the Services page here */}
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: { xs: "center", md: "flex-end" },
+                alignItems: "center",
+                border: "5px solid #d10000",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <img
+                src="/src/layout/services-hero.png"
+                alt="Agile Development Illustration"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+
+      {/* Our Services Section */}
+      <Box sx={{ padding: "2rem 0" }}>
+        <Typography
+          variant="h4"
+          sx={{
+            textAlign: "center",
+            fontWeight: "bold",
+            fontFamily: "Roboto, sans-serif",
+            marginBottom: "2rem",
+          }}
+        >
+          OUR SERVICES
+        </Typography>
+      </Box>
+
+      {/* Services List */}
+      <Box sx={{ backgroundColor: "#CECECE", padding: "2rem 0" }}>
+        <Grid
+          container
+          spacing={4}
+          sx={{
+            justifyContent: "center",
+            padding: { xs: "1rem", md: "2rem" },
+          }}
+        >
+          {services.map((service, index) => (
+            <Grid item xs={12} md={8} key={index}>
+              <Paper
+                elevation={3}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "1.5rem",
+                  borderRadius: "10px",
+                  backgroundColor: "#fff",
+                }}
+              >
+                {/* Left Content: Icon and Text */}
+                <Box sx={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+                  {service.icon}
+                  <Box>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: "bold",
+                        fontFamily: "Roboto, sans-serif",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      {service.title}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "#666",
+                        fontFamily: "Poppins, sans-serif",
+                        lineHeight: "1.5",
+                        marginBottom: "2rem", // Increased space below paragraph
+                      }}
+                    >
+                      {service.description}
+                    </Typography>
+                  </Box>
+                </Box>
+
+                {/* Button on the Right */}
+                <Button
+                  variant="contained"
+                  endIcon={<ArrowForward />}
+                  sx={{
+                    backgroundColor: "#d10000", // Strong red color
+                    color: "#fff",
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
+                    fontSize: "0.75rem", // Smaller font size
+                    padding: "0.4rem 1rem", // Reduced padding for a smaller button
+                    minWidth: "100px", // Ensures consistent small button size
+                    borderRadius: "5px", // Slightly rounded corners
+                    ":hover": {
+                      backgroundColor: "#b30000", // Darker red on hover
+                    },
+                  }}
+                >
+                  Read More
+                </Button>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
       </Box>
     </div>
   );
