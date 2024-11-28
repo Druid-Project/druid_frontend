@@ -1,4 +1,4 @@
-import React from 'react'
+/*import React from 'react'
 import "../layout/Services.css";
 import heroImage from "../layout/services-hero.png";
 
@@ -99,3 +99,105 @@ const Services = () => {
 }
 
 export default Services
+*/
+
+import React from "react";
+import { Box, Typography, Grid, Button } from "@mui/material";
+
+// Hero Section Component
+const HeroSection = ({ title, subtitle, buttonText, imageUrl }) => (
+  <Box
+    sx={{
+      backgroundColor: "#fff",
+      padding: "3rem 2rem",
+    }}
+  >
+    <Grid container spacing={4} alignItems="center">
+      {/* Left Content */}
+      <Grid item xs={12} md={6}>
+        <Typography
+          variant="h3"
+          component="h1"
+          sx={{
+            fontWeight: "bold",
+            marginBottom: "1rem",
+            fontSize: { xs: "2rem", md: "2.5rem" },
+            textAlign: { xs: "center", md: "left" },
+          }}
+        >
+          {title}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: { xs: "1rem", md: "1.2rem" },
+            marginBottom: "2rem",
+            textAlign: { xs: "center", md: "left" },
+          }}
+        >
+          {subtitle}
+        </Typography>
+        <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#e55332",
+              padding: "0.8rem 1.5rem",
+              fontSize: "1rem",
+              ":hover": {
+                backgroundColor: "#c44428",
+              },
+            }}
+          >
+            {buttonText}
+          </Button>
+        </Box>
+      </Grid>
+
+      {/* Right Image */}
+      <Grid item xs={12} md={6}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: { xs: "center", md: "flex-end" },
+            alignItems: "center",
+            border: "5px solid #e55332",
+            width: "100%",
+            height: "100%", // Ensures it fills the container
+          }}
+        >
+          <img
+            src={imageUrl}
+            alt="Agile Development Illustration"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover", // Ensures the image covers the container without distortion
+            }}
+          />
+        </Box>
+      </Grid>
+    </Grid>
+  </Box>
+);
+
+const Services = () => {
+  return (
+    <div>
+      {/* Hero Section */}
+      <HeroSection
+        title="We help you make better digital business"
+        subtitle="We are warm-hearted experts of agile software development and digital design. We build high-quality, high-performance digital services that the users love."
+        buttonText="Read More"
+        imageUrl="/src/layout/services-hero.png" // Replace with your actual image path
+      />
+
+      {/* Additional Services Content */}
+      <Box sx={{ padding: "2rem" }}>
+        {/* Add other content for the Services page here */}
+      </Box>
+    </div>
+  );
+};
+
+export default Services;
