@@ -101,7 +101,6 @@ const Services = () => {
 export default Services
 */
 
-// src/pages/Services.js
 import React from "react";
 import {
   Box,
@@ -114,8 +113,6 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { Tour, DesignServices, Code, Build, ArrowForward } from "@mui/icons-material";
-
-// Data for Services Section
 const services = [
   {
     title: "Discovery Tour",
@@ -146,7 +143,6 @@ const services = [
 const Services = () => {
   return (
     <div>
-      {/* Hero Section */}
       <Box
         sx={{
           backgroundColor: "#fff",
@@ -183,7 +179,7 @@ const Services = () => {
               <Button
                 variant="contained"
                 sx={{
-                  backgroundColor: "#d10000", // Strong red color
+                  backgroundColor: "#d10000", 
                   color: "#fff",
                   padding: "0.5rem 1rem",
                   fontSize: "0.8rem",
@@ -223,8 +219,6 @@ const Services = () => {
           </Grid>
         </Grid>
       </Box>
-
-      {/* Our Services Section */}
       <Box sx={{ padding: "2rem 0" }}>
         <Typography
           variant="h4"
@@ -312,8 +306,6 @@ const Services = () => {
           ))}
         </Grid>
       </Box>
-
-      {/* Get In Touch Section */}
       <Box sx={{ padding: "4rem 2rem", backgroundColor: "#fff" }}>
   <Typography
     variant="h4"
@@ -404,8 +396,6 @@ const Services = () => {
         </Grid>
       </form>
     </Grid>
-
-    {/* Right Side: Image */}
     <Grid
       item
       xs={12}
@@ -421,10 +411,10 @@ const Services = () => {
         alt="Contact Illustration"
         sx={{
           width: "100%",
-          height: "auto", // Maintain aspect ratio
+          height: "auto", 
           borderRadius: "8px",
-          objectFit: "cover", // Ensures the image fits nicely within the container
-          maxHeight: "100%", // Ensures it doesn’t exceed the form height
+          objectFit: "cover", 
+          maxHeight: "100%", 
         }}
       />
     </Grid>
