@@ -1,0 +1,12 @@
+.services-hero-image {
+  --s: 30px; /* the size on the corner */
+
+  padding: 5px; /* the gap between the border and image */
+  border: 5px solid #e13200; /* the thickness and color */
+  -webkit-mask: conic-gradient(at var(--s) var(--s), #0000 75%, #000 0) 0 0 /
+      calc(100% - var(--s)) calc(100% - var(--s)),
+    linear-gradient(#000 0 0) content-box;
+  mask: conic-gradient(at var(--s) var(--s), #0000 75%, #000 0) 0 0 /
+      calc(100% - var(--s)) calc(100% - var(--s)),
+    linear-gradient(#000 0 0) content-box;
+}
