@@ -1,5 +1,5 @@
 import React from "react";
-import "../layout/Blogs.css";
+import "../components/blogspage/css/blogs.css";
 import blogImage from "../assets/img/blog-hero.png";
 import drupalLogo from "../assets/img/drupal-logo.png";
 
