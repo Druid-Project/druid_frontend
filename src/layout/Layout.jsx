@@ -8,10 +8,10 @@ const Layout = () => {
   return (
     <Container maxWidth={false} disableGutters>
       <Header />
-      <Box component="main" sx={{ my: 4, px: 2 }}>
+      <Box component="main" sx={{ paddingTop: "64px" }}>
         <Outlet />
       </Box>
-      <Box sx={{ mt: 'auto' }}>
+      <Box sx={{ mt: "auto" }}>
         <Footer />
       </Box>
     </Container>
