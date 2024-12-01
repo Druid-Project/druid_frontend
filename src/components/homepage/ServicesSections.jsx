@@ -3,8 +3,7 @@ import { Typography, Grid, Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { fetchCards } from "../../utils/fetchCards";
 import ServicesCard from "../common/ServicesCard";
-import "./servicesSections.css"; // Import custom CSS
-
+import "./css/servicesSections.css"
 const ServicesSections = ({ data }) => {
   const { baseUrl } = useSelector((state) => state.content);
   const [serviceCards, setServiceCards] = useState([]);

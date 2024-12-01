@@ -20,7 +20,7 @@
   transition: transform 0.5s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for better appearance */
   border-radius: 10px; /* Rounded corners */
-  overflow: hidden; /* Ensure content stays within the card */
+  overflow: hidden; /* Ensures content stays within the card */
 }
 
 .custom-slider .slider-card img {

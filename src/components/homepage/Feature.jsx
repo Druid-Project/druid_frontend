@@ -6,7 +6,7 @@ import { fetchCards } from "../../utils/fetchCards";
 import CardComponent from "../common/Card";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./feature.css";
+import "./css/feature.css"
 
 const Feature = ({ data }) => {
   const { baseUrl } = useSelector((state) => state.content);
