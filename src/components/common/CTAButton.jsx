@@ -1,9 +1,10 @@
 import { Button } from "@mui/material";
-const CTAButton = (ctaButton) => {
+
+const CTAButton = ({ uri, title, onClick }) => {
   return (
     <Button
       size="small"
-      href={ctaButton.uri}
+      href={uri}
       variant="contained"
       sx={{
         backgroundColor: "#e13200",
@@ -14,8 +15,9 @@ const CTAButton = (ctaButton) => {
         display: "flex",
         alignItems: "center",
       }}
+      onClick={onClick}
     >
-      {ctaButton.title}
+      {title}
       <span className="arrow-icon">→</span>
     </Button>
   );

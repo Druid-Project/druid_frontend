@@ -51,7 +51,11 @@ const ServiceCardSection = ({ data }) => {
             xs={12}
             md={12}
             key={index}
-            sx={{ display: "flex", justifyContent: "space-around", padding:"10px" }}
+            sx={{
+              display: "flex",
+              justifyContent: "space-around",
+              padding: "10px",
+            }}
           >
             <CardComponent
               imageUrl={card.imageUrl}
