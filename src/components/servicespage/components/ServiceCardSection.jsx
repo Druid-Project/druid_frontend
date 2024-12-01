@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { fetchCards } from "../../../utils/fetchCards";
-import { Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import CardComponent from "./CardComponet";
 
 const ServiceCardSection = ({ data }) => {
@@ -32,19 +32,27 @@ const ServiceCardSection = ({ data }) => {
   if (!servicesSection) return null;
 
   return (
-    <div>
+    <Container
+      sx={{
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        paddingBottom: "50px",
+      }}
+    >
       <Typography variant="h4" gutterBottom className="centered-title">
-        {servicesSection.attributes.field_title
-          .split(" ")
-          .map((word, index) => (
-            <span key={index} className={word === "OPEN" ? "highlight" : ""}>
-              {word}{" "}
-            </span>
-          ))}
+        {servicesSection.attributes.field_title}
       </Typography>
       <Grid container spacing={3}>
         {serviceCards.map((card, index) => (
-          <Grid item xs={12} key={index}>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            key={index}
+            sx={{ display: "flex", justifyContent: "space-around", padding:"10px" }}
+          >
             <CardComponent
               imageUrl={card.imageUrl}
               title={card.attributes.field_card_title}
@@ -54,7 +62,7 @@ const ServiceCardSection = ({ data }) => {
           </Grid>
         ))}
       </Grid>
-    </div>
+    </Container>
   );
 };
 
