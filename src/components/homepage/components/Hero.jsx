@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { CardContent, Typography, Button, Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { setImageUrl } from "../../redux/contentSlice";
-import { fetchImage } from "../../utils/fetchImage";
+import { setImageUrl } from "../../../redux/contentSlice";
+import { fetchImage } from "../../../utils/fetchImage";
 
 const Hero = ({ data }) => {
   const hero = data.included?.find(

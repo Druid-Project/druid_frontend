@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContentData } from "../redux/contentSlice";
 import { Container, Box, Typography, CircularProgress } from "@mui/material";
-import Hero from "../components/homepage/Hero";
-import ServicesSections from "../components/homepage/ServicesSections";
-import Feature from "../components/homepage/Feature";
+import Hero from "../components/homepage/components/Hero";
+import ServicesSections from "../components/homepage/components/ServicesSections";
+import Feature from "../components/homepage/components/Feature";
 const Home = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.content);
