@@ -10,7 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import { Link } from "react-router-dom";
 import druidLogo from "../assets/img/druid_logo.png";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -36,7 +36,7 @@ const Header = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="default">
+      <AppBar position="fixed" color="default">
         <Toolbar>
           <Link to="/">
             <img src={druidLogo} width="100" height="30" alt="Logo" />
@@ -54,7 +54,7 @@ const Header = () => {
       </AppBar>
       <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
         <Box
-          sx={{ width: 250, bgcolor: 'background.paper' }}
+          sx={{ width: 250, bgcolor: "background.paper" }}
           role="presentation"
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
@@ -75,6 +75,6 @@ const Header = () => {
       </Drawer>
     </Box>
   );
-}
+};
 
 export default Header;

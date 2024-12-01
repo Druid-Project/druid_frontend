@@ -1,6 +1,8 @@
 import React from "react";
 import { Container, Row, Col, Nav } from "react-bootstrap";
-import "./Footer.css";
+import "../assets/css/Footer.css";
+import druidLogo from "../assets/img/druid_logo.png";
+import klarna from "../assets/img/klarna.webp";
 
 function Footer() {
   return (
@@ -12,7 +14,7 @@ function Footer() {
         <Row className="align-items-center">
           <Col md={4} className="d-flex align-items-center mb-4 mb-md-0">
             <img
-              src="/src/layout/logo.webp"
+              src={druidLogo}
               alt="Druid Logo"
               className="footer-logo me-3"
             />
@@ -34,11 +36,7 @@ function Footer() {
           </Col>
           <Col md={4} className="text-center mb-4 mb-md-0">
             <p className="fw-bold">partners with</p>
-            <img
-              src="/src/layout/klarna.webp"
-              alt="Klarna Logo"
-              className="partner-logo"
-            />
+            <img src={klarna} alt="Klarna Logo" className="partner-logo" />
           </Col>
           <Col md={4} className="text-center text-md-end">
             <p className="fw-bold">Follow Us</p>

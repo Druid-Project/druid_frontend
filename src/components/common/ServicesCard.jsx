@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, Typography, Box } from "@mui/material";
 import PropTypes from "prop-types";
 import CTAButton from "./CTAButton";
-import "./servicesCard.css"; // Import custom CSS
+import "../../assets/css/servicesCard.css";
 
 const ServicesCard = ({ description, ctaButton, reverse }) => {
   return (
@@ -29,15 +29,6 @@ const ServicesCard = ({ description, ctaButton, reverse }) => {
           <Typography
             variant="body1"
             color="text.primary"
-            sx={{
-              fontFamily: '"Ruluko", sans-serif',
-              fontWeight: 400,
-              fontSize: "20px",
-              textAlign: "left",
-              marginRight: "16px",
-              position: "relative",
-              padding: "16px",
-            }}
             className="services-card-description"
           >
             {description}

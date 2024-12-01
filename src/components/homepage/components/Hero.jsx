@@ -1,16 +1,19 @@
 import React, { useEffect } from "react";
 import { CardContent, Typography, Button, Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { setImageUrl } from "../../redux/homeSlice";
-import { fetchImage } from "../../utils/fetchImage";
+import { setImageUrl } from "../../../redux/contentSlice";
+import { fetchImage } from "../../../utils/fetchImage";
 
-const Hero = ({ hero }) => {
-  const { baseUrl, imageUrl } = useSelector((state) => state.home);
+const Hero = ({ data }) => {
+  const hero = data.included?.find(
+    (item) => item.type === "paragraph--hero_section"
+  );
+  const { baseUrl, imageUrl } = useSelector((state) => state.content);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchBackgroundImage = async () => {
-      if (hero.relationships.field_background_image?.data?.id) {
+      if (hero?.relationships?.field_background_image?.data?.id) {
         const imageId = hero.relationships.field_background_image.data.id;
         console.log("Background image ID:", imageId);
         const imageUrl = await fetchImage(imageId, baseUrl);
@@ -28,7 +31,9 @@ const Hero = ({ hero }) => {
     <Box
       sx={{
         position: "relative",
-        height: "60vh",
+        width: "100vw",
+        maxWidth: "100%",
+        height: "80vh",
         backgroundImage: imageUrl ? `url(${imageUrl})` : "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -37,7 +42,10 @@ const Hero = ({ hero }) => {
         justifyContent: "center",
         color: "#fff",
         textAlign: "center",
-        marginBottom: 0, // Remove bottom margin
+        mb: 4,
+        overflow: "hidden",
+        p: 0,
+        m: 0,
       }}
     >
       <Box
@@ -54,7 +62,7 @@ const Hero = ({ hero }) => {
         <Typography variant="h2" gutterBottom sx={{ fontWeight: "bold" }}>
           {hero.attributes.field_titile}
         </Typography>
-        <Typography variant="h5" sx={{ marginBottom: 3 }}>
+        <Typography variant="h5" sx={{ mb: 3 }}>
           {hero.attributes.field_description}
         </Typography>
         <Button

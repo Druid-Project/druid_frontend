@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import PropTypes from "prop-types";
-import "../../assets/css/cardStyle.css"; // Import custom CSS
+import "../../assets/css/cardStyle.css";
 
 const CardComponent = ({ imageUrl, title, description, ctaButton }) => {
   return (
