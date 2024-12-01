@@ -1,63 +1,79 @@
-// src/pages/Home.jsx
-
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchHomeData } from "../redux/homeSlice";
-import { Container, Typography, Grid } from "@mui/material";
+import { fetchContentData } from "../redux/contentSlice";
+import {
+  Container,
+  Typography,
+  Box,
+  CircularProgress,
+} from "@mui/material";
 import Hero from "../components/homepage/Hero";
 import ServicesSections from "../components/homepage/ServicesSections";
 import Feature from "../components/homepage/Feature";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { data, status, error } = useSelector((state) => state.home);
+  const { data, status, error } = useSelector((state) => state.content);
 
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchHomeData());
+      dispatch(
+        fetchContentData({
+          endpoint: "/node/home",
+          includes:
+            "field_home_page_sections.field_services_section_cards,field_home_page_sections.field_feature_list",
+        })
+      );
     }
-  }, [dispatch, status]);
+  }, [dispatch, data.home, status]);
 
   if (status === "loading") {
-    return <Typography>Loading...</Typography>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (status === "failed") {
-    return <Typography color="error">Error: {error}</Typography>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Typography variant="h6" color="error">
+          Error: {error}
+        </Typography>
+      </Box>
+    );
   }
-
-  if (!data) {
+  const homeData = data?.data?.find((item) => item.type === "node--home");
+  if (!homeData) {
     return <Typography>No data available.</Typography>;
   }
 
   return (
-    <Container style={{ paddingTop: "20px" }}>
-      <Grid container spacing={4}>
-        {data?.included?.map((section) => {
-          switch (section.type) {
-            case "paragraph--hero_section":
-              return (
-                <Grid item xs={12} sm={12} md={12} key={section.id}>
-                  <Hero hero={section} />
-                </Grid>
-              );
-            case "paragraph--our_services_section":
-              return (
-                <Grid item xs={12} key={section.id}>
-                  <ServicesSections section={section} />
-                </Grid>
-              );
-            case "paragraph--feature_section":
-              return (
-                <Grid item xs={12} key={section.id}>
-                  <Feature section={section} />
-                </Grid>
-              );
-            default:
-              return null;
-          }
-        })}
-      </Grid>
+    <Container>
+      <Box>
+        <Hero data={data} />
+      </Box>
+      <Box>
+        <ServicesSections data={data} />
+      </Box>
+      <Box>
+        <Feature data={data} />
+      </Box>
     </Container>
   );
 };
