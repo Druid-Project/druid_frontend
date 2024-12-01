@@ -1,33 +1,25 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContentData } from "../redux/contentSlice";
-import {
-  Container,
-  Typography,
-  Box,
-  CircularProgress,
-} from "@mui/material";
+import { Container, Box, Typography, CircularProgress } from "@mui/material";
 import Hero from "../components/homepage/Hero";
 import ServicesSections from "../components/homepage/ServicesSections";
 import Feature from "../components/homepage/Feature";
-
 const Home = () => {
   const dispatch = useDispatch();
-  const { data, status, error } = useSelector((state) => state.content);
+  const { data, loading, error } = useSelector((state) => state.content);
 
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(
-        fetchContentData({
-          endpoint: "/node/home",
-          includes:
-            "field_home_page_sections.field_services_section_cards,field_home_page_sections.field_feature_list",
-        })
-      );
-    }
-  }, [dispatch, data.home, status]);
+    dispatch(
+      fetchContentData({
+        endpoint: "node/home",
+        includes:
+          "field_home_page_sections.field_services_section_cards,field_home_page_sections.field_feature_list",
+      })
+    );
+  }, [dispatch, data.home]);
 
-  if (status === "loading") {
+  if (loading) {
     return (
       <Box
         sx={{
@@ -42,7 +34,7 @@ const Home = () => {
     );
   }
 
-  if (status === "failed") {
+  if (error) {
     return (
       <Box
         sx={{
@@ -59,12 +51,13 @@ const Home = () => {
     );
   }
   const homeData = data?.data?.find((item) => item.type === "node--home");
+
   if (!homeData) {
     return <Typography>No data available.</Typography>;
   }
 
   return (
-    <Container>
+    <Container disableGutters maxWidth="xl">
       <Box>
         <Hero data={data} />
       </Box>

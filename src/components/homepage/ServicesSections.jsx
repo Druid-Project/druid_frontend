@@ -5,31 +5,45 @@ import { fetchCards } from "../../utils/fetchCards";
 import ServicesCard from "../common/ServicesCard";
 import "./servicesSections.css"; // Import custom CSS
 
-const ServicesSections = ({ section }) => {
-  const { baseUrl } = useSelector((state) => state.home);
+const ServicesSections = ({ data }) => {
+  const { baseUrl } = useSelector((state) => state.content);
   const [serviceCards, setServiceCards] = useState([]);
 
   useEffect(() => {
-    const fetchServiceCards = async () => {
-      const cards = await fetchCards(
-        section,
-        baseUrl,
-        "field_services_section_cards"
-      );
-      setServiceCards(cards);
-    };
+    const servicesSection = data.included?.find(
+      (item) => item.type === "paragraph--our_services_section"
+    );
 
-    fetchServiceCards();
-  }, [section, baseUrl]);
+    if (servicesSection) {
+      const fetchServiceCards = async () => {
+        const cards = await fetchCards(
+          servicesSection,
+          baseUrl,
+          "field_services_section_cards"
+        );
+        setServiceCards(cards);
+      };
+
+      fetchServiceCards();
+    }
+  }, [data, baseUrl]);
+
+  const servicesSection = data.included?.find(
+    (item) => item.type === "paragraph--our_services_section"
+  );
+
+  if (!servicesSection) return null;
 
   return (
     <div className="services-container">
       <Typography variant="h4" gutterBottom className="centered-title">
-        {section.attributes.field_title.split(" ").map((word, index) => (
-          <span key={index} className={word === "OPEN" ? "highlight" : ""}>
-            {word}{" "}
-          </span>
-        ))}
+        {servicesSection.attributes.field_title
+          .split(" ")
+          .map((word, index) => (
+            <span key={index} className={word === "OPEN" ? "highlight" : ""}>
+              {word}{" "}
+            </span>
+          ))}
       </Typography>
       <Grid container spacing={3}>
         {serviceCards.map((card, index) => (

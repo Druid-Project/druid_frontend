@@ -6,21 +6,31 @@ import { fetchCards } from "../../utils/fetchCards";
 import CardComponent from "../common/Card";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./feature.css"; // Import custom CSS
+import "./feature.css";
 
-const Feature = ({ section }) => {
-  const { baseUrl } = useSelector((state) => state.home);
+const Feature = ({ data }) => {
+  const { baseUrl } = useSelector((state) => state.content);
   const [featureCards, setFeatureCards] = useState([]);
   const sliderRef = useRef(null);
 
   useEffect(() => {
-    const fetchFeatureCards = async () => {
-      const cards = await fetchCards(section, baseUrl, "field_feature_list");
-      setFeatureCards(cards);
-    };
+    const featureSection = data.included?.find(
+      (item) => item.type === "paragraph--feature_section"
+    );
 
-    fetchFeatureCards();
-  }, [section, baseUrl]);
+    if (featureSection) {
+      const fetchFeatureCards = async () => {
+        const cards = await fetchCards(
+          featureSection,
+          baseUrl,
+          "field_feature_list"
+        );
+        setFeatureCards(cards);
+      };
+
+      fetchFeatureCards();
+    }
+  }, [data, baseUrl]);
 
   useEffect(() => {
     const handleWheel = (e) => {
@@ -68,10 +78,16 @@ const Feature = ({ section }) => {
     ],
   };
 
+  const featureSection = data.included?.find(
+    (item) => item.type === "paragraph--feature_section"
+  );
+
+  if (!featureSection) return null;
+
   return (
-    <div className="feature-container">
+    <Box className="feature-container">
       <Typography variant="h4" className="text-center p-2" gutterBottom>
-        {section.attributes.field_titile}
+        {featureSection.attributes.field_title}
       </Typography>
       <Slider {...settings} className="custom-slider" ref={sliderRef}>
         {featureCards.map((card, index) => (
@@ -85,7 +101,7 @@ const Feature = ({ section }) => {
           </Box>
         ))}
       </Slider>
-    </div>
+    </Box>
   );
 };
 
