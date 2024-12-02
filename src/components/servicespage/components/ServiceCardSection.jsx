@@ -49,11 +49,11 @@ const ServiceCardSection = ({ data }) => {
           <Grid
             item
             xs={12}
-            md={12}
+            md={6}
             key={index}
             sx={{
               display: "flex",
-              justifyContent: "space-around",
+              justifyContent: "center",
               padding: "10px",
             }}
           >

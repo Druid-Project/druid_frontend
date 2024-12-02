@@ -1,58 +1,67 @@
 import React from "react";
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Typography,
-  Button,
-  Box,
-} from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { Card, CardContent, Typography, Box, ButtonBase } from "@mui/material";
 import PropTypes from "prop-types";
-import CTAButton from "../../common/CTAButton";
 
 const CardComponent = ({ imageUrl, title, description, ctaButton }) => {
-  console.log("CardComponent -> imageUrl", imageUrl);
-
   return (
-    <Card sx={{ display: "flex", maxWidth: "800px", justifyContent:"center", alignItems:"center", borderRadius:"10px" }}>
-      {imageUrl && (
-        <CardMedia
-          component="img"
-          sx={{ width: 100 }}
-          image={imageUrl}
-          alt={title || "Card Image"}
-          className="card-image"
-        />
-      )}
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+        borderRadius: "16px",
+        padding: "24px",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+        transition: "transform 0.3s, box-shadow 0.3s",
+        "&:hover": {
+          transform: "scale(1.05)",
+          boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
+        },
+      }}
+    >
       <Box
+        component="img"
+        src={imageUrl}
+        alt={title}
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          maxWidth: "500px",
-          padding: "10px",
+          width: "64px",
+          height: "64px",
+          marginBottom: "16px",
         }}
-      >
-        <CardContent className="card-content">
-          <Typography variant="h5" component="div" className="card-title">
-            {title}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            className="card-description"
+      />
+      <CardContent>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "bold",
+            marginBottom: "8px",
+            fontSize: "1.25rem",
+          }}
+        >
+          {title}
+        </Typography>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ marginBottom: "16px" }}
+        >
+          {description}
+        </Typography>
+        {ctaButton && (
+          <ButtonBase
+            href={ctaButton.uri}
+            sx={{
+              fontWeight: "bold",
+              textTransform: "none",
+              color: "#0071e3",
+              "&:hover": { textDecoration: "underline" },
+            }}
           >
-            {description}
-          </Typography>
-        </CardContent>
-      </Box>
-
-      {ctaButton && (
-        <CardActions className="card-actions">
-          <CTAButton title={ctaButton.title} url={ctaButton.uri} />
-        </CardActions>
-      )}
+            {ctaButton.title || "Learn More"}
+          </ButtonBase>
+        )}
+      </CardContent>
     </Card>
   );
 };
