@@ -37,6 +37,21 @@ const ConnectCard = ({ data }) => {
     navigate(uri);
   };
 
+  // Parse description into lines and specific fields
+  const descriptionLines = [
+    connectCard.attributes.field_card_description.split("\n")[0], // Address line 1
+    connectCard.attributes.field_card_description.split("\n")[1], // Address line 2
+    connectCard.attributes.field_card_description.split("\n")[2], // Country
+  ];
+
+  const email = connectCard.attributes.field_card_description
+    .split("\n")[3]
+    ?.trim();
+
+  const phone = connectCard.attributes.field_card_description
+    .split("\n")[4]
+    ?.trim();
+
   return (
     <Container sx={{ padding: "2rem 0" }}>
       <Grid container spacing={4} alignItems="center">
@@ -67,12 +82,69 @@ const ConnectCard = ({ data }) => {
           }}
         >
           <Box sx={{ padding: { xs: "1rem", md: "2rem" } }}>
-            <Typography variant="h4" gutterBottom>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: "bold",
+                marginBottom: "1rem",
+                color: "text.primary",
+                fontSize: { xs: "1.8rem", md: "2.2rem" },
+              }}
+            >
               {connectCard.attributes.field_card_title}
             </Typography>
-            <Typography variant="body1" sx={{ marginBottom: "1.5rem" }}>
-              {connectCard.attributes.field_card_description}
-            </Typography>
+
+            {descriptionLines.map((line, index) => (
+              <Typography
+                key={index}
+                variant="body1"
+                sx={{
+                  marginBottom: "0.5rem",
+                  lineHeight: "1.6",
+                  fontSize: "1rem",
+                  color: "text.secondary",
+                }}
+              >
+                {line}
+              </Typography>
+            ))}
+
+            {/* Email */}
+            {email && (
+              <Typography
+                variant="body1"
+                sx={{
+                  marginBottom: "0.5rem",
+                  lineHeight: "1.6",
+                  fontSize: "1rem",
+                  color: "text.secondary",
+                }}
+              >
+                <strong>Email: </strong>
+                <a href={`mailto:${email}`} style={{ color: "#0071e3" }}>
+                  {email}
+                </a>
+              </Typography>
+            )}
+
+            {/* Phone */}
+            {phone && (
+              <Typography
+                variant="body1"
+                sx={{
+                  marginBottom: "0.5rem",
+                  lineHeight: "1.6",
+                  fontSize: "1rem",
+                  color: "text.secondary",
+                }}
+              >
+                <strong>Phone: </strong>
+                <a href={`tel:${phone}`} style={{ color: "#0071e3" }}>
+                  {phone}
+                </a>
+              </Typography>
+            )}
+
             <CTAButton
               uri="#"
               title={
@@ -80,6 +152,17 @@ const ConnectCard = ({ data }) => {
                 "Learn More"
               }
               onClick={handleButtonClick}
+              sx={{
+                marginTop: "2rem",
+                fontSize: "1rem",
+                padding: "0.75rem 1.5rem",
+                borderRadius: "50px",
+                backgroundColor: "#0071e3",
+                color: "#fff",
+                "&:hover": {
+                  backgroundColor: "#005bb5",
+                },
+              }}
             />
           </Box>
         </Grid>
