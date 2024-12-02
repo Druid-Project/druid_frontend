@@ -205,7 +205,7 @@ const About = () => {
           }}
         >
           <img
-            src="/src/layout/About Us.jpg" 
+            src="/src/assets/img/About Us.jpg" 
             alt="Team working"
             style={{
               maxWidth: "100%",
