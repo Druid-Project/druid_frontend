@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import careerImage from "../assets/img/Career-image.jpg"; // Ensure this matches the exact file name and path
+import careerImage from "../assets/img/Career-image.jpg"; 
 
 const Career = () => {
   return (
@@ -83,10 +83,10 @@ const CareerWrapper = styled.div`
 `;
 
 const Hero = styled.section`
-  height: 100vh; /* Full viewport height */
+  height: 100vh; 
   display: flex;
-  align-items: center; /* Center all content horizontally */
-  justify-content: center; /* Center all content vertically */
+  align-items: center; 
+  justify-content: center; 
   padding: 0 20px;
   background-image: url(${careerImage});
   background-size: cover;
@@ -95,45 +95,45 @@ const Hero = styled.section`
 `;
 
 const MainCircle = styled.div`
-  width: 600px; /* Diameter of the main circle */
+  width: 600px; 
   height: 600px;
-  background: rgba(255, 255, 255, 0.1); /* Light transparent background */
-  border-radius: 50%; /* Make it circular */
-  position: relative; /* Allow positioning of internal elements */
-  display: flex; /* Flexbox for content alignment */
-  flex-direction: column; /* Stack title, buttons, and small circle vertically */
-  align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
-  transform: translateX(2%); /* Shift everything slightly to the right */
+  background: rgba(255, 255, 255, 0.1); 
+  border-radius: 50%; 
+  position: relative; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  transform: translateX(2%);
 `;
 
 const Title = styled.h1`
   position: absolute;
-  top: 22%; /* Adjust position within the top part */
-  left: 52%; /* Move slightly to the right */
-  transform: translate(-50%, -50%); /* Perfect centering */
+  top: 22%; 
+  left: 52%; 
+  transform: translate(-50%, -50%); 
   font-size: 28px;
   text-align: center;
   color: #000;
 `;
 
 const SmallCircle = styled.div`
-  width: 200px; /* Diameter of the small circle */
+  width: 200px; 
   height: 200px;
-  background: rgba(255, 255, 255, 0.5); /* Lightly transparent background */
-  border-radius: 50%; /* Make it circular */
-  display: flex; /* Flexbox for content alignment */
-  align-items: center; /* Center text vertically */
-  justify-content: center; /* Center text horizontally */
+  background: rgba(255, 255, 255, 0.5); 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
   position: absolute;
-  top: 50%; /* Center vertically */
-  left: 54%; /* Move slightly to the right */
+  top: 50%; 
+  left: 54%; 
   transform: translate(-50%, -50%);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 
   p {
     text-align: center;
-    font-size: 16px; /* Slightly increase text size */
+    font-size: 16px; 
     color: #333;
     margin: 0;
     padding: 0 10px;
@@ -142,9 +142,9 @@ const SmallCircle = styled.div`
 
 const ButtonContainer = styled.div`
   position: absolute;
-  bottom: 20%; /* Position buttons closer to the bottom of the main circle */
-  left: 52%; /* Shift buttons slightly to the right */
-  transform: translateX(-50%); /* Perfect horizontal centering */
+  bottom: 20%; 
+  left: 52%; 
+  transform: translateX(-50%); 
   display: flex;
   gap: 20px;
   justify-content: center;
