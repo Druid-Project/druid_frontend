@@ -15,7 +15,6 @@ const ConnectCard = ({ data }) => {
       (item) => item.type === "paragraph--connect_with_us"
     );
     if (!connectSection) return;
-
     const connectCardId =
       connectSection.relationships.field_connect_card.data.id;
 

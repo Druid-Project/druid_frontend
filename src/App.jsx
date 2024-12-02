@@ -6,14 +6,31 @@ import Services from "./pages/Services";
 import Blogs from "./pages/Blogs";
 import Career from "./pages/Career";
 import Contact from "./pages/Contact";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import mautic from "./api/mautic_api_services";
 
+// Mautic tracking
+const pageTitle = {
+  "/": "Home",
+  "/about": "About",
+  "/services": "Services",
+  "/blogs": "Blogs",
+  "/career": "Career",
+  "/contact": "Contact",
+};
 
+const title = pageTitle[location.pathname] || "No Title";
+document.title = title;
 
+// Track the page view in the Mautic
+mautic.pageView({
+  path: location.pathname,
+  title: document.title,
+});
 
 const App = () => {
   return (
