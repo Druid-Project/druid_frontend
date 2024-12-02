@@ -6,14 +6,16 @@ const Career = () => {
   return (
     <CareerWrapper>
       <Hero>
-        <Title>For developers by developers</Title>
-        <ButtonContainer>
-          <Button>Contact</Button>
-          <Button>Join</Button>
-        </ButtonContainer>
-        <CircleContainer>
-          <p>Make the world more functional with every line of code.</p>
-        </CircleContainer>
+        <MainCircle>
+          <Title>For developers by developers</Title>
+          <SmallCircle>
+            <p>Make the world more functional with every line of code.</p>
+          </SmallCircle>
+          <ButtonContainer>
+            <Button>Contact</Button>
+            <Button>Join</Button>
+          </ButtonContainer>
+        </MainCircle>
       </Hero>
 
       <ContentSection>
@@ -81,33 +83,71 @@ const CareerWrapper = styled.div`
 `;
 
 const Hero = styled.section`
-  height: 100vh;
-  position: relative;
+  height: 100vh; /* Full viewport height */
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: center; /* Center all content horizontally */
+  justify-content: center; /* Center all content vertically */
   padding: 0 20px;
   background-image: url(${careerImage});
   background-size: cover;
   background-position: center;
-  background-color: #f5f5f5;
+  position: relative;
+`;
+
+const MainCircle = styled.div`
+  width: 600px; /* Diameter of the main circle */
+  height: 600px;
+  background: rgba(255, 255, 255, 0.1); /* Light transparent background */
+  border-radius: 50%; /* Make it circular */
+  position: relative; /* Allow positioning of internal elements */
+  display: flex; /* Flexbox for content alignment */
+  flex-direction: column; /* Stack title, buttons, and small circle vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  transform: translateX(2%); /* Shift everything slightly to the right */
 `;
 
 const Title = styled.h1`
-  font-size: 48px;
-  margin-bottom: 30px;
+  position: absolute;
+  top: 22%; /* Adjust position within the top part */
+  left: 52%; /* Move slightly to the right */
+  transform: translate(-50%, -50%); /* Perfect centering */
+  font-size: 28px;
   text-align: center;
   color: #000;
-  z-index: 2;
+`;
+
+const SmallCircle = styled.div`
+  width: 200px; /* Diameter of the small circle */
+  height: 200px;
+  background: rgba(255, 255, 255, 0.5); /* Lightly transparent background */
+  border-radius: 50%; /* Make it circular */
+  display: flex; /* Flexbox for content alignment */
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 54%; /* Move slightly to the right */
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  p {
+    text-align: center;
+    font-size: 16px; /* Slightly increase text size */
+    color: #333;
+    margin: 0;
+    padding: 0 10px;
+  }
 `;
 
 const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 20%; /* Position buttons closer to the bottom of the main circle */
+  left: 52%; /* Shift buttons slightly to the right */
+  transform: translateX(-50%); /* Perfect horizontal centering */
   display: flex;
   gap: 20px;
-  margin-bottom: 40px;
   justify-content: center;
-  z-index: 2;
 `;
 
 const Button = styled.button`
@@ -120,27 +160,6 @@ const Button = styled.button`
   font-size: 16px;
 `;
 
-const CircleContainer = styled.div`
-  width: 400px;
-  height: 400px;
-  background: rgba(255, 255, 255, 0.2); /* Main circle background */
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-
-  /* Removed all padding and effects to ensure only the big circle remains */
-  p {
-    text-align: center;
-    font-size: 18px;
-    line-height: 1.5;
-    color: #333;
-    max-width: 80%;
-  }
-`;
-
 const ContentSection = styled.section`
   max-width: 800px;
   margin: 0 auto;
@@ -151,7 +170,6 @@ const SectionTitle = styled.h2`
   font-size: 36px;
   color: #000;
   margin-bottom: 40px;
-  font-weight: 500;
 `;
 
 const PerksList = styled.div`
@@ -165,7 +183,6 @@ const PerkItem = styled.div`
 const PerkLabel = styled.span`
   color: #d84315;
   font-weight: 500;
-  margin-right: 8px;
 `;
 
 const JoinSection = styled.div`
@@ -199,8 +216,6 @@ const JobItem = styled.div`
 const JobTitle = styled.h3`
   color: #d84315;
   font-size: 18px;
-  margin-bottom: 8px;
-  font-weight: normal;
 `;
 
 const JobLocation = styled.p`
@@ -216,7 +231,6 @@ const AllJobsButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
-  margin-top: 40px;
 `;
 
 export default Career;
