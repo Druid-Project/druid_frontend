@@ -27,11 +27,11 @@
   animation-delay: 0s;
 }
 
-.campaign-item:nth-child(2) {
+.campaign-item:nth-child(1) {
   animation-delay: 10s; /* Delay to start after the first item completes */
 }
 
-.campaign-item:nth-child(3) {
+.campaign-item:nth-child(2) {
   animation-delay: 20s; /* Delay to start after the second item completes */
 }
 
@@ -43,4 +43,3 @@
   width: 100%;
   z-index: 99;
 }
-

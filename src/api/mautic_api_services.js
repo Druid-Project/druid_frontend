@@ -1,7 +1,6 @@
 import mautic from "mautic-tracking";
+import { mauticBaseUrl } from "../config";
 
-const mauticSiteUrl = import.meta.env.VITE_MAUTIC_HOST_URL;
-
-mautic.initialize(`${mauticSiteUrl}/mtc.js`);
+mautic.initialize(`${mauticBaseUrl}/mtc.js`);
 
 export default mautic;

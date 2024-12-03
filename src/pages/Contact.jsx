@@ -1,12 +1,23 @@
 import React from "react";
-import { Container, Typography, TextField, Button, Box, Grid, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Grid,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
-
+import MauticForm from "../components/mautic/MauticForm";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -35,7 +46,7 @@ const Contact = () => {
         style={{
           marginBottom: "1rem",
           fontWeight: 700,
-          color: "#d10000", 
+          color: "#d10000",
         }}
       >
         Get in <span style={{ color: "#000" }}>Touch</span>
@@ -75,7 +86,9 @@ const Contact = () => {
               variant="outlined"
             />
             <FormControl fullWidth margin="normal">
-              <InputLabel id="how-did-you-find-us">How did you find us?</InputLabel>
+              <InputLabel id="how-did-you-find-us">
+                How did you find us?
+              </InputLabel>
               <Select
                 labelId="how-did-you-find-us"
                 id="how-did-you-find-us"
@@ -110,7 +123,9 @@ const Contact = () => {
               marginTop: "1rem",
             }}
           >
-            <Box style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <Box
+              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            >
               <Box
                 style={{
                   width: "40px",
@@ -132,7 +147,9 @@ const Contact = () => {
                 (Mon-Fri 9-17)
               </Typography>
             </Box>
-            <Box style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <Box
+              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            >
               <Box
                 style={{
                   width: "40px",
@@ -197,6 +214,7 @@ const Contact = () => {
           </Box>
         </Grid>
       </Grid>
+      <MauticForm />
     </Container>
   );
 };
