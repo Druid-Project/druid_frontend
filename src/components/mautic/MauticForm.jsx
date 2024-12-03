@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Container, Typography, Box, Grid, Button } from "@mui/material";
 import "./MauticForm.css";
 
 const MauticForm = () => {
@@ -30,10 +31,8 @@ const MauticForm = () => {
       const doc = parser.parseFromString(html, "text/html");
 
       // Ensure messages are repositioned without altering form layout
-      const messageDiv = doc.getElementById(
-        "mauticform_mauticcontactform_message"
-      );
-      const errorDiv = doc.getElementById("mauticform_mauticcontactform_error");
+      const messageDiv = doc.getElementById("mauticform_contactform_message");
+      const errorDiv = doc.getElementById("mauticform_contactform_error");
 
       if (messageDiv) {
         messageDiv.style.display = "none";
@@ -61,14 +60,12 @@ const MauticForm = () => {
     const handleFormSubmit = (event) => {
       event.preventDefault();
       const form = event.target;
-      if (!form.matches("#mauticform_mauticcontactform")) return;
+      if (!form.matches("#mauticform_contactform")) return;
 
       const messageDiv = document.getElementById(
-        "mauticform_mauticcontactform_message"
+        "mauticform_contactform_message"
       );
-      const errorDiv = document.getElementById(
-        "mauticform_mauticcontactform_error"
-      );
+      const errorDiv = document.getElementById("mauticform_contactform_error");
 
       // Simulate server response
       const response = {
@@ -136,21 +133,32 @@ const MauticForm = () => {
     return () => {
       document.removeEventListener("submit", handleFormSubmit);
       const scriptTag = document.querySelector(
-        `script[src="${mauticUrl}/media/js/mautic-form.js"]`
+        `script[src="${mauticUrl}/media/js/mautic-form.js?v775035ad"]`
       );
-      if (scriptTag) scriptTag.remove();
+      if (scriptTag) {
+        scriptTag.remove();
+      }
     };
-  }, [mauticUrl]);
-
-  if (isLoading) {
-    return <div>Loading form...</div>;
-  }
+  }, []);
 
   return (
-    <div
-      className="mauticform-container"
-      dangerouslySetInnerHTML={{ __html: formHtml }}
-    />
+    <Container>
+      <Typography variant="h4" align="center" sx={{ fontWeight: 700 }}>
+        Contact Us
+      </Typography>
+      <Box>
+        {isLoading ? (
+          <Typography variant="body1" align="center">
+            Loading...
+          </Typography>
+        ) : (
+          <div
+            className="mauticform_wrapper"
+            dangerouslySetInnerHTML={{ __html: formHtml }}
+          />
+        )}
+      </Box>
+    </Container>
   );
 };
 
