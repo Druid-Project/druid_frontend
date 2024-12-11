@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/form": {
-        target: "https://druid-mautic.lndo.site",
+        target: "https://mautic-lando.lndo.site/",
         changeOrigin: true, // This modifies the origin of the request
         secure: false, // Use this if Mautic is using self-signed certificates
         rewrite: (path) => path.replace(/^\/form/, ""),

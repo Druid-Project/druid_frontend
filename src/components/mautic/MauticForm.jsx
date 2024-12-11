@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Container, Typography, Box, Grid, Button } from "@mui/material";
+import { Container, Typography, Box } from "@mui/material";
 import "./MauticForm.css";
+import { mauticBaseUrl } from "../../config";
 
 const MauticForm = () => {
-  const mauticUrl = import.meta.env.VITE_MAUTIC_HOST_URL;
   const [formHtml, setFormHtml] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,10 +18,10 @@ const MauticForm = () => {
         window.MauticSDKLoaded = true;
         const script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = `${mauticUrl}/media/js/mautic-form.js?v775035ad`;
+        script.src = `${mauticBaseUrl}/media/js/mautic-form.js?v775035ad`;
         script.async = true;
         script.onload = () => resolve();
-        script.onerror = () => reject();
+        script.onerror = () => reject(new Error("Failed to load Mautic script"));
         document.head.appendChild(script);
       });
     };
@@ -62,9 +62,7 @@ const MauticForm = () => {
       const form = event.target;
       if (!form.matches("#mauticform_contactform")) return;
 
-      const messageDiv = document.getElementById(
-        "mauticform_contactform_message"
-      );
+      const messageDiv = document.getElementById("mauticform_contactform_message");
       const errorDiv = document.getElementById("mauticform_contactform_error");
 
       // Simulate server response
@@ -89,9 +87,7 @@ const MauticForm = () => {
       }
 
       // Ensure the message container stays within its allocated space
-      const messagesContainer = document.querySelector(
-        ".mauticform-messages-container"
-      );
+      const messagesContainer = document.querySelector(".mauticform-messages-container");
       if (messagesContainer) {
         messagesContainer.scrollIntoView({
           behavior: "smooth",
@@ -104,14 +100,12 @@ const MauticForm = () => {
       try {
         const response = await fetch("/mautic-form.html");
         const data = await response.text();
-        const updatedHtml = modifyFormHtml(
-          data.replace(/http:\/\/localhost:\d+/g, mauticUrl)
-        );
+        const updatedHtml = modifyFormHtml(data.replace(/http:\/\/localhost:\d+/g, mauticBaseUrl));
         setFormHtml(updatedHtml);
 
         await loadMauticScript();
 
-        window.MauticDomain = mauticUrl;
+        window.MauticDomain = mauticBaseUrl;
         window.MauticLang = { submittingMessage: "Wait..." };
 
         if (window.MauticSDK) {
@@ -132,9 +126,7 @@ const MauticForm = () => {
 
     return () => {
       document.removeEventListener("submit", handleFormSubmit);
-      const scriptTag = document.querySelector(
-        `script[src="${mauticUrl}/media/js/mautic-form.js?v775035ad"]`
-      );
+      const scriptTag = document.querySelector(`script[src="${mauticBaseUrl}/media/js/mautic-form.js?v775035ad"]`);
       if (scriptTag) {
         scriptTag.remove();
       }
@@ -152,10 +144,7 @@ const MauticForm = () => {
             Loading...
           </Typography>
         ) : (
-          <div
-            className="mauticform_wrapper"
-            dangerouslySetInnerHTML={{ __html: formHtml }}
-          />
+          <div className="mauticform_wrapper" dangerouslySetInnerHTML={{ __html: formHtml }} />
         )}
       </Box>
     </Container>
