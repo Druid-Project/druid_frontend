@@ -3,7 +3,7 @@ import { Box, Typography, Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { setImageUrl } from "../../../redux/contentSlice";
 import { fetchImage } from "../../../utils/fetchImage";
-
+import { sendMtcIdToBackend } from "../../../api/mautic_api_services"; // Ensure this path is correct
 const Hero = ({ data }) => {
   const hero = data.included?.find(
     (item) => item.type === "paragraph--hero_section"
@@ -22,6 +22,17 @@ const Hero = ({ data }) => {
       }
     };
 
+    const sendMTCData = () => {
+      sendMtcIdToBackend()
+        .then((data) => {
+          console.log("Segment data:", data);
+        })
+        .catch((error) => {
+          console.error("Failed to send mtc_id:", error);
+        });
+    };
+
+    sendMTCData();
     fetchBackgroundImage();
   }, [hero, baseUrl, dispatch]);
 
@@ -91,6 +102,7 @@ const Hero = ({ data }) => {
             marginX: "auto",
           }}
         >
+
           {hero.attributes.field_description}
         </Typography>
         {hero.attributes.field_cta_button && (
