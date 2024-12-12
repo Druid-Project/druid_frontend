@@ -18,7 +18,7 @@ const MauticForm = () => {
         window.MauticSDKLoaded = true;
         const script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = `${mauticBaseUrl}/media/js/mautic-form.js?v775035ad`;
+        script.src = `${mauticBaseUrl}/media/js/mautic-form.js?vf9b8e99a`;
         script.async = true;
         script.onload = () => resolve();
         script.onerror = () => reject(new Error("Failed to load Mautic script"));
@@ -126,7 +126,7 @@ const MauticForm = () => {
 
     return () => {
       document.removeEventListener("submit", handleFormSubmit);
-      const scriptTag = document.querySelector(`script[src="${mauticBaseUrl}/media/js/mautic-form.js?v775035ad"]`);
+      const scriptTag = document.querySelector(`script[src="${mauticBaseUrl}/media/js/mautic-form.js?vf9b8e99a"]`);
       if (scriptTag) {
         scriptTag.remove();
       }

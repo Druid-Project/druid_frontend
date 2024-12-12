@@ -6,7 +6,6 @@ import Hero from "../components/homepage/components/Hero";
 import ServicesSections from "../components/homepage/components/ServicesSections";
 import Feature from "../components/homepage/components/Feature";
 import CampaignList from "../campaign/CampaignList";
-import Campaign from "../campaign/Campaign";
 
 const Home = () => {
   const dispatch = useDispatch();
