@@ -1,221 +1,88 @@
-import React from 'react';
-import { Container, Typography, Box, Card, Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import ViewInArOutlinedIcon from '@mui/icons-material/ViewInArOutlined';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-
-// Styled components
-const StyledCard = styled(Card)({
-  padding: '25px',
-  borderRadius: '12px',
-  display: 'flex',
-  alignItems: 'center',
-  backgroundColor: 'white',
-  boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.05)',
-  transition: 'transform 0.2s ease-in-out',
-  width: '100%',
-  maxWidth: '1000px',
-  '&:hover': {
-    transform: 'translateY(-4px)',
-    boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.1)',
-  },
-});
-
-const IconBox = styled(Box)({
-  width: '48px',
-  height: '48px',
-  borderRadius: '50%',
-  backgroundColor: '#FF5733',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginRight: '24px',
-});
-
-const ReadMoreButton = styled(Button)({
-  backgroundColor: '#FF5733',
-  color: 'white',
-  borderRadius: '20px',
-  padding: '8px 20px',
-  '&:hover': {
-    backgroundColor: '#E64A2E',
-  },
-});
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchContentData } from "../redux/contentSlice";
+import { Container, Box, Typography, CircularProgress } from "@mui/material";
+import AboutSections from "../components/about/AboutSections";
 
 const About = () => {
+  const dispatch = useDispatch();
+  const { data, loading, error } = useSelector((state) => state.content);
 
+  // Fetch content data when the component mountsgit add .
+  useEffect(() => {
+    dispatch(
+      fetchContentData({
+        endpoint: "node/about",
+        includes:
+          "field_about_page_sections,field_about_page_sections.field_services_section_cards,field_about_page_sections.field_card_image",
+      })
+    );
+  }, [dispatch]);
 
-  const cards = [
-    { icon: <ViewInArOutlinedIcon sx={{ color: 'white' }} />, text: 'We are a regulated software house working with complex projects including payments and regulated environments.' },
-    { icon: <ViewInArOutlinedIcon sx={{ color: 'white' }} />, text: 'A trusted technological partner, here to help all of clients for the best.' },
-    { icon: <ViewInArOutlinedIcon sx={{ color: 'white' }} />, text: 'A knowledge-first approach.' },
-    { icon: <ViewInArOutlinedIcon sx={{ color: 'white' }} />, text: 'High-quality, tested solution.' },
-    { icon: <ViewInArOutlinedIcon sx={{ color: 'white' }} />, text: 'Focus on long-term partnerships.' },
-    { icon: <ViewInArOutlinedIcon sx={{ color: 'white' }} />, text: "A company that's been ever-developing new products." }
-  ];
-
-  return (
-    <>
+  // Loading state
+  if (loading) {
+    return (
       <Box
         sx={{
-          backgroundColor: "#f6f6f6",
-          py: 6,
-          px: 2,
-          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
         }}
       >
-        <Typography
-          variant="h4"
-          component="h1"
-          sx={{
-            fontWeight: "bold",
-            color: "#000",
-            textAlign: "center",
-            mb: 5,
-          }}
-        >
-          Open source. Open attitude.
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Typography variant="h6" color="error" sx={{ textAlign: "center" }}>
+          Something went wrong. <br />
+          {error}
         </Typography>
-
-        <Box>
-          {cards.map((card, index) => (
-            <Box
-              key={index}
-              sx={{
-                display: "flex",
-                justifyContent: index % 2 === 0 ? "flex-start" : "flex-end",
-                mb: 4,
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "1.5rem",
-                  borderRadius: 2,
-                  width: "100%",
-                  maxWidth: "600px",
-                  backgroundColor: "#fff",
-                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                }}
-              >
-                <Box
-                  sx={{
-                    backgroundColor: "#d10000",
-                    width: 60,
-                    height: 60,
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    mr: 3,
-                  }}
-                >
-                  {card.icon}
-                </Box>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    flex: 1,
-                    color: "#333",
-                    textAlign: "center",
-                    lineHeight: "1.5rem",
-                  }}
-                >
-                  {card.text}
-                </Typography>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#d10000",
-                    color: "#fff",
-                    textTransform: "none",
-                    borderRadius: "1rem",
-                    padding: "0.5rem 1rem",
-                    ml: 3,
-                    "&:hover": {
-                      backgroundColor: "#a80000",
-                    },
-                  }}
-                  endIcon={<ArrowForwardIcon />}
-                >
-                  Read More
-                </Button>
-              </Box>
-            </Box>
-          ))}
-        </Box>
       </Box>
+    );
+  }
+
+  // No data available
+  const aboutData = data?.data?.find((item) => item.type === "node--about");
+
+  if (!aboutData) {
+    return (
       <Box
         sx={{
-          backgroundColor: "#fff",
-          py: 6,
-          px: 2,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          textAlign: "center",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 4,
-            mb: 4,
-          }}
-        >
-          <Typography
-            variant="h4"
-            component="h2"
-            sx={{
-              fontFamily: "'Port Lligat Slab', serif",
-              fontWeight: "bold",
-              lineHeight: "1.5",
-              fontSize: "2rem", 
-              color: "#333",
-              whiteSpace: "pre-line",
-              textAlign: "center",
-            }}
-          >
-            {"We design and implement\nhigh-quality digital\nsolutions with passion and\ntechnological expertise."}
-          </Typography>
-          
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#d10000",
-              color: "#fff",
-              textTransform: "none",
-              borderRadius: "1rem",
-              padding: "0.5rem 1.5rem",
-              "&:hover": {
-                backgroundColor: "#a80000",
-              },
-            }}
-            endIcon={<ArrowForwardIcon />}
-          >
-            Read More
-          </Button>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <img
-            src="/src/assets/img/About Us.jpg" 
-            alt="Team working"
-            style={{
-              maxWidth: "100%",
-              borderRadius: "8px",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-            }}
-          />
-        </Box>
+        <Typography variant="h6">
+          No data available for the About page. Please check back later.
+        </Typography>
       </Box>
-    </>
+    );
+  }
+
+  // Main content
+  return (
+    <Container disableGutters maxWidth="xl">
+      <Typography variant="h2" sx={{ textAlign: "center", marginBottom: 4 }}>
+        About Us
+      </Typography>
+      <AboutSections data={data} />
+    </Container>
   );
 };
 
