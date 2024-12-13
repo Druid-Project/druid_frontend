@@ -10,7 +10,7 @@ const ServicesSections = ({ data }) => {
   const servicesSection = data.included?.find(
     (item) => item.type === "paragraph--our_services_section"
   );
-  const serviceCards = useFetchCards(servicesSection, baseUrl, "field_services_section_cards");
+  const serviceCards = useFetchCards(servicesSection, "field_services_section_cards");
 
   if (!servicesSection) return null;
 

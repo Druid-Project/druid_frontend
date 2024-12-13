@@ -13,7 +13,7 @@ const Feature = ({ data }) => {
   const featureSection = data.included?.find(
     (item) => item.type === "paragraph--feature_section"
   );
-  const featureCards = useFetchCards(featureSection, baseUrl, "field_feature_list");
+  const featureCards = useFetchCards(featureSection, "field_feature_list");
   const sliderRef = useRef(null);
 
   useEffect(() => {
