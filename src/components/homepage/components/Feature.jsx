@@ -1,36 +1,20 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Typography, Box } from "@mui/material";
 import Slider from "react-slick";
-import { fetchCards } from "../../../utils/fetchCards";
 import CardComponent from "../../common/Card";
+import useFetchCards from "../../../hooks/useFetchCards";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../css/feature.css";
 
 const Feature = ({ data }) => {
   const { baseUrl } = useSelector((state) => state.content);
-  const [featureCards, setFeatureCards] = useState([]);
+  const featureSection = data.included?.find(
+    (item) => item.type === "paragraph--feature_section"
+  );
+  const featureCards = useFetchCards(featureSection, baseUrl, "field_feature_list");
   const sliderRef = useRef(null);
-
-  useEffect(() => {
-    const featureSection = data.included?.find(
-      (item) => item.type === "paragraph--feature_section"
-    );
-
-    if (featureSection) {
-      const fetchFeatureCards = async () => {
-        const cards = await fetchCards(
-          featureSection,
-          baseUrl,
-          "field_feature_list"
-        );
-        setFeatureCards(cards);
-      };
-
-      fetchFeatureCards();
-    }
-  }, [data, baseUrl]);
 
   useEffect(() => {
     const handleWheel = (e) => {
@@ -77,10 +61,6 @@ const Feature = ({ data }) => {
       },
     ],
   };
-
-  const featureSection = data.included?.find(
-    (item) => item.type === "paragraph--feature_section"
-  );
 
   if (!featureSection) return null;
 

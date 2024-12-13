@@ -12,7 +12,7 @@ export const sendMtcIdToBackend = async () => {
 
   if (!mtcId) {
     console.error("No mtc_id available to send");
-    return null;
+    return [];
   }
 
   console.log("Sending MTC ID:", mtcId);
@@ -37,7 +37,20 @@ export const sendMtcIdToBackend = async () => {
     );
 
     console.log("mtc_id logged successfully:", response.data);
-    return response.data;
+
+    // Fetch the segment based on mtc_id
+    const segmentResponse = await axios.get(
+      `${drupalBaseUrl}/api/mautic-contacts/mtc_id/segments`
+    );
+
+    // Process the backend response
+    const { total, lists } = segmentResponse.data;
+    console.log("Segments data:", segmentResponse.data);
+    if (total > 0) {
+      return Object.values(lists).map(list => list.name);
+    }
+
+    return [];
   } catch (error) {
     if (error.response) {
       console.error("Backend responded with an error:", {

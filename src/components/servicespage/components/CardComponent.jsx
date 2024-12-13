@@ -39,7 +39,7 @@ const CardComponent = ({ imageUrl, title, description, ctaButton }) => {
             fontSize: "1.25rem",
           }}
         >
-          {title}
+          {title || "Default Title"}
         </Typography>
         <Typography
           variant="body2"

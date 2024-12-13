@@ -1,35 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Typography, Grid, Box } from "@mui/material";
+import React from "react";
+import { Typography, Grid } from "@mui/material";
 import { useSelector } from "react-redux";
-import { fetchCards } from "../../../utils/fetchCards";
 import ServicesCard from "../../common/ServicesCard";
+import useFetchCards from "../../../hooks/useFetchCards";
 import "../css/servicesSections.css";
+
 const ServicesSections = ({ data }) => {
   const { baseUrl } = useSelector((state) => state.content);
-  const [serviceCards, setServiceCards] = useState([]);
-
-  useEffect(() => {
-    const servicesSection = data.included?.find(
-      (item) => item.type === "paragraph--our_services_section"
-    );
-
-    if (servicesSection) {
-      const fetchServiceCards = async () => {
-        const cards = await fetchCards(
-          servicesSection,
-          baseUrl,
-          "field_services_section_cards"
-        );
-        setServiceCards(cards);
-      };
-
-      fetchServiceCards();
-    }
-  }, [data, baseUrl]);
-
   const servicesSection = data.included?.find(
     (item) => item.type === "paragraph--our_services_section"
   );
+  const serviceCards = useFetchCards(servicesSection, baseUrl, "field_services_section_cards");
 
   if (!servicesSection) return null;
 

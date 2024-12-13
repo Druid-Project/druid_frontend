@@ -1,33 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { fetchCards } from "../../../utils/fetchCards";
 import { Container, Grid, Typography } from "@mui/material";
-import CardComponent from "./CardComponet";
+import CardComponent from "./CardComponent";
+import useFetchCards from "../../../hooks/useFetchCards";
 
 const ServiceCardSection = ({ data }) => {
   const { baseUrl } = useSelector((state) => state.content);
-  const [serviceCards, setServiceCards] = useState([]);
-
-  useEffect(() => {
-    const servicesSection = data.included?.find(
-      (item) => item.type === "paragraph--our_services_section"
-    );
-    if (servicesSection) {
-      const fetchServiceCards = async () => {
-        const cards = await fetchCards(
-          servicesSection,
-          baseUrl,
-          "field_services_section_cards"
-        );
-        setServiceCards(cards);
-      };
-      fetchServiceCards();
-    }
-  }, [data, baseUrl]);
-
   const servicesSection = data.included?.find(
     (item) => item.type === "paragraph--our_services_section"
   );
+  const serviceCards = useFetchCards(servicesSection, baseUrl, "field_services_section_cards");
 
   if (!servicesSection) return null;
 
@@ -59,7 +42,7 @@ const ServiceCardSection = ({ data }) => {
           >
             <CardComponent
               imageUrl={card.imageUrl}
-              title={card.attributes.field_card_title}
+              title={card.attributes.field_card_title || "Default Title"}
               description={card.attributes.field_card_description}
               ctaButton={card.attributes.field_card_cta_button}
             />
@@ -68,6 +51,10 @@ const ServiceCardSection = ({ data }) => {
       </Grid>
     </Container>
   );
+};
+
+ServiceCardSection.propTypes = {
+  data: PropTypes.object.isRequired,
 };
 
 export default ServiceCardSection;

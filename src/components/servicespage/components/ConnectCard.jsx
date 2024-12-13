@@ -2,29 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container, Box, Typography, Grid, Button } from "@mui/material";
-import { fetchCardDetails } from "../../../utils/fetchCards";
 import CTAButton from "../../common/CTAButton";
+import useFetchCardDetails from "../../../hooks/useFetchCardDetails";
 
 const ConnectCard = ({ data }) => {
-  const [connectCard, setConnectCard] = useState(null);
   const { baseUrl } = useSelector((state) => state.content);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const connectSection = data.included?.find(
-      (item) => item.type === "paragraph--connect_with_us"
-    );
-    if (!connectSection) return;
-    const connectCardId =
-      connectSection.relationships.field_connect_card.data.id;
-
-    const fetchCard = async () => {
-      const card = await fetchCardDetails(connectCardId, baseUrl);
-      setConnectCard(card);
-    };
-
-    fetchCard();
-  }, [data, baseUrl]);
+  const connectSection = data.included?.find(
+    (item) => item.type === "paragraph--connect_with_us"
+  );
+  const connectCardId = connectSection?.relationships.field_connect_card.data.id;
+  const connectCard = useFetchCardDetails(connectCardId, baseUrl);
 
   if (!connectCard) return null;
 
