@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContentData } from "../redux/contentSlice";
-import { Box, CircularProgress, Container, Typography } from "@mui/material";
-import ServicesHero from "../components/servicespage/components/ServicesHero";
+import { Box, Container, Typography } from "@mui/material";
+import Hero from "../components/common/Hero"; // Import the reusable component
 import ServiceCardSection from "../components/servicespage/components/ServiceCardSection";
 import ConnectCard from "../components/servicespage/components/ConnectCard";
+import Loading from "../components/common/Loading";
+import Error from "../components/common/Error";
 
 const Services = () => {
   const dispatch = useDispatch();
@@ -17,40 +19,12 @@ const Services = () => {
           "field_services.field_connect_card,field_services,field_services.field_background_image,field_services.field_services_section_cards",
       })
     );
-  }, [dispatch, data.services]);
+  }, [dispatch]);
   console.log("Services -> data", data);
 
-  if (loading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
+  if (loading) return <Loading />;
+  if (error) return <Error message={`Error: ${error}`} />;
 
-  if (error) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <Typography variant="h6" color="error">
-          Error: {error}
-        </Typography>
-      </Box>
-    );
-  }
   const servicesData = data?.data?.find(
     (item) => item.type === "node--services"
   );
@@ -61,7 +35,7 @@ const Services = () => {
   return (
     <Container disableGutters maxWidth="xl">
       <Box>
-        <ServicesHero data={data} />
+        <Hero data={data} />
       </Box>
       <Box>
         <ServiceCardSection data={data} />

@@ -15,6 +15,17 @@ export const fetchContentData = createAsyncThunk(
   }
 );
 
+// Async thunk to fetch taxonomy term data
+export const fetchTaxonomyTermData = createAsyncThunk(
+  "content/fetchTaxonomyTerm",
+  async (taxonomyTermId) => {
+    const response = await axios.get(
+      `${baseUrl}/jsonapi/taxonomy_term/mautic_segments/${taxonomyTermId}`
+    );
+    return response.data;
+  }
+);
+
 const contentSlice = createSlice({
   name: "content",
   initialState: {
@@ -23,6 +34,7 @@ const contentSlice = createSlice({
     error: null,
     imageUrl: null,
     baseUrl: baseUrl,
+    taxonomyTerm: null,
   },
   reducers: {
     setImageUrl: (state, action) => {
@@ -42,6 +54,9 @@ const contentSlice = createSlice({
       .addCase(fetchContentData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(fetchTaxonomyTermData.fulfilled, (state, action) => {
+        state.taxonomyTerm = action.payload.data.attributes.name;
       });
   },
 });
