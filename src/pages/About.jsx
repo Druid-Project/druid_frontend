@@ -9,6 +9,7 @@ import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
 import useFetchCardDetails from "../hooks/useFetchCardDetails";
 import { baseUrl } from "../config";
+import ParagraphCard from "../components/homepage/components/ParagraphCard";
 
 const About = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,9 @@ const About = () => {
   // Set card ID
   useEffect(() => {
     const card = data.included?.find(
-      (item) => item.type === "paragraph--card" && item.id === "3517aa5f-e382-405e-90a1-0da107113bfb"
+      (item) =>
+        item.type === "paragraph--card" &&
+        item.id === "3517aa5f-e382-405e-90a1-0da107113bfb"
     );
     if (card) {
       setCardId(card.id);
@@ -80,57 +83,85 @@ const About = () => {
   return (
     <Container disableGutters maxWidth="xl">
       {heroSection && <Hero data={{ included: [heroSection] }} />}
+      <Feature data={data} />
       {paragraphCard && (
-        <Box sx={{ margin: "2rem 0", alignItems: "center", display:"flex", flexDirection:"column" }}>
-          {paragraphCard.imageUrl && (
+        // <ParagraphCard paragraphCard={paragraphCard} />
+        <Container disableGutters maxWidth="xl">
+          <Box
+            sx={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "60vh",
+              backgroundImage: `url(${paragraphCard.imageUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              color: "#fff",
+            }}
+          >
+            {/* Background Blur */}
             <Box
-              component="img"
-              src={paragraphCard.imageUrl}
-              alt={paragraphCard.attributes.field_card_title}
               sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
                 width: "100%",
-                maxWidth: "700px",
-                height: "auto",
-                borderRadius: "12px",
-                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                marginBottom: "1rem",
+                height: "100%",
+                backdropFilter: "blur(8px)",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                zIndex: 1,
               }}
             />
-            
-            
-          )
-          
-          }
-          <Typography variant="h4" gutterBottom>
-            {paragraphCard.attributes.field_card_title}
-          </Typography>
-          <Typography variant="body1" paragraph>
-            {paragraphCard.attributes.field_card_description}
-          </Typography>
-          {paragraphCard.attributes.field_card_cta_button && (
-            <Button
-              variant="contained"
-              href={paragraphCard.attributes.field_card_cta_button.uri.replace(
-                "internal:",
-                ""
-              )}
+
+            {/* Content */}
+            <Box
               sx={{
-                marginTop: "1rem",
-                padding: "0.75rem 1.5rem",
-                borderRadius: "50px",
-                backgroundColor: "#0071e3",
-                color: "#fff",
-                "&:hover": {
-                  backgroundColor: "#005bb5",
-                },
+                position: "relative",
+                zIndex: 2,
+                padding: "2rem",
+                background: "rgba(255, 255, 255, 0.1)",
+                borderRadius: "12px",
+                backdropFilter: "blur(12px)",
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+                maxWidth: "700px",
+                textAlign: "center",
               }}
             >
-              {paragraphCard.attributes.field_card_cta_button.title || "Learn More"}
-            </Button>
-          )}
-        </Box>
+              <Typography variant="h4" gutterBottom>
+                {paragraphCard.attributes.field_card_title}
+              </Typography>
+              <Typography variant="body1" paragraph>
+                {paragraphCard.attributes.field_card_description}
+              </Typography>
+              {paragraphCard.attributes.field_card_cta_button && (
+                <Button
+                  variant="contained"
+                  href={paragraphCard.attributes.field_card_cta_button.uri.replace(
+                    "internal:",
+                    ""
+                  )}
+                  sx={{
+                    marginTop: "1rem",
+                    padding: "0.75rem 1.5rem",
+                    borderRadius: "30px",
+                    backgroundColor: "#fff",
+                    color: "#333",
+                    fontWeight: 500,
+                    "&:hover": {
+                      backgroundColor: "#ddd",
+                    },
+                  }}
+                >
+                  {paragraphCard.attributes.field_card_cta_button.title ||
+                    "Learn More"}
+                </Button>
+              )}
+            </Box>
+          </Box>
+        </Container>
       )}
-      <Feature data={data} />
       <ConnectCard data={data} />
     </Container>
   );
