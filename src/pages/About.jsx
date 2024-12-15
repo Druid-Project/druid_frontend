@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchContentData } from "../redux/contentSlice";
 import { Container, Box, Typography, Button } from "@mui/material";
 import Hero from "../components/common/Hero"; // Import the reusable component
-import Feature from "../components/homepage/components/Feature";
+import Feature from "../components/about/Feature";
 import ConnectCard from "../components/servicespage/components/ConnectCard";
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
@@ -81,7 +81,7 @@ const About = () => {
     <Container disableGutters maxWidth="xl">
       {heroSection && <Hero data={{ included: [heroSection] }} />}
       {paragraphCard && (
-        <Box sx={{ margin: "2rem 0", alignItems: "center", display:"flex", flexDirection:"column-reverse" }}>
+        <Box sx={{ margin: "2rem 0", alignItems: "center", display:"flex", flexDirection:"column" }}>
           {paragraphCard.imageUrl && (
             <Box
               component="img"
