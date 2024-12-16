@@ -24,6 +24,7 @@ const Card = ({
 }) => {
   const isServicesVariant = variant === "services";
   const isParagraphVariant = variant === "paragraph";
+  const isCardComponentVariant = variant === "cardComponent"; // New variant
 
   return (
     <MuiCard
@@ -31,7 +32,7 @@ const Card = ({
         reverse ? "reverse" : ""
       } ${isServicesVariant ? "services-card-horizontal" : ""} ${
         isParagraphVariant ? "paragraph-card" : ""
-      }`}
+      } ${isCardComponentVariant ? "card-component" : ""}`} // Apply new variant class
       sx={{
         display: "flex",
         flexDirection: layout === "horizontal" ? "row" : "column",
@@ -47,8 +48,9 @@ const Card = ({
           image={imageUrl}
           alt="Card image"
           sx={{
-            width: layout === "horizontal" ? "50%" : "100%",
-            height: layout === "horizontal" ? "auto" : "200px",
+            width: isCardComponentVariant ? "100px" : layout === "horizontal" ? "50%" : "100%",
+            height: isCardComponentVariant ? "100px" : layout === "horizontal" ? "auto" : "200px",
+            marginBottom: isCardComponentVariant ? "16px" : "0",
           }}
         />
       )}
@@ -71,6 +73,8 @@ const Card = ({
                 ? "services-card-description"
                 : isParagraphVariant
                 ? "paragraph-card-description"
+                : isCardComponentVariant
+                ? "card-component-description"
                 : ""
             }
           >
