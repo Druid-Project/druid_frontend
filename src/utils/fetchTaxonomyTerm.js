@@ -7,14 +7,13 @@ export const fetchTaxonomyTerms = async (dispatch, taxonomyTermIds) => {
   }
 
   try {
-    const promises = taxonomyTermIds.map(async (id) => {
-      const response = await dispatch(fetchTaxonomyTermData(id));
-      return { id, name: response.payload.data.attributes.name };
-    });
-
-    const terms = await Promise.all(promises);
+    const terms = await Promise.all(
+      taxonomyTermIds.map(async (id) => {
+        const response = await dispatch(fetchTaxonomyTermData(id));
+        return { id, name: response.payload.data.attributes.name };
+      })
+    );
     console.log("Fetched taxonomy terms:", terms);
-    
     return terms;
   } catch (error) {
     console.error("Failed to fetch taxonomy terms:", error);
