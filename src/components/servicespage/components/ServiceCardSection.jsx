@@ -66,7 +66,7 @@ const ServiceCardSection = ({ data }) => {
                 padding: "0 !important",
                 textAlign: "center",
               }}
-              variant="cardComponent" // Use new variant
+              variant="servicecard" // Use the new servicecard variant
             />
           </Grid>
         ))}

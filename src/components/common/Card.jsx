@@ -6,7 +6,7 @@ import {
   Button,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import CommonCardContent from "./CommonCardContent"; // Import the common content component
+
 import "../../assets/css/servicesCard.css";
 
 const Card = ({
@@ -16,11 +16,11 @@ const Card = ({
   layout = "horizontal",
   reverse = false,
   customStyles = {},
-  contentStyles = {},
   variant = "default",
 }) => {
   const isServicesVariant = variant === "services";
   const isCardComponentVariant = variant === "cardComponent";
+  const isServiceCardVariant = variant === "servicecard";
 
   return (
     <MuiCard
@@ -28,7 +28,9 @@ const Card = ({
         reverse ? "reverse" : ""
       } ${isServicesVariant ? "services-card-horizontal" : ""} ${
         isServicesVariant && reverse ? "services-card-horizontal.reverse" : ""
-      } ${isCardComponentVariant ? "card-component" : ""}`}
+      } ${isCardComponentVariant ? "card-component" : ""} ${
+        isServiceCardVariant ? "service-card" : ""
+      }`}
       sx={{
         display: "flex",
         flexDirection: layout === "horizontal" ? "row" : "column",
@@ -46,15 +48,19 @@ const Card = ({
           sx={{
             width: isCardComponentVariant
               ? "100px"
+              : isServiceCardVariant
+              ? "80px"
               : layout === "horizontal"
               ? "50%"
               : "100%",
             height: isCardComponentVariant
               ? "100px"
+              : isServiceCardVariant
+              ? "80px"
               : layout === "horizontal"
               ? "auto"
               : "200px",
-            marginBottom: isCardComponentVariant ? "16px" : "0",
+            marginBottom: isCardComponentVariant || isServiceCardVariant ? "16px" : "0",
           }}
         />
       )}
@@ -62,9 +68,9 @@ const Card = ({
         sx={{
           flex: 1,
           display: "flex",
-          flexDirection: reverse ? "row-reverse" : "row",
+          flexDirection: isServiceCardVariant ? "column" : reverse ? "row-reverse" : "row",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: isServiceCardVariant ? "center" : "space-between",
           padding: "16px",
           position: "relative",
         }}
@@ -72,19 +78,22 @@ const Card = ({
         <Box
           sx={{
             flex: 1,
-            paddingRight: reverse ? "0" : "16px",
-            paddingLeft: reverse ? "16px" : "0",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            padding: "16px",
           }}
         >
           <Typography
             variant="body1"
             paragraph
-            className={isServicesVariant ? "services-card-description" : ""}
+            className={isServicesVariant || isServiceCardVariant ? "services-card-description" : ""}
           >
             {description}
           </Typography>
         </Box>
-        <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+        <Box sx={{ display: "flex",flex:isServicesVariant ? "1": "0"  , justifyContent: "center", marginTop: isServiceCardVariant ? "auto" : "0" }}>
           {ctaButton && (
             <Button
               variant="contained"
