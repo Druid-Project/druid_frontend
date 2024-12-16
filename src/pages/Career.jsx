@@ -42,7 +42,7 @@ const Career = () => {
         }}
       >
         <Typography variant="h6">
-          No data available for the homepage. Please check back later.
+          No data available for this page. Please check back later.
         </Typography>
       </Box>
     );
@@ -51,7 +51,8 @@ const Career = () => {
   // Main content
   return (
     <Container disableGutters maxWidth="xl">
-      <Hero data={data} />
+              {/* Hero section */}
+              <Hero data={data} /> 
       
     </Container>
   );
