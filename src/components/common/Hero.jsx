@@ -1,14 +1,17 @@
 import React, { useEffect, useMemo } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-// import { fetchImage } from "../../../utils/fetchImage";
 import { fetchImage } from "../../utils/fetchImage";
 import { filterMatchedHeroes } from "../../utils/mauticUtils";
 
 const Hero = ({ data }) => {
-  const heroSections = useMemo(() => data.included?.filter(
-    (item) => item.type === "paragraph--hero_section"
-  ) || [], [data.included]);
+  const heroSections = useMemo(
+    () =>
+      data.included?.filter(
+        (item) => item.type === "paragraph--hero_section"
+      ) || [],
+    [data.included]
+  );
 
   const { baseUrl } = useSelector((state) => state.content);
   const dispatch = useDispatch();
@@ -17,17 +20,32 @@ const Hero = ({ data }) => {
 
   useEffect(() => {
     const fetchBackgroundImage = async (hero) => {
-      if (hero?.relationships?.field_background_image?.data?.id) {
-        const imageId = hero.relationships.field_background_image.data.id;
-        const imageUrl = await fetchImage(imageId, baseUrl);
-        if (imageUrl) {
-          setImages((prevImages) => ({ ...prevImages, [hero.id]: imageUrl }));
+      const backgroundImageData =
+        hero?.relationships?.field_background_image?.data;
+      if (backgroundImageData) {
+        const imageId = Array.isArray(backgroundImageData)
+          ? backgroundImageData[0]?.id
+          : backgroundImageData.id;
+        if (imageId) {
+          const imageUrl = await fetchImage(imageId, baseUrl);
+          console.log("Fetched background image URL:", imageUrl); // Add this line
+          if (imageUrl) {
+            setImages((prevImages) => {
+              const newImages = { ...prevImages, [hero.id]: imageUrl };
+              console.log("Updated images state:", newImages); // Add this line
+              return newImages;
+            });
+          }
         }
       }
     };
 
     const filterHeroes = async () => {
-      const matched = await filterMatchedHeroes(heroSections, baseUrl, fetchBackgroundImage);
+      const matched = await filterMatchedHeroes(
+        heroSections,
+        dispatch,
+        fetchBackgroundImage
+      );
       setMatchedHeroes(matched);
     };
 
@@ -47,7 +65,9 @@ const Hero = ({ data }) => {
             position: "relative",
             width: "100%",
             height: { xs: "500px", md: "750px" },
-            backgroundImage: `url(${images[hero.id] || ''})`,
+            backgroundImage: `url(${
+              images && images[hero.id] ? images[hero.id] : ""
+            })`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             display: "flex",

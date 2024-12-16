@@ -1,47 +1,60 @@
-import { sendMtcIdToBackend } from "../api/mautic_api_services"; // Import the function
+import { sendMtcIdToBackend } from "../api/mautic_api_services";
 import { fetchTaxonomyTerms } from "./fetchTaxonomyTerm";
 
 // Function to fetch taxonomy terms
-export const fetchTerms = async (hero, baseUrl) => {
-  const taxonomyTermIds = hero?.relationships?.field_visible_to?.data?.map(term => term.id) || [];
-  const terms = await fetchTaxonomyTerms(baseUrl, taxonomyTermIds);
-  const termNames = terms.map(term => term.name);
-  console.log('Taxonomy term list', termNames);
-  return termNames;
+export const fetchTerms = async (heroSections, dispatch) => {
+  const termsWithIds = await Promise.all(heroSections.map(async (hero) => {
+    const taxonomyTermIds = hero?.relationships?.field_visible_to?.data?.map(term => term.id) || [];
+    const terms = await fetchTaxonomyTerms(dispatch, taxonomyTermIds);
+    const termNames = terms.map(term => term.name);
+    return { id: hero.id, termNames };
+  }));
+  console.log('Terms with IDs:', termsWithIds);
+  return termsWithIds;
 };
 
 // Function to match segments and terms
-export const matchSegmentsAndTerms = async (hero, baseUrl) => {
-  const segmentNames = await sendMtcIdToBackend();
-  if (!Array.isArray(segmentNames)) {
-    console.error("Expected segmentNames to be an array, but got:", segmentNames);
-    return false;
-  }
-  const termNames = await fetchTerms(hero, baseUrl);
-  const matchedNames = segmentNames.filter(name => termNames.includes(name));
-  console.log('Matched names:', matchedNames);
-  return matchedNames.length > 0;
+export const matchSegmentsAndTerms = async (termsWithIds, segmentNames) => {
+  const matchedHeroes = termsWithIds.filter(({ termNames }) => {
+    const matchedNames = segmentNames.filter(name => termNames.includes(name));
+    return matchedNames.length > 0;
+  });
+  console.log('Matched heroes:', matchedHeroes);
+  return matchedHeroes.map(({ id }) => id);
 };
 
 // Function to filter matched heroes
-export const filterMatchedHeroes = async (heroSections, baseUrl, fetchBackgroundImage) => {
-  const matched = [];
-  for (const hero of heroSections) {
-    const isMatched = await matchSegmentsAndTerms(hero, baseUrl);
-    if (isMatched) {
-      matched.push(hero);
-      fetchBackgroundImage(hero);
-    }
+export const filterMatchedHeroes = async (heroSections, dispatch, fetchBackgroundImage) => {
+  const segmentNames = await sendMtcIdToBackend();
+  if (!Array.isArray(segmentNames)) {
+    console.error("Expected segmentNames to be an array, but got:", segmentNames);
+    return [];
   }
 
-  if (matched.length === 0) {
+  const termsWithIds = await fetchTerms(heroSections, dispatch);
+  const matchedHeroIds = await matchSegmentsAndTerms(termsWithIds, segmentNames);
+
+  const matchedHeroes = heroSections.filter(hero => matchedHeroIds.includes(hero.id));
+  matchedHeroes.forEach(hero => fetchBackgroundImage(hero));
+
+  if (matchedHeroes.length === 0) {
     const fallbackHeroes = heroSections.filter(hero => {
       const termNames = hero.relationships.field_visible_to?.data?.map(term => term.name) || [];
       return termNames.length === 0 || termNames.includes("visitor");
     });
-    fallbackHeroes.forEach(hero => fetchBackgroundImage(hero));
-    return fallbackHeroes;
+
+    if (fallbackHeroes.length > 0) {
+      fallbackHeroes.forEach(hero => fetchBackgroundImage(hero));
+      return fallbackHeroes;
+    } else {
+      // If no "visitor" hero section is found, return the first hero section as a fallback
+      const firstHero = heroSections[0];
+      if (firstHero) {
+        fetchBackgroundImage(firstHero);
+        return [firstHero];
+      }
+    }
   } else {
-    return matched;
+    return matchedHeroes;
   }
 };

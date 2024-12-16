@@ -1,4 +1,6 @@
-export const fetchTaxonomyTerms = async (baseUrl, taxonomyTermIds) => {
+import { fetchTaxonomyTermData } from "../redux/contentSlice";
+
+export const fetchTaxonomyTerms = async (dispatch, taxonomyTermIds) => {
   if (!Array.isArray(taxonomyTermIds)) {
     console.error("taxonomyTermIds should be an array");
     return [];
@@ -6,14 +8,13 @@ export const fetchTaxonomyTerms = async (baseUrl, taxonomyTermIds) => {
 
   try {
     const promises = taxonomyTermIds.map(async (id) => {
-      const response = await fetch(
-        `${baseUrl}/jsonapi/taxonomy_term/mautic_segments/${id}`
-      );
-      const result = await response.json();
-      return { id, name: result.data.attributes.name };
+      const response = await dispatch(fetchTaxonomyTermData(id));
+      return { id, name: response.payload.data.attributes.name };
     });
 
     const terms = await Promise.all(promises);
+    console.log("Fetched taxonomy terms:", terms);
+    
     return terms;
   } catch (error) {
     console.error("Failed to fetch taxonomy terms:", error);
