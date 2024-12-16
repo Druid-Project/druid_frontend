@@ -5,101 +5,99 @@ import {
   CardContent,
   CardActions,
   Typography,
-  Button,
-  ButtonBase,
+  Box,
 } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import PropTypes from "prop-types";
-import "../../assets/css/cardStyle.css";
+import CTAButton from "./CTAButton";
+import "../../assets/css/servicesCard.css";
 
 const Card = ({
   imageUrl,
-  title,
   description,
   ctaButton,
-  layout = "vertical",
+  layout = "horizontal",
   reverse = false,
   customStyles = {},
   contentStyles = {},
-  imageStyles = {},
   actionsStyles = {},
+  variant = "default", // Add variant prop
 }) => {
+  const isServicesVariant = variant === "services";
+  const isParagraphVariant = variant === "paragraph";
+
   return (
     <MuiCard
       className={`custom-card ${layout === "horizontal" ? "horizontal" : ""} ${
         reverse ? "reverse" : ""
+      } ${isServicesVariant ? "services-card-horizontal" : ""} ${
+        isParagraphVariant ? "paragraph-card" : ""
       }`}
       sx={{
         display: "flex",
         flexDirection: layout === "horizontal" ? "row" : "column",
-        alignItems: "center",
-        textAlign: layout === "horizontal" ? "left" : "center",
-        borderRadius: "16px",
-        padding: "24px",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-        transition: "transform 0.3s, box-shadow 0.3s",
-        "&:hover": {
-          transform: "scale(1.05)",
-          boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
-        },
+        width: "100%",
+        boxShadow: isServicesVariant ? "none" : "0 2px 8px rgba(0,0,0,0.1)",
+        backgroundColor: isServicesVariant ? "transparent" : "#fff",
         ...customStyles,
       }}
     >
       {imageUrl && (
         <CardMedia
           component="img"
-          height="200"
           image={imageUrl}
-          alt={title || "Card Image"}
-          className="card-image"
+          alt="Card image"
           sx={{
             width: layout === "horizontal" ? "50%" : "100%",
             height: layout === "horizontal" ? "auto" : "200px",
-            ...imageStyles,
           }}
         />
       )}
-      <CardContent className="card-content" sx={contentStyles}>
-        <Typography variant="h5" component="div" className="card-title">
-          {title}
-        </Typography>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          className="card-description"
-        >
-          {description}
-        </Typography>
-      </CardContent>
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "16px",
+          position: "relative",
+        }}
+      >
+        <CardContent sx={{ padding: "0 !important", ...contentStyles }}>
+          <Typography
+            variant="body1"
+            color="text.primary"
+            className={
+              isServicesVariant
+                ? "services-card-description"
+                : isParagraphVariant
+                ? "paragraph-card-description"
+                : ""
+            }
+          >
+            {description}
+          </Typography>
+        </CardContent>
+      </Box>
       {ctaButton && (
-        <CardActions className="card-actions" sx={actionsStyles}>
-          {layout === "horizontal" ? (
-            <ButtonBase
-              href={ctaButton.uri}
-              sx={{
-                fontWeight: "bold",
-                textTransform: "none",
-                color: "#0071e3",
-                "&:hover": { textDecoration: "underline" },
-              }}
-            >
-              {ctaButton.title || "Learn More"}
-            </ButtonBase>
-          ) : (
-            <Button size="small" href={ctaButton.uri} className="cta-button">
-              {ctaButton.title}
-              <ArrowForwardIcon className="arrow-icon" />
-            </Button>
-          )}
-        </CardActions>
+        <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "16px",
+            ...actionsStyles,
+          }}
+        >
+          <CTAButton uri={ctaButton.uri} title={ctaButton.title} />
+        </Box>
       )}
     </MuiCard>
   );
 };
 
 Card.propTypes = {
-  imageUrl: PropTypes.string,
-  title: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string, // Add imageUrl prop type
   description: PropTypes.string.isRequired,
   ctaButton: PropTypes.shape({
     uri: PropTypes.string,
@@ -109,8 +107,8 @@ Card.propTypes = {
   reverse: PropTypes.bool,
   customStyles: PropTypes.object,
   contentStyles: PropTypes.object,
-  imageStyles: PropTypes.object,
   actionsStyles: PropTypes.object,
+  variant: PropTypes.string, // Add variant prop type
 };
 
 export default Card;

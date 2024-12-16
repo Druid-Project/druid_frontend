@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContentData } from "../redux/contentSlice";
-import { Container, Box, Typography, Button } from "@mui/material";
+import { Container, Box, Typography } from "@mui/material";
 import Hero from "../components/common/Hero"; // Import the reusable component
 import Feature from "../components/about/Feature";
 import ConnectCard from "../components/servicespage/components/ConnectCard";
@@ -9,7 +9,7 @@ import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
 import useFetchCardDetails from "../hooks/useFetchCardDetails";
 import { baseUrl } from "../config";
-import ParagraphCard from "../components/homepage/components/ParagraphCard";
+import HeroCard from "../components/common/HeroCard"; // Import the HeroCard component
 
 const About = () => {
   const dispatch = useDispatch();
@@ -85,82 +85,12 @@ const About = () => {
       {heroSection && <Hero data={{ included: [heroSection] }} />}
       <Feature data={data} />
       {paragraphCard && (
-        // <ParagraphCard paragraphCard={paragraphCard} />
-        <Container disableGutters maxWidth="xl">
-          <Box
-            sx={{
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "60vh",
-              backgroundImage: `url(${paragraphCard.imageUrl})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              color: "#fff",
-            }}
-          >
-            {/* Background Blur */}
-            <Box
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                backdropFilter: "blur(8px)",
-                backgroundColor: "rgba(0, 0, 0, 0.5)",
-                zIndex: 1,
-              }}
-            />
-
-            {/* Content */}
-            <Box
-              sx={{
-                position: "relative",
-                zIndex: 2,
-                padding: "2rem",
-                background: "rgba(255, 255, 255, 0.1)",
-                borderRadius: "12px",
-                backdropFilter: "blur(12px)",
-                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-                maxWidth: "700px",
-                textAlign: "center",
-              }}
-            >
-              <Typography variant="h4" gutterBottom>
-                {paragraphCard.attributes.field_card_title}
-              </Typography>
-              <Typography variant="body1" paragraph>
-                {paragraphCard.attributes.field_card_description}
-              </Typography>
-              {paragraphCard.attributes.field_card_cta_button && (
-                <Button
-                  variant="contained"
-                  href={paragraphCard.attributes.field_card_cta_button.uri.replace(
-                    "internal:",
-                    ""
-                  )}
-                  sx={{
-                    marginTop: "1rem",
-                    padding: "0.75rem 1.5rem",
-                    borderRadius: "30px",
-                    backgroundColor: "#fff",
-                    color: "#333",
-                    fontWeight: 500,
-                    "&:hover": {
-                      backgroundColor: "#ddd",
-                    },
-                  }}
-                >
-                  {paragraphCard.attributes.field_card_cta_button.title ||
-                    "Learn More"}
-                </Button>
-              )}
-            </Box>
-          </Box>
-        </Container>
+        <HeroCard
+          title={paragraphCard.attributes.field_card_title}
+          description={paragraphCard.attributes.field_card_description}
+          ctaButton={paragraphCard.attributes.field_card_cta_button}
+          imageUrl={paragraphCard.imageUrl}
+        />
       )}
       <ConnectCard data={data} />
     </Container>

@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { Typography, Box, Card, CardMedia, CardContent } from "@mui/material";
+import { Typography, Box } from "@mui/material";
+import Card from "../common/Card";
 import useFetchCards from "../../hooks/useFetchCards";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 
 const Feature = ({ data }) => {
   const { baseUrl } = useSelector((state) => state.content);
@@ -47,13 +47,14 @@ const Feature = ({ data }) => {
             marginBottom: "3rem",
           }}
         >
-          <Box
-            sx={{
+          <Card
+            title={card.attributes.field_card_title}
+            description={card.attributes.field_card_title}
+            customStyles={{
               flex: 1,
               height: "200px",
               borderRadius: "12px",
               backgroundColor: "#ffoooo",
-              backgroundImage: `url(${baseUrl}${card.attributes.field_card_image?.uri.url || 'Not found'})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
@@ -61,14 +62,12 @@ const Feature = ({ data }) => {
               alignItems: "center",
               justifyContent: "center",
             }}
-          >
-            <Typography
-              variant="h5"
-              sx={{ fontWeight: "bold", color: "#1d1d1f", textAlign: "center" }}
-            >
-              {card.attributes.field_card_title}
-            </Typography>
-          </Box>
+            contentStyles={{
+              textAlign: "center",
+              color: "#1d1d1f",
+              fontWeight: "bold",
+            }}
+          />
           <Typography
             variant="body1"
             sx={{

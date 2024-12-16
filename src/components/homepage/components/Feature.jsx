@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Typography, Box } from "@mui/material";
 import Slider from "react-slick";
-import CardComponent from "../../common/Card";
+import HeroCard from "../../common/HeroCard";
 import useFetchCards from "../../../hooks/useFetchCards";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -72,11 +72,11 @@ const Feature = ({ data }) => {
       <Slider {...settings} className="custom-slider" ref={sliderRef}>
         {featureCards.map((card, index) => (
           <Box key={index} className="slider-item">
-            <CardComponent
-              imageUrl={card.imageUrl}
+            <HeroCard
               title={card.attributes.field_card_title}
               description={card.attributes.field_card_description}
               ctaButton={card.attributes.field_card_cta_button}
+              imageUrl={card.imageUrl}
             />
           </Box>
         ))}
