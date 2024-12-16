@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Card from "../../common/Card"; // Import the Card component
 import useFetchCards from "../../../hooks/useFetchCards";
 import "../css/servicesSections.css";
+import '../../../assets/css/servicesCard.css';
 
 const ServicesSections = ({ data }) => {
   const { baseUrl } = useSelector((state) => state.content);
@@ -29,6 +30,7 @@ const ServicesSections = ({ data }) => {
         {serviceCards.map((card, index) => (
           <Grid item xs={12} key={index}>
             <Card
+              imageUrl={card.imageUrl}
               description={card.attributes.field_card_description}
               ctaButton={card.attributes.field_card_cta_button}
               layout="horizontal"
