@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { fetchImage } from "../../../utils/fetchImage";
 import { baseUrl } from "../../../config";
 import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
 
 const BlogCard = ({ blog }) => {
-  const { title, body, field_date } = blog.attributes;
+  const navigate = useNavigate();
+  const { title, body, field_date, path } = blog.attributes;
   const authorId = blog.relationships.field_author.data.id;
   const heroImageId = blog.relationships.field_hero_image.data.id;
 
   const [imageUrl, setImageUrl] = useState("");
 
   const author = useSelector((state) =>
-    state.content.data.included.find(
+    state.content.data?.included?.find(
       (item) => item.id === authorId && item.type === "user--user"
     )
   );
@@ -31,8 +33,13 @@ const BlogCard = ({ blog }) => {
   const formattedDate = new Date(field_date).toLocaleDateString();
   const formattedTime = new Date(field_date).toLocaleTimeString();
 
+  const handleCardClick = () => {
+    navigate(`/blogs/${blog.id}`);
+  };
+
   return (
     <Card
+      onClick={handleCardClick}
       sx={{
         width: 500, // Fixed width for uniformity
         height: 550, // Fixed height for uniformity

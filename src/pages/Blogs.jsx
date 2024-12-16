@@ -3,15 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchContentData } from "../redux/contentSlice";
 import BlogCard from "../components/blogspage/components/BlogCard";
 import { Box, Container, Grid, Typography } from "@mui/material";
-
+import { baseUrl } from "../config";
 const Blogs = () => {
   const dispatch = useDispatch();
 
-  // Access blogs from the Redux store
   const { data: blogs, loading, error } = useSelector((state) => state.content);
 
   useEffect(() => {
-    // Dispatch an action to fetch blogs
     dispatch(
       fetchContentData({
         endpoint: "node/blogs",
@@ -34,7 +32,11 @@ const Blogs = () => {
         >
           Blogs
         </Typography>
-        <Typography variant="body1" sx={{ textAlign: "center" }} gutterBottom>
+        <Typography
+          variant="body1"
+          sx={{ textAlign: "center" }}
+          gutterBottom
+        >
           What's on the minds of druids? Our writings on the subject and beyond
           – our everyday life, our culture, and the world of software
           development.
@@ -44,7 +46,7 @@ const Blogs = () => {
         {blogs.data &&
           blogs.data.map((blog) => (
             <Grid item xs={12} sm={6} md={6} key={blog.id}>
-              <BlogCard blog={blog} included={blogs.included} />
+              <BlogCard blog={blog} />
             </Grid>
           ))}
       </Grid>

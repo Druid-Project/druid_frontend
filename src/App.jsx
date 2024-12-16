@@ -6,6 +6,7 @@ import Services from "./pages/Services";
 import Blogs from "./pages/Blogs";
 import Career from "./pages/Career";
 import Contact from "./pages/Contact";
+import SingleBlog from "./components/blogspage/components/SingleBlog";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -37,15 +38,13 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route>
-            {/* This is where other routes will go to allow Layout to be visible everywhere */}
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/blogs" element={<Blogs />} />
-            <Route path="/career" element={<Career />} />
-            <Route path="/contact" element={<Contact />} />
-          </Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:blogId" element={<SingleBlog />} />
+          <Route path="/career" element={<Career />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
       </Routes>
     </BrowserRouter>
