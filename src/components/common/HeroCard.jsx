@@ -1,6 +1,6 @@
+import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import PropTypes from "prop-types";
-import CommonCardContent from "./CommonCardContent"; // Import the common content component
 
 const HeroCard = ({ title, description, ctaButton, imageUrl }) => {
   return (
@@ -33,11 +33,8 @@ const HeroCard = ({ title, description, ctaButton, imageUrl }) => {
       />
 
       {/* Content */}
-      <CommonCardContent
-        title={title}
-        description={description}
-        ctaButton={ctaButton}
-        containerStyles={{
+      <Box
+        sx={{
           position: "relative",
           zIndex: 2,
           padding: "2rem",
@@ -51,20 +48,35 @@ const HeroCard = ({ title, description, ctaButton, imageUrl }) => {
           display: "flex",
           flexDirection: "column",
         }}
-        buttonStyles={{
-          marginTop: "1rem",
-          padding: "0.75rem 1.5rem",
-          borderRadius: "30px",
-          backgroundColor: "#ffffff9a",
-          color: "#333",
-          fontWeight: 500,
-          "&:hover": {
-            backgroundColor: "#ddd",
-          },
-          maxWidth: "200px",
-          alignSelf: "center",
-        }}
-      />
+      >
+        <Typography variant="h4" gutterBottom>
+          {title}
+        </Typography>
+        <Typography variant="body1" paragraph sx={{ flexGrow: 1 }}>
+          {description}
+        </Typography>
+        {ctaButton && (
+          <Button
+            variant="contained"
+            href={ctaButton.uri.replace("internal:", "")}
+            sx={{
+              marginTop: "1rem",
+              padding: "0.75rem 1.5rem",
+              borderRadius: "30px",
+              backgroundColor: "#ffffff88",
+              color: "#333",
+              fontWeight: 500,
+              "&:hover": {
+                backgroundColor: "#ddd",
+              },
+              maxWidth: "200px",
+              alignSelf: "center",
+            }}
+          >
+            {ctaButton.title || "Learn More"}
+          </Button>
+        )}
+      </Box>
     </Box>
   );
 };
