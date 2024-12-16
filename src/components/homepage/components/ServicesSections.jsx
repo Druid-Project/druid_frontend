@@ -15,7 +15,7 @@ const ServicesSections = ({ data }) => {
   if (!servicesSection) return null;
 
   return (
-    <div className="services-container">
+    <div className="services-container" >
       <Typography variant="h4" gutterBottom className="centered-title">
         {servicesSection.attributes.field_title
           .split(" ")

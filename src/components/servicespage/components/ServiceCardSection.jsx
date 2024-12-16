@@ -21,10 +21,10 @@ const ServiceCardSection = ({ data }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        paddingBottom: "50px",
+        padding: "50px",
       }}
     >
-      <Typography variant="h4" gutterBottom className="centered-title">
+      <Typography variant="h4" gutterBottom className="centered-title" sx={{padding:"10px"}} >
         {servicesSection.attributes.field_title}
       </Typography>
       <Grid container spacing={3}>
