@@ -42,15 +42,17 @@ const HeroCard = ({ title, description, ctaButton, imageUrl }) => {
           borderRadius: "12px",
           backdropFilter: "blur(12px)",
           boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-          minHeight: "30vh",
+          minHeight: "40vh",
           maxWidth: "700px",
           textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <Typography variant="h4" gutterBottom>
           {title}
         </Typography>
-        <Typography variant="body1" paragraph>
+        <Typography variant="body1" paragraph sx={{ flexGrow: 1 }}>
           {description}
         </Typography>
         {ctaButton && (
@@ -61,12 +63,14 @@ const HeroCard = ({ title, description, ctaButton, imageUrl }) => {
               marginTop: "1rem",
               padding: "0.75rem 1.5rem",
               borderRadius: "30px",
-              backgroundColor: "#fff",
+              backgroundColor: "#ffffff9a",
               color: "#333",
               fontWeight: 500,
               "&:hover": {
                 backgroundColor: "#ddd",
               },
+              maxWidth: "200px",
+              alignSelf: "center",
             }}
           >
             {ctaButton.title || "Learn More"}
