@@ -43,4 +43,3 @@ flowchart TB
   - The Mautic API returns the segment data (e.g., "users", "premium") based on the `mtc_id` from the frontend.
 
 ---
-
