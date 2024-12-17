@@ -17,8 +17,6 @@ export const sendMtcIdToBackend = async () => {
     return [];
   }
 
-  console.log("Sending MTC ID:", mtcId);
-
   try {
     const response = await axios.post(
       `${mauticContactsApiUrl}/mtc_id`, // Use centralized URL
@@ -38,8 +36,6 @@ export const sendMtcIdToBackend = async () => {
       }
     );
 
-    console.log("mtc_id logged successfully:", response.data);
-
     // Fetch the segment based on mtc_id
     const segmentResponse = await axios.get(
       `${mauticContactsApiUrl}/mtc_id/segments` // Use centralized URL
@@ -47,9 +43,8 @@ export const sendMtcIdToBackend = async () => {
 
     // Process the backend response
     const { total, lists } = segmentResponse.data;
-    console.log("Segments data:", segmentResponse.data);
     if (total > 0) {
-      return Object.values(lists).map(list => list.name);
+      return Object.values(lists).map((list) => list.name);
     }
 
     return [];
@@ -67,7 +62,6 @@ export const sendMtcIdToBackend = async () => {
     throw error;
   }
 };
-
 
 export default mautic;
 

@@ -12,13 +12,11 @@ const fetchTerms = async (heroSections, dispatch) => {
       return { id: hero.id, termNames: terms.map((term) => term.name) };
     })
   );
-  console.log("Terms with IDs:", termsWithIds);
   return termsWithIds;
 };
 
 // Function to match segments and terms
 const matchSegmentsAndTerms = (termsWithIds, segmentNames) => {
-  console.log("Segment names:", segmentNames);
   return termsWithIds
     .filter(({ termNames }) =>
       segmentNames.some((name) => termNames.includes(name))
@@ -34,10 +32,7 @@ export const filterMatchedHeroes = async (
 ) => {
   const segmentNames = await sendMtcIdToBackend();
   if (!Array.isArray(segmentNames)) {
-    console.error(
-      "Expected segmentNames to be an array, but got:",
-      segmentNames
-    );
+    console.error("Expected segmentNames to be an array, but got:", segmentNames);
     return [];
   }
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPersonalizedContent } from "../../redux/mauticSlice";
-import { Box, CircularProgress, Alert } from "@mui/material";
-import Card from "./Card"; // Import the new Card component
+import { Box, CircularProgress, Alert, Typography } from "@mui/material";
+import Card from "./Card";
 
 const DynamicContent = () => {
   const dispatch = useDispatch();
@@ -17,10 +17,17 @@ const DynamicContent = () => {
   }, [dispatch]);
 
   const renderContent = useMemo(() => {
+    if (!contact || !Object.keys(personalizedContent).length) {
+      return (
+        <Typography variant="body1" sx={{ textAlign: "center", marginTop: 2 }}>
+          No personalized content available.
+        </Typography>
+      );
+    }
+
     const placeholders = {
-      "contactfield=lastname": contact?.fields?.core?.lastname?.value || "User", // Use contact's last name or a default value
+      "contactfield=lastname": contact?.fields?.core?.lastname?.value || "User",
       "ownerfield=position": contact?.fields?.core?.position?.value || "Manager",
-      // Add more placeholders as needed
     };
 
     return Object.values(personalizedContent).map((content) => (

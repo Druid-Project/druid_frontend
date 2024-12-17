@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import { Card as MuiCard, CardContent, Typography, Box } from "@mui/material";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
@@ -6,7 +6,6 @@ import parse from "html-react-parser";
 const Card = ({ content, placeholders }) => {
   let sanitizedContent = DOMPurify.sanitize(content.content);
 
-  // Replace placeholders with actual data
   Object.keys(placeholders).forEach((key) => {
     const regex = new RegExp(`{${key}}`, "g");
     sanitizedContent = sanitizedContent.replace(regex, placeholders[key]);
@@ -14,7 +13,7 @@ const Card = ({ content, placeholders }) => {
 
   const parser = new DOMParser();
   const doc = parser.parseFromString(sanitizedContent, "text/html");
-  const paragraphs = doc.querySelectorAll("p"); // Extract all <p> elements
+  const paragraphs = doc.querySelectorAll("p");
 
   return (
     <MuiCard key={content.id} sx={{ marginBottom: 4, boxShadow: 3 }}>
@@ -36,6 +35,15 @@ const Card = ({ content, placeholders }) => {
       </CardContent>
     </MuiCard>
   );
+};
+
+Card.propTypes = {
+  content: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+  }).isRequired,
+  placeholders: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default Card;

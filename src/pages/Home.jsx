@@ -8,6 +8,7 @@ import Feature from "../components/homepage/components/Feature";
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
 import DyanamicContents from "../components/mautic/DynamicContent";
+
 const Home = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.content);

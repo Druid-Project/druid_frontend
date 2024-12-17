@@ -1,13 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { mauticContactsApiUrl } from "../config"; // Import centralized URL
+import { mauticContactsApiUrl } from "../config";
 
-// Async thunk to fetch personalized content data
 export const fetchPersonalizedContent = createAsyncThunk(
   "mautic/fetchPersonalizedContent",
   async () => {
     const response = await axios.get(`${mauticContactsApiUrl}/personalized-content`);
-    return response.data; // Adjust to match the new structure
+    return response.data;
   }
 );
 
