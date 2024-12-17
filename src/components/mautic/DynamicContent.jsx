@@ -6,8 +6,10 @@ import Card from "./Card"; // Import the new Card component
 
 const DynamicContent = () => {
   const dispatch = useDispatch();
-  const { personalizedContent, loading, error } = useSelector(
-    (state) => state.mautic
+  const { personalizedContent, loading, error, contact } = useSelector(
+    (state) => ({
+      ...state.mautic,
+    })
   );
 
   useEffect(() => {
@@ -15,10 +17,16 @@ const DynamicContent = () => {
   }, [dispatch]);
 
   const renderContent = useMemo(() => {
+    const placeholders = {
+      "contactfield=lastname": contact?.fields?.core?.lastname?.value || "User", // Use contact's last name or a default value
+      "ownerfield=position": contact?.fields?.core?.position?.value || "Manager",
+      // Add more placeholders as needed
+    };
+
     return Object.values(personalizedContent).map((content) => (
-      <Card key={content.id} content={content} />
+      <Card key={content.id} content={content} placeholders={placeholders} />
     ));
-  }, [personalizedContent]);
+  }, [personalizedContent, contact]);
 
   if (loading) return <CircularProgress />;
   if (error)

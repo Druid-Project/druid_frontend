@@ -7,7 +7,7 @@ export const fetchPersonalizedContent = createAsyncThunk(
   "mautic/fetchPersonalizedContent",
   async () => {
     const response = await axios.get(`${mauticContactsApiUrl}/personalized-content`);
-    return response.data.dynamic_content; // Adjust to match the new structure
+    return response.data; // Adjust to match the new structure
   }
 );
 
@@ -15,6 +15,7 @@ const mauticSlice = createSlice({
   name: "mautic",
   initialState: {
     personalizedContent: {},
+    contact: {},
     loading: false,
     error: null,
   },
@@ -27,7 +28,8 @@ const mauticSlice = createSlice({
       })
       .addCase(fetchPersonalizedContent.fulfilled, (state, action) => {
         state.loading = false;
-        state.personalizedContent = action.payload;
+        state.personalizedContent = action.payload.dynamic_content;
+        state.contact = action.payload.contact;
       })
       .addCase(fetchPersonalizedContent.rejected, (state, action) => {
         state.loading = false;

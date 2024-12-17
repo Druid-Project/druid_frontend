@@ -3,8 +3,15 @@ import { Card as MuiCard, CardContent, Typography, Box } from "@mui/material";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 
-const Card = ({ content }) => {
-  const sanitizedContent = DOMPurify.sanitize(content.content);
+const Card = ({ content, placeholders }) => {
+  let sanitizedContent = DOMPurify.sanitize(content.content);
+
+  // Replace placeholders with actual data
+  Object.keys(placeholders).forEach((key) => {
+    const regex = new RegExp(`{${key}}`, "g");
+    sanitizedContent = sanitizedContent.replace(regex, placeholders[key]);
+  });
+
   const parser = new DOMParser();
   const doc = parser.parseFromString(sanitizedContent, "text/html");
   const paragraphs = doc.querySelectorAll("p"); // Extract all <p> elements

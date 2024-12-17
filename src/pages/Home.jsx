@@ -54,9 +54,9 @@ const Home = () => {
   return (
     <Container disableGutters maxWidth="xl">
       <Hero data={data} />
-      <DyanamicContents />
       <ServicesSections data={data} />
       <Feature data={data} />
+      <DyanamicContents />
     </Container>
   );
 };
