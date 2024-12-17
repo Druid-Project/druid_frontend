@@ -55,7 +55,7 @@ const Career = () => {
     <Container disableGutters maxWidth="xl">
       {/* Hero section */}
       <Hero data={data} />
-      {/* Text blocks */}
+      {/* Text blockgit */}
       {textBlocks?.map((block) => (
         <Box key={block.id} sx={{ margin: "20px 0" }}>
           <Typography
