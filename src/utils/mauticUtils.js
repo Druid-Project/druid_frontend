@@ -5,44 +5,59 @@ import { fetchTaxonomyTerms } from "./fetchTaxonomyTerm";
 const fetchTerms = async (heroSections, dispatch) => {
   const termsWithIds = await Promise.all(
     heroSections.map(async (hero) => {
-      const taxonomyTermIds = hero?.relationships?.field_visible_to?.data?.map(term => term.id) || [];
+      const taxonomyTermIds =
+        hero?.relationships?.field_visible_to?.data?.map((term) => term.id) ||
+        [];
       const terms = await fetchTaxonomyTerms(dispatch, taxonomyTermIds);
-      return { id: hero.id, termNames: terms.map(term => term.name) };
+      return { id: hero.id, termNames: terms.map((term) => term.name) };
     })
   );
-  console.log('Terms with IDs:', termsWithIds);
+  console.log("Terms with IDs:", termsWithIds);
   return termsWithIds;
 };
 
 // Function to match segments and terms
 const matchSegmentsAndTerms = (termsWithIds, segmentNames) => {
-  console.log('Segment names:', segmentNames);
+  console.log("Segment names:", segmentNames);
   return termsWithIds
-    .filter(({ termNames }) => segmentNames.some(name => termNames.includes(name)))
+    .filter(({ termNames }) =>
+      segmentNames.some((name) => termNames.includes(name))
+    )
     .map(({ id }) => id);
 };
 
 // Function to filter matched heroes
-export const filterMatchedHeroes = async (heroSections, dispatch, fetchBackgroundImage) => {
+export const filterMatchedHeroes = async (
+  heroSections,
+  dispatch,
+  fetchBackgroundImage
+) => {
   const segmentNames = await sendMtcIdToBackend();
   if (!Array.isArray(segmentNames)) {
-    console.error("Expected segmentNames to be an array, but got:", segmentNames);
+    console.error(
+      "Expected segmentNames to be an array, but got:",
+      segmentNames
+    );
     return [];
   }
 
   const termsWithIds = await fetchTerms(heroSections, dispatch);
   const matchedHeroIds = matchSegmentsAndTerms(termsWithIds, segmentNames);
 
-  const matchedHeroes = heroSections.filter(hero => matchedHeroIds.includes(hero.id));
+  const matchedHeroes = heroSections.filter((hero) =>
+    matchedHeroIds.includes(hero.id)
+  );
   if (matchedHeroes.length > 0) {
     const firstMatchedHero = matchedHeroes[0];
     fetchBackgroundImage(firstMatchedHero);
     return [firstMatchedHero];
   }
 
-  const visitorHero = termsWithIds.find(({ termNames }) => termNames.includes("visitor"));
+  const visitorHero = termsWithIds.find(({ termNames }) =>
+    termNames.includes("visitor")
+  );
   if (visitorHero) {
-    const hero = heroSections.find(hero => hero.id === visitorHero.id);
+    const hero = heroSections.find((hero) => hero.id === visitorHero.id);
     fetchBackgroundImage(hero);
     return [hero];
   }
