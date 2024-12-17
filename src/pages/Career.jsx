@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContentData } from "../redux/contentSlice";
-import { Container, Box, Typography } from "@mui/material";
+import { Container, Box, Typography, Button, Card, CardContent } from "@mui/material";
 import Hero from "../components/common/Hero"; // Import the reusable component
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
@@ -52,38 +52,73 @@ const Career = () => {
 
   // Main content
   return (
-    <Container disableGutters maxWidth="xl">
+    <Container disableGutters maxWidth="lg" sx={{ padding: "40px 20px" }}>
       {/* Hero section */}
       <Hero data={data} />
 
-      {/* Text blocks */}
-      {textBlocks?.map((block) => (
-        <Box
-          key={block.id}
-          sx={{
-            margin: "20px 0",
-            padding: "16px",
-            backgroundColor: "#f9f9f9",
-            borderRadius: "8px",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          {block.attributes?.field_text?.processed && (
-            <Typography
-              variant="body1"
-              sx={{
-                color: "#333",
-                lineHeight: "1.6",
-                fontSize: "1rem",
-                fontWeight: 400,
-              }}
-              dangerouslySetInnerHTML={{
-                __html: block.attributes.field_text.processed,
-              }}
-            />
-          )}
-        </Box>
-      ))}
+      {/* Job Posts Section */}
+      <Box sx={{ marginTop: "30px" }}>
+        {textBlocks?.map((block) => (
+          <Card
+            key={block.id}
+            sx={{
+              marginBottom: "20px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              borderRadius: "8px",
+              transition: "transform 0.3s",
+              "&:hover": {
+                transform: "translateY(-5px)",
+                boxShadow: "0 6px 12px rgba(0, 0, 0, 0.15)",
+              },
+            }}
+          >
+            <CardContent>
+              {/* Title */}
+              <Typography
+                variant="h5"
+                sx={{
+                  marginBottom: "10px",
+                  fontWeight: "bold",
+                  color: "#333",
+                }}
+              >
+                {block.attributes?.field_text?.processed
+                  ? block.attributes.field_text.processed.split("<p>")[1]?.split("</p>")[0]
+                  : "Job Title"}
+              </Typography>
+
+              {/* Description */}
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#555",
+                  marginBottom: "15px",
+                  lineHeight: "1.6",
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: block.attributes?.field_text?.processed || "",
+                }}
+              />
+
+              {/* Call-to-Action Button */}
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  backgroundColor: "#0073e6",
+                  "&:hover": {
+                    backgroundColor: "#005bb5",
+                  },
+                }}
+              >
+                Learn More
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </Box>
     </Container>
   );
 };
