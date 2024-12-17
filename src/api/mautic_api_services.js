@@ -3,6 +3,8 @@ import axios from "axios";
 import { mauticBaseUrl, drupalBaseUrl } from "../config";
 import { getMtcId } from "../utils/cookieUtils"; // Import the utility
 
+const mauticContactsApiUrl = `${drupalBaseUrl}/api/mautic-contacts`; // Centralized URL
+
 // Initialize Mautic tracking
 mautic.initialize(`${mauticBaseUrl}/mtc.js`);
 
@@ -19,7 +21,7 @@ export const sendMtcIdToBackend = async () => {
 
   try {
     const response = await axios.post(
-      `${drupalBaseUrl}/api/mautic-contacts/mtc_id`, // Ensure drupalBaseUrl is correctly defined
+      `${mauticContactsApiUrl}/mtc_id`, // Use centralized URL
       {
         data: {
           type: "mautic_segment",
@@ -40,7 +42,7 @@ export const sendMtcIdToBackend = async () => {
 
     // Fetch the segment based on mtc_id
     const segmentResponse = await axios.get(
-      `${drupalBaseUrl}/api/mautic-contacts/mtc_id/segments`
+      `${mauticContactsApiUrl}/mtc_id/segments` // Use centralized URL
     );
 
     // Process the backend response
@@ -65,6 +67,7 @@ export const sendMtcIdToBackend = async () => {
     throw error;
   }
 };
+
 
 export default mautic;
 

@@ -1,35 +1,35 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { baseUrl } from "../config";
+import { mauticContactsApiUrl } from "../config"; // Import centralized URL
 
-// Async thunk to fetch dynamic content data
-export const fetchDynamicContent = createAsyncThunk(
-  "mautic/fetchDynamicContent",
+// Async thunk to fetch personalized content data
+export const fetchPersonalizedContent = createAsyncThunk(
+  "mautic/fetchPersonalizedContent",
   async () => {
-    const response = await axios.get(`${baseUrl}/api/mautic-contacts/dynamiccontents`);
-    return response.data;
+    const response = await axios.get(`${mauticContactsApiUrl}/personalized-content`);
+    return response.data.dynamic_content; // Adjust to match the new structure
   }
 );
 
 const mauticSlice = createSlice({
   name: "mautic",
   initialState: {
-    dynamicContent: {},
+    personalizedContent: {},
     loading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchDynamicContent.pending, (state) => {
+      .addCase(fetchPersonalizedContent.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchDynamicContent.fulfilled, (state, action) => {
+      .addCase(fetchPersonalizedContent.fulfilled, (state, action) => {
         state.loading = false;
-        state.dynamicContent = action.payload;
+        state.personalizedContent = action.payload;
       })
-      .addCase(fetchDynamicContent.rejected, (state, action) => {
+      .addCase(fetchPersonalizedContent.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
