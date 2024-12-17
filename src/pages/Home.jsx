@@ -8,7 +8,7 @@ import Feature from "../components/homepage/components/Feature";
 import CampaignList from "../campaign/CampaignList";
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
-
+import DyanamicContents from "../components/mautic/DynamicContent";
 const Home = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.content);
@@ -56,6 +56,7 @@ const Home = () => {
     <Container disableGutters maxWidth="xl">
       <Hero data={data} />
       <CampaignList />
+      <DyanamicContents />
       <ServicesSections data={data} />
       <Feature data={data} />
     </Container>
