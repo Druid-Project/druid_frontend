@@ -55,12 +55,33 @@ const Career = () => {
     <Container disableGutters maxWidth="xl">
       {/* Hero section */}
       <Hero data={data} />
-      {/* Text blockgit */}
+
+      {/* Text blocks */}
       {textBlocks?.map((block) => (
-        <Box key={block.id} sx={{ margin: "20px 0" }}>
-          <Typography
-            dangerouslySetInnerHTML={{ __html: block.attributes.field_text.processed }}
-          />
+        <Box
+          key={block.id}
+          sx={{
+            margin: "20px 0",
+            padding: "16px",
+            backgroundColor: "#f9f9f9",
+            borderRadius: "8px",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          {block.attributes?.field_text?.processed && (
+            <Typography
+              variant="body1"
+              sx={{
+                color: "#333",
+                lineHeight: "1.6",
+                fontSize: "1rem",
+                fontWeight: 400,
+              }}
+              dangerouslySetInnerHTML={{
+                __html: block.attributes.field_text.processed,
+              }}
+            />
+          )}
         </Box>
       ))}
     </Container>
@@ -68,4 +89,3 @@ const Career = () => {
 };
 
 export default Career;
- 
