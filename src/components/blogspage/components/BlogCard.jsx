@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useFetchImage from "../../../hooks/useFetchImage";
 import { fetchAuthorDetails } from "../../../utils/fetchAuthorDetails";
 import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
+import sanitizeHtml from "../../../utils/sanitizeHtml"; // Add this import
 
 const BlogCard = ({ blog }) => {
   const navigate = useNavigate();
@@ -91,7 +92,7 @@ const BlogCard = ({ blog }) => {
             fontSize: "0.9rem",
             color: "#555",
           }}
-          dangerouslySetInnerHTML={{ __html: body.processed }}
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(body.processed) }}
         />
         <Box mt={2}>
           <Typography

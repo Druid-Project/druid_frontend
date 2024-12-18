@@ -10,6 +10,7 @@ import useFetchImage from "../../../hooks/useFetchImage";
 import ImageBlock from "../../common/ImageBlock";
 import { fetchParagraphsAndImages } from "../../../utils/fetchParagraphsAndImages";
 import { fetchAuthorDetails } from "../../../utils/fetchAuthorDetails";
+import sanitizeHtml from "../../../utils/sanitizeHtml"; // Add this import
 
 const SingleBlog = () => {
   const { blogId } = useParams();
@@ -76,7 +77,7 @@ const SingleBlog = () => {
           <Box key={section.id} mt={2}>
             <Typography
               dangerouslySetInnerHTML={{
-                __html: processInlineImages(section.attributes.field_text.processed),
+                __html: sanitizeHtml(processInlineImages(section.attributes.field_text.processed)),
               }}
             />
           </Box>
@@ -91,7 +92,7 @@ const SingleBlog = () => {
                 paddingLeft: "16px",
               }}
               dangerouslySetInnerHTML={{
-                __html: section.attributes.field_quote_text,
+                __html: sanitizeHtml(section.attributes.field_quote_text),
               }}
             />
           </Box>
@@ -161,7 +162,7 @@ const SingleBlog = () => {
         <Box mt={2}>
           <Typography
             variant="body1"
-            dangerouslySetInnerHTML={{ __html: body.processed }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(body.processed) }}
           />
         </Box>
         {paragraphs.map((section) => renderSection(section))}
