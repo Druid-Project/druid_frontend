@@ -3,14 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPersonalizedContent } from "../../redux/mauticSlice";
 import { Box, CircularProgress, Alert, Typography } from "@mui/material";
 import Card from "./Card";
+import { createSelector } from "reselect";
+
+const selectData = createSelector(
+  (state) => state,
+  (state) => ({
+    personalizedContent: state.mautic.personalizedContent,
+    loading: state.mautic.loading,
+    error: state.mautic.error,
+    contact: state.mautic.contact,
+  })
+);
 
 const DynamicContent = () => {
   const dispatch = useDispatch();
-  const { personalizedContent, loading, error, contact } = useSelector(
-    (state) => ({
-      ...state.mautic,
-    })
-  );
+  const { personalizedContent, loading, error, contact } = useSelector(selectData);
 
   useEffect(() => {
     dispatch(fetchPersonalizedContent());
