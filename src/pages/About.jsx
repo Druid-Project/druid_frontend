@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContentData } from "../redux/contentSlice";
 import { Container, Box, Typography } from "@mui/material";
-import Hero from "../components/common/Hero"; // Import the reusable component
+import Hero from "../components/common/Hero";
 import Feature from "../components/about/Feature";
-import ConnectCard from "../components/servicespage/components/ConnectCard";
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
 import useFetchCardDetails from "../hooks/useFetchCardDetails";
 import { baseUrl } from "../config";
-import HeroCard from "../components/common/HeroCard"; // Import the HeroCard component
+import HeroCard from "../components/common/HeroCard";
 
 const About = () => {
   const dispatch = useDispatch();

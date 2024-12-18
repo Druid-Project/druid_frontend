@@ -1,15 +1,14 @@
-import React, { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
 import { Typography, Box } from "@mui/material";
 import Slider from "react-slick";
 import HeroCard from "../../common/HeroCard";
 import useFetchCards from "../../../hooks/useFetchCards";
+import PropTypes from "prop-types";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../css/feature.css";
 
 const Feature = ({ data }) => {
-  const { baseUrl } = useSelector((state) => state.content);
   const featureSection = data.included?.find(
     (item) => item.type === "paragraph--feature_section"
   );
@@ -39,9 +38,9 @@ const Feature = ({ data }) => {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
-    swipeToSlide: true, // Enable swipe to slide
-    touchMove: true, // Enable touch move
-    autoplay: false, // Disable automatic scrolling
+    swipeToSlide: true,
+    touchMove: true,
+    autoplay: false,
     responsive: [
       {
         breakpoint: 1024,
@@ -83,6 +82,26 @@ const Feature = ({ data }) => {
       </Slider>
     </Box>
   );
+};
+
+Feature.propTypes = {
+  data: PropTypes.shape({
+    included: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string.isRequired,
+        attributes: PropTypes.shape({
+          field_title: PropTypes.string,
+          field_card_title: PropTypes.string,
+          field_card_description: PropTypes.string,
+          field_card_cta_button: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.object,
+          ]),
+        }),
+        imageUrl: PropTypes.string,
+      })
+    ),
+  }).isRequired,
 };
 
 export default Feature;

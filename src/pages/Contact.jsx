@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Typography, Box, Grid } from "@mui/material";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -7,9 +6,7 @@ import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import MauticForm from "../components/mautic/MauticForm";
-import serviceImg from "../assets/img/contact_image.jpg";
 import DynamicContent from "../components/mautic/DynamicContent";
-import Card from "../components/mautic/Card";
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
