@@ -5,13 +5,11 @@ import { fetchFooterData } from "../redux/footerSlice";
 import ConnectCard from "../components/common/ConnectCard";
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
-import sanitizeHtml from "../utils/sanitizeHtml"; // Add this import
+import sanitizeHtml from "../utils/sanitizeHtml";
 
 function Footer() {
   const dispatch = useDispatch();
-  const footerData = useSelector((state) => state.footer.data);
-  const loading = useSelector((state) => state.footer.loading);
-  const error = useSelector((state) => state.footer.error);
+  const { data: footerData, loading, error } = useSelector((state) => state.footer);
 
   useEffect(() => {
     dispatch(
@@ -22,28 +20,25 @@ function Footer() {
     );
   }, [dispatch]);
 
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return <Error message={`Error: ${error}`} />;
-  }
-
-  if (!footerData.included) {
-    return null;
-  }
+  if (loading) return <Loading />;
+  if (error) return <Error message={`Error: ${error}`} />;
+  if (!footerData.included) return null;
 
   const footerSection = footerData.included.find(
     (item) => item.type === "paragraph--footer_section"
   );
 
-  const socialLinks = footerSection
-    ? footerSection.attributes.field_social_media_link
-    : [];
-  const menuLinks = footerSection
-    ? footerSection.attributes.field_menu_links
-    : [];
+  const socialLinks = footerSection?.attributes.field_social_media_link || [];
+  const menuLinks = footerSection?.attributes.field_menu_links || [];
+
+  const renderLinks = (links, xs, sm) =>
+    links.map((link, index) => (
+      <Grid item key={index} xs={xs} sm={sm}>
+        <Link href={sanitizeHtml(link.uri)} underline="none" color="textPrimary">
+          {sanitizeHtml(link.title).toUpperCase()}
+        </Link>
+      </Grid>
+    ));
 
   return (
     <footer style={{ backgroundColor: "#fefefe", padding: "2rem 0" }}>
@@ -54,40 +49,15 @@ function Footer() {
             <hr />
           </Grid>
         </Grid>
-        <Grid
-          container
-          spacing={2}
-          height="100px"
-          sx={{ fontSize: "12px", textAlign: "center" }}
-        >
+        <Grid container spacing={2} height="100px" sx={{ fontSize: "12px", textAlign: "center" }}>
           <Grid item xs={12} md={6}>
             <Grid container justifyContent="center">
-              {socialLinks.map((link, index) => (
-                <Grid item key={index} xs={12} sm={2}>
-                  <Link
-                    href={sanitizeHtml(link.uri)}
-                    underline="none"
-                    color="textPrimary"
-                  >
-                    {sanitizeHtml(link.title).toUpperCase()}
-                  </Link>
-                </Grid>
-              ))}
+              {renderLinks(socialLinks, 12, 2)}
             </Grid>
           </Grid>
           <Grid item xs={12} md={6} textAlign="center">
             <Grid container justifyContent="center">
-              {menuLinks.map((link, index) => (
-                <Grid item key={index} xs={12} sm={3}>
-                  <Link
-                    href={sanitizeHtml(link.uri)}
-                    underline="none"
-                    color="textPrimary"
-                  >
-                    {sanitizeHtml(link.title).toUpperCase()}
-                  </Link>
-                </Grid>
-              ))}
+              {renderLinks(menuLinks, 12, 3)}
             </Grid>
           </Grid>
         </Grid>
