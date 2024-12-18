@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import DOMPurify from "dompurify";

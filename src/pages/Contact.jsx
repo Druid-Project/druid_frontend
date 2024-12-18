@@ -86,7 +86,7 @@ const Contact = () => {
               />
               <Marker position={center}>
                 <Popup>
-                  Visit us here! <br /> We're always happy to meet you.
+                  Visit us here! <br /> We&apos;re always happy to meet you.
                 </Popup>
               </Marker>
             </MapContainer>
