@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchFooterData } from "../redux/footerSlice";
 import { Grid } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import blackLogo from "../assets/img/logo_black.svg";
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -103,12 +104,13 @@ const Header = () => {
           sx: {
             width: "100%", // Cover full window width
             height: "100%", // Cover full window height
+            bgcolor: "#222", // Use dark theme color
           },
         }}
       >
         <Box
           sx={{
-            bgcolor: "background.paper",
+            bgcolor: "#222", // Use dark theme color
             pt: 2,
             display: "flex",
             flexDirection: "column",
@@ -120,12 +122,36 @@ const Header = () => {
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
+          <Box
+            sx={{
+              position: "absolute",
+              top: "3rem",
+              left: "3rem",
+              display: "flex",
+              alignItems: "center", // Align items horizontally
+            }}
+          >
+            <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+              <img src={blackLogo} width="80" height="60" alt="Logo" />
+              <Typography
+                variant="h6"
+                sx={{
+                  color: "#fff",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  fontSize: "2rem",
+                }}
+              >
+                Druid
+              </Typography>
+            </Link>
+          </Box>
           <IconButton
             edge="end"
             sx={{
               position: "absolute",
-              top: "1.5rem",
-              right: "4rem",
+              top: "1rem",
+              right: "4.5rem",
               color: "#E11000",
               fontSize: "2rem",
             }} // Updated size
