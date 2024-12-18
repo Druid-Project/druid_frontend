@@ -110,13 +110,14 @@ const Header = () => {
       >
         <Box
           sx={{
-            bgcolor: "#222", // Use dark theme color
+            bgcolor: "#000", // Use dark theme color
             pt: 2,
             display: "flex",
             flexDirection: "column",
             height: "100%",
             justifyContent: "center", // Center vertically
             alignItems: "center", // Center horizontally
+            position: "relative", // Add relative positioning
           }}
           role="presentation"
           onClick={toggleDrawer(false)}
@@ -131,7 +132,14 @@ const Header = () => {
               alignItems: "center", // Align items horizontally
             }}
           >
-            <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+            <Link
+              to="/"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                textDecoration: "none",
+              }}
+            >
               <img src={blackLogo} width="80" height="60" alt="Logo" />
               <Typography
                 variant="h6"
@@ -180,14 +188,26 @@ const Header = () => {
                       textAlign: "left", // Align text to the left
                       color: "#fff", // Light color
                       fontSize: "3vw", // Bigger size
-                      fontFamily: 'Euclid, -apple-system, BlinkMacSystemFont',
+                      fontFamily: "Euclid, -apple-system, BlinkMacSystemFont",
                     }}
                   />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
-          <Box sx={{ pb: 2 }}>
+
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: "2rem",
+              right: "2rem",
+              display: "flex",
+              flexDirection: "row", // Align items horizontally
+              gap: "1rem", // Add some space between items
+              paddingTop: "1rem", // Add padding at the top
+              borderTop: ".01px solid #838383", // Add border at the top
+            }}
+          >
             {socialLinks.map((link, index) => (
               <ListItem key={index} disablePadding>
                 <ListItemButton component="a" href={link.uri}>
@@ -197,6 +217,8 @@ const Header = () => {
                       textTransform: "uppercase",
                       fontSize: "0.8rem",
                       textAlign: "center", // Center text horizontally
+                      color: "#838383", // Light color
+                      fontFamily: "Euclid, -apple-system, BlinkMacSystemFont",
                     }}
                   />
                 </ListItemButton>
