@@ -26,15 +26,6 @@ export const fetchTaxonomyTermData = createAsyncThunk(
   }
 );
 
-// Async thunk to fetch a single blog by ID
-export const fetchSingleBlog = createAsyncThunk(
-  "content/fetchSingleBlog",
-  async (blogId) => {
-    const response = await axios.get(`${baseUrl}/jsonapi/node/blogs/${blogId}`);
-    return response.data.data;
-  }
-);
-
 const contentSlice = createSlice({
   name: "content",
   initialState: {
@@ -67,18 +58,6 @@ const contentSlice = createSlice({
       .addCase(fetchTaxonomyTermData.fulfilled, (state, action) => {
         const { id, attributes } = action.payload.data;
         state.taxonomyTerms[id] = attributes.name; // Store the term name by its ID
-      })
-      .addCase(fetchSingleBlog.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchSingleBlog.fulfilled, (state, action) => {
-        state.loading = false;
-        state.singleBlog = action.payload;
-      })
-      .addCase(fetchSingleBlog.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
       });
   },
 });
