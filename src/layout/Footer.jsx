@@ -66,7 +66,7 @@ function Footer() {
                   href={link.uri}
                   className="text-dark text-decoration-none mb-2 d-flex align-items-center"
                 >
-                  {link.title}
+                  {link.title.toUpperCase()}
                 </Nav.Link>
               ))}
             </Nav>
@@ -79,7 +79,7 @@ function Footer() {
                   href={link.uri}
                   className="text-dark text-decoration-none mb-2"
                 >
-                  {link.title}
+                  {link.title.toUpperCase()}
                 </Nav.Link>
               ))}
             </Nav>
