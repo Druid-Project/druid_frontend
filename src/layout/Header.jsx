@@ -210,7 +210,15 @@ const Header = () => {
           >
             {socialLinks.map((link, index) => (
               <ListItem key={index} disablePadding>
-                <ListItemButton component="a" href={link.uri}>
+                <ListItemButton
+                  component="a"
+                  href={link.uri}
+                  sx={{
+                    "&:hover .MuiTypography-root": {
+                      color: "#fefefe", // Change color on hover
+                    },
+                  }}
+                >
                   <ListItemText
                     primary={link.title.toUpperCase()}
                     primaryTypographyProps={{
