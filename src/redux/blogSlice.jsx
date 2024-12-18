@@ -6,7 +6,7 @@ import { baseUrl } from "../config";
 export const fetchBlogs = createAsyncThunk(
   "blogs/fetchBlogs",
   async () => {
-    const response = await axios.get(`${baseUrl}/jsonapi/views/blog_listings/page_1`);
+    const response = await axios.get(`${baseUrl}/jsonapi/views/blog_listings/page_1?include=field_content_sections`);
     return response.data;
   }
 );
@@ -15,7 +15,7 @@ export const fetchBlogs = createAsyncThunk(
 export const fetchSingleBlog = createAsyncThunk(
   "blogs/fetchSingleBlog",
   async (blogId) => {
-    const response = await axios.get(`${baseUrl}/jsonapi/node/blogs/${blogId}`);
+    const response = await axios.get(`${baseUrl}/jsonapi/node/blogs/${blogId}?include=field_content_sections,field_author,field_hero_image`);
     return response.data.data;
   }
 );
