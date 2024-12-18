@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Container, Grid, Link } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFooterData } from "../redux/footerSlice";
-import ConnectCard from "../components/servicespage/components/ConnectCard";
+import ConnectCard from "../components/common/ConnectCard";
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
 import sanitizeHtml from "../utils/sanitizeHtml"; // Add this import

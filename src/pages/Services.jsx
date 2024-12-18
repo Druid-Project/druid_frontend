@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContentData } from "../redux/contentSlice";
 import { Box, Container, Typography } from "@mui/material";
-import Hero from "../components/common/Hero"; // Import the reusable component
+import Hero from "../components/common/Hero";
 import ServiceCardSection from "../components/servicespage/components/ServiceCardSection";
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
@@ -10,6 +10,7 @@ import Error from "../components/common/Error";
 const Services = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.content);
+
   useEffect(() => {
     dispatch(
       fetchContentData({
@@ -19,7 +20,6 @@ const Services = () => {
       })
     );
   }, [dispatch]);
-  console.log("Services -> data", data);
 
   if (loading) return <Loading />;
   if (error) return <Error message={`Error: ${error}`} />;
@@ -31,6 +31,7 @@ const Services = () => {
   if (!servicesData) {
     return <Typography>No data available.</Typography>;
   }
+
   return (
     <Container disableGutters maxWidth="xl">
       <Box>

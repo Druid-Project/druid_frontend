@@ -1,16 +1,16 @@
-import React from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
 import { Container, Grid, Typography } from "@mui/material";
-import Card from "../../common/Card"; // Import Card component
+import Card from "../../common/Card"; 
 import useFetchCards from "../../../hooks/useFetchCards";
 
 const ServiceCardSection = ({ data }) => {
-  const { baseUrl } = useSelector((state) => state.content);
   const servicesSection = data.included?.find(
     (item) => item.type === "paragraph--our_services_section"
   );
-  const serviceCards = useFetchCards(servicesSection, "field_services_section_cards");
+  const serviceCards = useFetchCards(
+    servicesSection,
+    "field_services_section_cards"
+  );
 
   if (!servicesSection) return null;
 
@@ -24,7 +24,12 @@ const ServiceCardSection = ({ data }) => {
         padding: "50px",
       }}
     >
-      <Typography variant="h4" gutterBottom className="centered-title" sx={{padding:"10px"}} >
+      <Typography
+        variant="h4"
+        gutterBottom
+        className="centered-title"
+        sx={{ padding: "10px" }}
+      >
         {servicesSection.attributes.field_title}
       </Typography>
       <Grid container spacing={3}>
@@ -66,7 +71,7 @@ const ServiceCardSection = ({ data }) => {
                 padding: "0 !important",
                 textAlign: "center",
               }}
-              variant="servicecard" // Use the new servicecard variant
+              variant="servicecard"
             />
           </Grid>
         ))}

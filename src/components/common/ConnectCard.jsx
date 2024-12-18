@@ -1,7 +1,9 @@
-import { Container, Grid, Typography, Box, Button } from "@mui/material";
+import PropTypes from "prop-types";
+import { Container, Grid, Typography, Button } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import useFetchCardDetails from "../../../hooks/useFetchCardDetails";
+import useFetchCardDetails from "../../hooks/useFetchCardDetails";
 import { useNavigate } from "react-router-dom";
+
 const ConnectCard = ({ data }) => {
   const navigate = useNavigate();
   const connectSection = data.included?.find(
@@ -13,33 +15,24 @@ const ConnectCard = ({ data }) => {
 
   if (!connectCard) return null;
 
-  const descriptionLines = [
-    connectCard.attributes.field_card_description.split("\n")[0], // Address line 1
-    connectCard.attributes.field_card_description.split("\n")[1], // Address line 2
-    connectCard.attributes.field_card_description.split("\n")[2], // Country
-  ];
+  const { field_card_description, field_card_title, field_card_cta_button } =
+    connectCard.attributes;
 
-  const email = connectCard.attributes.field_card_description
-    .split("\n")[3]
-    ?.trim();
-
-  const phone = connectCard.attributes.field_card_description
-    .split("\n")[4]
-    ?.trim();
+  const descriptionLines = field_card_description.split("\n").slice(0, 3);
+  const email = field_card_description.split("\n")[3]?.trim();
+  const phone = field_card_description.split("\n")[4]?.trim();
 
   const handleButtonClick = (event) => {
     event.preventDefault();
-    const uri = connectCard.attributes.field_card_cta_button.uri.replace(
-      "internal:",
-      ""
-    );
+    const uri = field_card_cta_button.uri.replace("internal:", "");
     navigate(uri);
   };
+
   return (
     <Container sx={{ padding: "2rem 0", textAlign: "left", display: "flex" }}>
       <Grid sx={{ flex: "4" }}>
         <Typography variant="h4" gutterBottom>
-          {connectCard.attributes.field_card_title}
+          {field_card_title}
         </Typography>
       </Grid>
       <Grid sx={{ flex: "1" }}>
@@ -90,11 +83,28 @@ const ConnectCard = ({ data }) => {
           }}
         >
           <ArrowRightAltIcon sx={{ color: "#cf2e2e" }} />{" "}
-          {connectCard.attributes.field_card_cta_button.title}
+          {field_card_cta_button.title}
         </Button>
       </Grid>
     </Container>
   );
+};
+
+ConnectCard.propTypes = {
+  data: PropTypes.shape({
+    included: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string,
+        relationships: PropTypes.shape({
+          field_connect_card: PropTypes.shape({
+            data: PropTypes.shape({
+              id: PropTypes.string,
+            }),
+          }),
+        }),
+      })
+    ),
+  }).isRequired,
 };
 
 export default ConnectCard;

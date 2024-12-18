@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContentData } from "../redux/contentSlice";
 import { Container, Box, Typography } from "@mui/material";
-import Hero from "../components/common/Hero"; // Import the reusable component
+import Hero from "../components/common/Hero";
 import ServicesSections from "../components/homepage/components/ServicesSections";
 import Feature from "../components/homepage/components/Feature";
 import Loading from "../components/common/Loading";
@@ -13,7 +13,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.content);
 
-  // Fetch content data when component mounts
   useEffect(() => {
     dispatch(
       fetchContentData({
@@ -24,13 +23,9 @@ const Home = () => {
     );
   }, [dispatch]);
 
-  // Loading state
   if (loading) return <Loading />;
-
-  // Error state
   if (error) return <Error message={`Something went wrong. ${error}`} />;
 
-  // No data available
   const homeData = data?.data?.find((item) => item.type === "node--home");
 
   if (!homeData) {
@@ -51,7 +46,6 @@ const Home = () => {
     );
   }
 
-  // Main content
   return (
     <Container disableGutters maxWidth="xl">
       <Hero data={data} />
