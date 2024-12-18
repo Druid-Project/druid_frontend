@@ -162,13 +162,25 @@ const Header = () => {
           <List>
             {menuItems.map((item) => (
               <ListItem key={item.text} disablePadding>
-                <ListItemButton component={Link} to={item.to}>
+                <ListItemButton
+                  component={Link}
+                  to={item.to}
+                  sx={{
+                    justifyContent: "flex-start",
+                    "&:hover .MuiTypography-root": {
+                      color: "#cf2e2e", // Change color on hover
+                    },
+                  }}
+                >
                   <ListItemText
                     primary={item.text}
                     primaryTypographyProps={{
                       fontWeight: "bold",
-                      textTransform: "uppercase",
-                      textAlign: "center", // Center text horizontally
+                      textTransform: "capitalize", // Use capitalize
+                      textAlign: "left", // Align text to the left
+                      color: "#fff", // Light color
+                      fontSize: "3vw", // Bigger size
+                      fontFamily: 'Euclid, -apple-system, BlinkMacSystemFont',
                     }}
                   />
                 </ListItemButton>
