@@ -2,15 +2,20 @@ import { fetchContent } from "../api/api";
 import { baseUrl } from "../config";
 import { fetchImage } from "./fetchImage";
 
+const getImageUrl = async (cardData) => {
+  if (cardData.relationships.field_card_image?.data?.id) {
+    const imageId = cardData.relationships.field_card_image.data.id;
+    return await fetchImage(imageId, baseUrl);
+  }
+  return null;
+};
+
 export const fetchCardDetails = async (cardId) => {
   try {
     const response = await fetchContent(`jsonapi/paragraph/card/${cardId}`);
     const cardData = response.data;
-    console.log("Fetched card data:", cardData);
-    if (cardData.relationships.field_card_image?.data?.id) {
-      const imageId = cardData.relationships.field_card_image.data.id;
-      const imageUrl = await fetchImage(imageId, baseUrl);
-      console.log("Fetched image URL:", imageUrl);
+    const imageUrl = await getImageUrl(cardData);
+    if (imageUrl) {
       cardData.imageUrl = imageUrl;
     }
     return cardData;
@@ -25,8 +30,7 @@ export const fetchCards = async (section, fieldName) => {
     const cardDetailsPromises = section.relationships[fieldName].data.map(
       (card) => fetchCardDetails(card.id)
     );
-    const cardDetails = await Promise.all(cardDetailsPromises);
-    return cardDetails;
+    return await Promise.all(cardDetailsPromises);
   }
   return [];
 };
