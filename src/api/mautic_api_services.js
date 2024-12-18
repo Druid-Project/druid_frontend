@@ -1,14 +1,37 @@
 import mautic from "mautic-tracking";
 import axios from "axios";
 import { mauticBaseUrl, drupalBaseUrl } from "../config";
-import { getMtcId } from "../utils/cookieUtils"; // Import the utility
+import { getMtcId } from "../utils/cookieUtils";
 
-const mauticContactsApiUrl = `${drupalBaseUrl}/api/mautic-contacts`; // Centralized URL
+const mauticContactsApiUrl = `${drupalBaseUrl}/api/mautic-contacts`;
 
-// Initialize Mautic tracking
 mautic.initialize(`${mauticBaseUrl}/mtc.js`);
 
-// Function to send mtc_id to Drupal backend
+const postMtcIdToBackend = async (mtcId) => {
+  await axios.post(
+    `${mauticContactsApiUrl}/mtc_id`,
+    {
+      data: {
+        type: "mautic_segment",
+        attributes: {
+          mtc_id: mtcId,
+        },
+      },
+    },
+    {
+      headers: {
+        "Content-Type": "application/vnd.api+json",
+      },
+      timeout: 5000,
+    }
+  );
+};
+
+const fetchSegments = async () => {
+  const response = await axios.get(`${mauticContactsApiUrl}/mtc_id/segments`);
+  return response.data;
+};
+
 export const sendMtcIdToBackend = async () => {
   const mtcId = getMtcId();
 
@@ -18,31 +41,9 @@ export const sendMtcIdToBackend = async () => {
   }
 
   try {
-    const response = await axios.post(
-      `${mauticContactsApiUrl}/mtc_id`, // Use centralized URL
-      {
-        data: {
-          type: "mautic_segment",
-          attributes: {
-            mtc_id: mtcId,
-          },
-        },
-      },
-      {
-        headers: {
-          "Content-Type": "application/vnd.api+json",
-        },
-        timeout: 5000, // Set timeout to 5 seconds
-      }
-    );
+    await postMtcIdToBackend(mtcId);
+    const { total, lists } = await fetchSegments();
 
-    // Fetch the segment based on mtc_id
-    const segmentResponse = await axios.get(
-      `${mauticContactsApiUrl}/mtc_id/segments` // Use centralized URL
-    );
-
-    // Process the backend response
-    const { total, lists } = segmentResponse.data;
     if (total > 0) {
       return Object.values(lists).map((list) => list.name);
     }
