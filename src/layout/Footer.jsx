@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchFooterData } from "../redux/footerSlice";
 import ConnectCard from "../components/servicespage/components/ConnectCard";
 import "../assets/css/Footer.css";
-import Loading from "../components/common/Loading"; 
-import Error from "../components/common/Error"; 
+import Loading from "../components/common/Loading";
+import Error from "../components/common/Error";
 
 function Footer() {
   const dispatch = useDispatch();
@@ -53,30 +53,24 @@ function Footer() {
             <ConnectCard data={footerData} />
           </Grid>
         </Grid>
-        <Grid container spacing={4} alignItems="center">
+        <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} md={6} textAlign="center">
-            <Typography variant="h6" gutterBottom>
-              Quick Links
-            </Typography>
             <Grid container justifyContent="center">
-              {menuLinks.map((link, index) => (
-                <Grid item key={index} xs={12} sm={6}>
+              {socialLinks.map((link, index) => (
+                <Grid item key={index} xs={12} sm={2}>
                   <Link href={link.uri} underline="none" color="textPrimary">
-                    {link.title}
+                    {link.title.toUpperCase()}
                   </Link>
                 </Grid>
               ))}
             </Grid>
           </Grid>
           <Grid item xs={12} md={6} textAlign="center">
-            <Typography variant="h6" gutterBottom>
-              Follow Us
-            </Typography>
             <Grid container justifyContent="center">
-              {socialLinks.map((link, index) => (
-                <Grid item key={index} xs={12} sm={6}>
+              {menuLinks.map((link, index) => (
+                <Grid item key={index} xs={12} sm={3}>
                   <Link href={link.uri} underline="none" color="textPrimary">
-                    {link.title}
+                    {link.title.toUpperCase()}
                   </Link>
                 </Grid>
               ))}
