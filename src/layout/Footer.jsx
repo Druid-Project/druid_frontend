@@ -3,7 +3,6 @@ import { Container, Grid, Typography, Link } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFooterData } from "../redux/footerSlice";
 import ConnectCard from "../components/servicespage/components/ConnectCard";
-import "../assets/css/Footer.css";
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
 
@@ -46,15 +45,21 @@ function Footer() {
     : [];
 
   return (
-    <footer style={{ backgroundColor: "#F6F6F6", padding: "2rem 0" }}>
+    <footer style={{ backgroundColor: "#fefefe", padding: "2rem 0" }}>
       <Container>
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12}>
             <ConnectCard data={footerData} />
+            <hr />
           </Grid>
         </Grid>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={6} textAlign="center">
+        <Grid
+          container
+          spacing={2}
+          height="100px"
+          sx={{ fontSize: "12px", textAlign: "center" }}
+        >
+          <Grid item xs={12} md={6}>
             <Grid container justifyContent="center">
               {socialLinks.map((link, index) => (
                 <Grid item key={index} xs={12} sm={2}>
