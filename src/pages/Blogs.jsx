@@ -6,7 +6,6 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 
 const Blogs = () => {
   const dispatch = useDispatch();
-
   const { blogs, loading, error } = useSelector((state) => state.blogs);
 
   useEffect(() => {
@@ -38,12 +37,11 @@ const Blogs = () => {
         </Typography>
       </Box>
       <Grid container spacing={4}>
-        {blogs &&
-          blogs.map((blog) => (
-            <Grid item xs={12} sm={6} md={6} key={blog.id}>
-              <BlogCard blog={blog} />
-            </Grid>
-          ))}
+        {blogs?.map((blog) => (
+          <Grid item xs={12} sm={6} md={6} key={blog.id}>
+            <BlogCard blog={blog} />
+          </Grid>
+        ))}
       </Grid>
     </Container>
   );
