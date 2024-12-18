@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,13 +9,19 @@ import MauticForm from "../../mautic/MauticForm";
 import useFetchImage from "../../../hooks/useFetchImage";
 import ImageBlock from "../../common/ImageBlock";
 import { fetchParagraphsAndImages } from "../../../utils/fetchParagraphsAndImages";
+import { fetchAuthorDetails } from "../../../utils/fetchAuthorDetails";
 
 const SingleBlog = () => {
   const { blogId } = useParams();
   const dispatch = useDispatch();
-  const { singleBlog: blog, loading, error } = useSelector((state) => state.blogs);
+  const {
+    singleBlog: blog,
+    loading,
+    error,
+  } = useSelector((state) => state.blogs);
   const [paragraphs, setParagraphs] = useState([]);
   const [blockImageUrls, setBlockImageUrls] = useState({});
+  const [authorDetails, setAuthorDetails] = useState(null);
 
   const heroImageId = blog?.relationships?.field_hero_image?.data?.id;
   const heroImageUrl = useFetchImage(heroImageId);
@@ -28,11 +34,22 @@ const SingleBlog = () => {
     if (blog) {
       document.title = blog.attributes.title || "Blog";
       const fetchData = async () => {
-        const { paragraphData, imageUrlMap } = await fetchParagraphsAndImages(blog);
+        const { paragraphData, imageUrlMap } = await fetchParagraphsAndImages(
+          blog
+        );
         setParagraphs(paragraphData);
         setBlockImageUrls(imageUrlMap);
       };
       fetchData();
+
+      const fetchAuthor = async () => {
+        const authorId = blog.relationships.field_author?.data?.id;
+        if (authorId) {
+          const author = await fetchAuthorDetails(authorId);
+          setAuthorDetails(author);
+        }
+      };
+      fetchAuthor();
     }
   }, [blog]);
 
@@ -52,13 +69,12 @@ const SingleBlog = () => {
   };
 
   if (loading) return <Typography>Loading blog...</Typography>;
-  if (error) return <Typography color="error">Error loading blog: {error}</Typography>;
+  if (error)
+    return <Typography color="error">Error loading blog: {error}</Typography>;
   if (!blog) return <Typography>Blog not found</Typography>;
 
-  const { title, body, field_date } = blog.attributes;
-  const formattedDate = new Date(field_date).toLocaleDateString();
-  const formattedTime = new Date(field_date).toLocaleTimeString();
-  const author = blog.relationships.field_author?.data;
+  const { title, body, created } = blog.attributes;
+  const formattedDate = new Date(created).toLocaleDateString();
 
   const renderSection = (section) => {
     switch (section.type) {
@@ -67,7 +83,9 @@ const SingleBlog = () => {
           <Box key={section.id} mt={2}>
             <Typography
               dangerouslySetInnerHTML={{
-                __html: processInlineImages(section.attributes.field_text.processed),
+                __html: processInlineImages(
+                  section.attributes.field_text.processed
+                ),
               }}
             />
           </Box>
@@ -98,11 +116,23 @@ const SingleBlog = () => {
         );
       case "paragraph--image_block":
         return (
-          <Box key={section.id} mt={2} display="flex" flexWrap="wrap" justifyContent="center">
+          <Box
+            key={section.id}
+            mt={2}
+            display="flex"
+            flexWrap="wrap"
+            justifyContent="center"
+          >
             {section.relationships.field_image.data.map((image) => {
               const imageUrl = blockImageUrls[image.id];
               if (!imageUrl) return null;
-              return <ImageBlock key={image.id} imageUrl={imageUrl} altText={image.filename || "Block image"} />;
+              return (
+                <ImageBlock
+                  key={image.id}
+                  imageUrl={imageUrl}
+                  altText={image.filename || "Block image"}
+                />
+              );
             })}
           </Box>
         );
@@ -117,14 +147,25 @@ const SingleBlog = () => {
         <Typography variant="h3" component="h1" gutterBottom>
           {title}
         </Typography>
-        <Typography variant="caption" color="text.secondary">
-          Published on: {formattedDate} at {formattedTime}
-        </Typography>
-        {author && author.attributes && (
+        <Box sx={{borderBottom: "1px solid #ccc",}} >
           <Typography variant="caption" color="text.secondary">
-            Author: {author.attributes.display_name}
+            Published on: {formattedDate}
           </Typography>
-        )}
+          {authorDetails && (
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{
+                textTransform: "capitalize",
+                padding: "10px",
+                
+              }}
+            >
+              Author: {authorDetails.attributes.display_name}
+            </Typography>
+          )}
+        </Box>
+
         {heroImageUrl && (
           <Box mt={2} display="flex" justifyContent="center">
             <img
@@ -159,7 +200,7 @@ SingleBlog.propTypes = {
       body: PropTypes.shape({
         processed: PropTypes.string.isRequired,
       }).isRequired,
-      field_date: PropTypes.string.isRequired,
+      created: PropTypes.string.isRequired,
     }).isRequired,
     relationships: PropTypes.shape({
       field_author: PropTypes.shape({

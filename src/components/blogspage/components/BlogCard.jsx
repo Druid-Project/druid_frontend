@@ -1,8 +1,9 @@
-import React from "react";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useFetchImage from "../../../hooks/useFetchImage";
+import { fetchAuthorDetails } from "../../../utils/fetchAuthorDetails";
 import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
 
 const BlogCard = ({ blog }) => {
@@ -12,12 +13,17 @@ const BlogCard = ({ blog }) => {
   const heroImageId = blog.relationships.field_hero_image?.data?.id;
 
   const imageUrl = useFetchImage(heroImageId);
+  const [authorDetails, setAuthorDetails] = useState(null);
 
-  const author = useSelector((state) =>
-    state.blogs.blogs?.included?.find(
-      (item) => item.id === authorId && item.type === "user--user"
-    )
-  );
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      if (authorId) {
+        const author = await fetchAuthorDetails(authorId);
+        setAuthorDetails(author);
+      }
+    };
+    fetchAuthor();
+  }, [authorId]);
 
   const formattedDate = new Date(created).toLocaleDateString();
   const formattedTime = new Date(created).toLocaleTimeString();
@@ -103,7 +109,7 @@ const BlogCard = ({ blog }) => {
             display="block"
             sx={{ fontSize: "0.8rem" }}
           >
-            Author: {author ? author.attributes.display_name : "Unknown"}
+            Author: {authorDetails ? authorDetails.attributes.display_name : "Unknown"}
           </Typography>
         </Box>
       </CardContent>
