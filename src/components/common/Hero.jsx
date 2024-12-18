@@ -28,13 +28,11 @@ const Hero = ({ data }) => {
           : backgroundImageData.id;
         if (imageId) {
           const imageUrl = await fetchImage(imageId, baseUrl);
-          console.log("Fetched background image URL:", imageUrl); // Add this line
           if (imageUrl) {
-            setImages((prevImages) => {
-              const newImages = { ...prevImages, [hero.id]: imageUrl };
-              console.log("Updated images state:", newImages); // Add this line
-              return newImages;
-            });
+            setImages((prevImages) => ({
+              ...prevImages,
+              [hero.id]: imageUrl,
+            }));
           }
         }
       }

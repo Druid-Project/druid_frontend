@@ -3,6 +3,8 @@ import axios from "axios";
 import { mauticBaseUrl, drupalBaseUrl } from "../config";
 import { getMtcId } from "../utils/cookieUtils"; // Import the utility
 
+const mauticContactsApiUrl = `${drupalBaseUrl}/api/mautic-contacts`; // Centralized URL
+
 // Initialize Mautic tracking
 mautic.initialize(`${mauticBaseUrl}/mtc.js`);
 
@@ -15,11 +17,9 @@ export const sendMtcIdToBackend = async () => {
     return [];
   }
 
-  console.log("Sending MTC ID:", mtcId);
-
   try {
     const response = await axios.post(
-      `${drupalBaseUrl}/api/mautic-contacts/mtc_id`, // Ensure drupalBaseUrl is correctly defined
+      `${mauticContactsApiUrl}/mtc_id`, // Use centralized URL
       {
         data: {
           type: "mautic_segment",
@@ -36,18 +36,15 @@ export const sendMtcIdToBackend = async () => {
       }
     );
 
-    console.log("mtc_id logged successfully:", response.data);
-
     // Fetch the segment based on mtc_id
     const segmentResponse = await axios.get(
-      `${drupalBaseUrl}/api/mautic-contacts/mtc_id/segments`
+      `${mauticContactsApiUrl}/mtc_id/segments` // Use centralized URL
     );
 
     // Process the backend response
     const { total, lists } = segmentResponse.data;
-    console.log("Segments data:", segmentResponse.data);
     if (total > 0) {
-      return Object.values(lists).map(list => list.name);
+      return Object.values(lists).map((list) => list.name);
     }
 
     return [];

@@ -5,10 +5,10 @@ import { Container, Box, Typography } from "@mui/material";
 import Hero from "../components/common/Hero"; // Import the reusable component
 import ServicesSections from "../components/homepage/components/ServicesSections";
 import Feature from "../components/homepage/components/Feature";
-import CampaignList from "../campaign/CampaignList";
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
 import DyanamicContents from "../components/mautic/DynamicContent";
+
 const Home = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.content);
@@ -55,10 +55,9 @@ const Home = () => {
   return (
     <Container disableGutters maxWidth="xl">
       <Hero data={data} />
-      <CampaignList />
-      <DyanamicContents />
       <ServicesSections data={data} />
       <Feature data={data} />
+      <DyanamicContents />
     </Container>
   );
 };
