@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Container, Grid, Typography, Button } from "@mui/material";
-import ArrowRightAltIcon from "@m../../hooks/useFetchCardDetails
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import useFetchCardDetails from "../../hooks/useFetchCardDetails";
 import { useNavigate } from "react-router-dom";
 

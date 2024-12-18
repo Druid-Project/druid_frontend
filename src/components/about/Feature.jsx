@@ -1,9 +1,7 @@
 import { Typography, Box } from "@mui/material";
 import PropTypes from "prop-types";
-import Card from "../common/Card";
 import useFetchCards from "../../hooks/useFetchCards";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import Card from "../common/Card";
 
 const Feature = ({ data }) => {
   const featureSection = data.included?.find(
@@ -54,7 +52,7 @@ const FeatureCard = ({ card, index }) => (
   >
     <Card
       title={card.attributes.field_card_title}
-      description={card.attributes.field_card_title}
+      description={card.attributes.field_card_description}
       customStyles={{
         flex: 1,
         height: "200px",
