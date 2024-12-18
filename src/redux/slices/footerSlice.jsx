@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { baseUrl } from "../config";
+import { baseUrl } from "../../config";
 
 // Async thunk to fetch footer data
 export const fetchFooterData = createAsyncThunk(

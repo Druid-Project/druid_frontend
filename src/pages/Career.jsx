@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchContentData } from "../redux/contentSlice";
+import { fetchContentData } from "../redux/slices/contentSlice";
 import { Container, Box, Typography } from "@mui/material";
 import Hero from "../components/common/Hero";
 import Loading from "../components/common/Loading";

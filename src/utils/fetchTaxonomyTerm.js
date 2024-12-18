@@ -1,4 +1,4 @@
-import { fetchTaxonomyTermData } from "../redux/contentSlice";
+import { fetchTaxonomyTermData } from "../redux/slices/contentSlice";
 
 export const fetchTaxonomyTerms = async (dispatch, taxonomyTermIds) => {
   if (!Array.isArray(taxonomyTermIds)) {

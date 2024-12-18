@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPersonalizedContent } from "../../redux/mauticSlice";
+import { fetchPersonalizedContent } from "../../redux/slices/mauticSlice";
 import { Box, CircularProgress, Alert, Typography } from "@mui/material";
 import Card from "./Card";
 import { createSelector } from "reselect";
@@ -17,7 +17,8 @@ const selectData = createSelector(
 
 const DynamicContent = () => {
   const dispatch = useDispatch();
-  const { personalizedContent, loading, error, contact } = useSelector(selectData);
+  const { personalizedContent, loading, error, contact } =
+    useSelector(selectData);
 
   useEffect(() => {
     dispatch(fetchPersonalizedContent());
@@ -34,7 +35,8 @@ const DynamicContent = () => {
 
     const placeholders = {
       "contactfield=lastname": contact?.fields?.core?.lastname?.value || "User",
-      "ownerfield=position": contact?.fields?.core?.position?.value || "Manager",
+      "ownerfield=position":
+        contact?.fields?.core?.position?.value || "Manager",
     };
 
     return Object.values(personalizedContent).map((content) => (

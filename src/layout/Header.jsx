@@ -14,7 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFooterData } from "../redux/footerSlice";
+import { fetchFooterData } from "../redux/slices/footerSlice";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import druidLogo from "../assets/img/druid_logo.png";

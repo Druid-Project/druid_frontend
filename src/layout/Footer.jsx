@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Container, Grid, Link } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFooterData } from "../redux/footerSlice";
+import { fetchFooterData } from "../redux/slices/footerSlice";
 import ConnectCard from "../components/common/ConnectCard";
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
@@ -9,7 +9,11 @@ import sanitizeHtml from "../utils/sanitizeHtml";
 
 function Footer() {
   const dispatch = useDispatch();
-  const { data: footerData, loading, error } = useSelector((state) => state.footer);
+  const {
+    data: footerData,
+    loading,
+    error,
+  } = useSelector((state) => state.footer);
 
   useEffect(() => {
     dispatch(
@@ -34,7 +38,11 @@ function Footer() {
   const renderLinks = (links, xs, sm) =>
     links.map((link, index) => (
       <Grid item key={index} xs={xs} sm={sm}>
-        <Link href={sanitizeHtml(link.uri)} underline="none" color="textPrimary">
+        <Link
+          href={sanitizeHtml(link.uri)}
+          underline="none"
+          color="textPrimary"
+        >
           {sanitizeHtml(link.title).toUpperCase()}
         </Link>
       </Grid>
@@ -49,7 +57,12 @@ function Footer() {
             <hr />
           </Grid>
         </Grid>
-        <Grid container spacing={2} height="100px" sx={{ fontSize: "12px", textAlign: "center" }}>
+        <Grid
+          container
+          spacing={2}
+          height="100px"
+          sx={{ fontSize: "12px", textAlign: "center" }}
+        >
           <Grid item xs={12} md={6}>
             <Grid container justifyContent="center">
               {renderLinks(socialLinks, 12, 2)}
