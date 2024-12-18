@@ -6,6 +6,7 @@ import { fetchParagraphDetails } from "../../../utils/fetchParagraphDetails";
 import { fetchImage } from "../../../utils/fetchImage"; // Import fetchImage
 import { Container, Typography, Box } from "@mui/material";
 import { baseUrl } from "../../../config"; // Import baseUrl
+import MauticForm from "../../mautic/MauticForm"; // Import MauticForm
 
 const SingleBlog = () => {
   const { blogId } = useParams();
@@ -42,6 +43,21 @@ const SingleBlog = () => {
     }
   }, [blog]);
 
+  const processInlineImages = (html) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const images = doc.querySelectorAll("img");
+
+    images.forEach((img) => {
+      const src = img.getAttribute("src");
+      if (src && !src.startsWith("http")) {
+        img.setAttribute("src", `${baseUrl}${src}`);
+      }
+    });
+
+    return doc.documentElement.innerHTML;
+  };
+
   if (loading) {
     return <Typography>Loading blog...</Typography>;
   }
@@ -61,13 +77,26 @@ const SingleBlog = () => {
   const renderSection = (section) => {
     switch (section.type) {
       case "paragraph--text_block":
-        return <Typography dangerouslySetInnerHTML={{ __html: section.attributes.field_text.processed }} />;
+        return (
+          <Box mt={2}>
+            <Typography dangerouslySetInnerHTML={{ __html: processInlineImages(section.attributes.field_text.processed) }} />
+          </Box>
+        );
       case "paragraph--quote_block":
         return (
           <Typography
             sx={{ fontStyle: "italic", borderLeft: "4px solid #ccc", paddingLeft: "16px" }}
             dangerouslySetInnerHTML={{ __html: section.attributes.field_quote_text }}
           />
+        );
+      case "paragraph--mautic":
+        return (
+          <Box mt={2}>
+            <Typography variant="h5" gutterBottom>
+              {section.attributes.field_mautic_title}
+            </Typography>
+            <MauticForm formId={section.attributes.field_mautic_formid} />
+          </Box>
         );
       default:
         return null;
