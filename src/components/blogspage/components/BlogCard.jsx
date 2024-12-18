@@ -7,14 +7,14 @@ import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
 
 const BlogCard = ({ blog }) => {
   const navigate = useNavigate();
-  const { title, body, field_date, path } = blog.attributes;
-  const authorId = blog.relationships.field_author.data.id;
-  const heroImageId = blog.relationships.field_hero_image.data.id;
+  const { title, body, created, path } = blog.attributes;
+  const authorId = blog.relationships.field_author?.data?.id;
+  const heroImageId = blog.relationships.field_hero_image?.data?.id;
 
   const [imageUrl, setImageUrl] = useState("");
 
   const author = useSelector((state) =>
-    state.content.data?.included?.find(
+    state.blogs.blogs?.included?.find(
       (item) => item.id === authorId && item.type === "user--user"
     )
   );
@@ -30,8 +30,8 @@ const BlogCard = ({ blog }) => {
     }
   }, [heroImageId]);
 
-  const formattedDate = new Date(field_date).toLocaleDateString();
-  const formattedTime = new Date(field_date).toLocaleTimeString();
+  const formattedDate = new Date(created).toLocaleDateString();
+  const formattedTime = new Date(created).toLocaleTimeString();
 
   const handleCardClick = () => {
     navigate(`/blogs/${blog.id}`);

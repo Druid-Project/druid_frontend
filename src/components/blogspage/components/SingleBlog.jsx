@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSingleBlog } from "../../../redux/contentSlice";
+import { fetchSingleBlog } from "../../../redux/blogSlice"; // Update this line
 import { Container, Typography, Box } from "@mui/material";
 
 const SingleBlog = () => {
   const { blogId } = useParams();
   const dispatch = useDispatch();
-  const { singleBlog: blog, loading, error } = useSelector((state) => state.content);
+  const { singleBlog: blog, loading, error } = useSelector((state) => state.blogs); // Update this line
 
   useEffect(() => {
     dispatch(fetchSingleBlog(blogId));
