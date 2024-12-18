@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,11 +14,25 @@ import druidLogo from "../assets/img/druid_logo.png";
 import MenuIcon from "@mui/icons-material/Menu";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useTheme } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFooterData } from "../redux/footerSlice";
+import { Grid } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const footerData = useSelector((state) => state.footer.data);
+
+  useEffect(() => {
+    dispatch(
+      fetchFooterData({
+        endpoint: "node/footer",
+        includes: "field_footer_page_sections.field_connect_card",
+      })
+    );
+  }, [dispatch]);
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -38,6 +52,12 @@ const Header = () => {
     { text: "Career", to: "/career" },
     { text: "Contact", to: "/contact" },
   ];
+
+  const socialLinks = footerData.included
+    ? footerData.included
+        .filter((item) => item.type === "paragraph--footer_section")
+        .flatMap((section) => section.attributes.field_social_media_link)
+    : [];
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -59,34 +79,60 @@ const Header = () => {
 
           {/* Language Switcher */}
           <IconButton edge="end" sx={{ mr: 2 }} color="" aria-label="language">
-            <LanguageIcon />
-            <Typography sx={{ ml: 1 }}>EN</Typography>
+            <Typography sx={{ ml: 1 }}>ENGLISH</Typography>
           </IconButton>
 
           {/* Hamburger Menu */}
           <IconButton
             edge="end"
-            sx={{ color: "#E11000" }} // Updated color
+            sx={{ color: "#222", marginRight: "2rem", fontSize: "2rem" }} // Updated size
             aria-label="menu"
             onClick={toggleDrawer(true)}
           >
-            <MenuIcon />
+            <MenuIcon fontSize="inherit" />
           </IconButton>
         </Toolbar>
       </AppBar>
 
       {/* Drawer */}
-      <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={toggleDrawer(false)}
+        PaperProps={{
+          sx: {
+            width: "100%", // Cover full window width
+            height: "100%", // Cover full window height
+          },
+        }}
+      >
         <Box
           sx={{
-            width: 250,
             bgcolor: "background.paper",
             pt: 2,
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            justifyContent: "center", // Center vertically
+            alignItems: "center", // Center horizontally
           }}
           role="presentation"
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
+          <IconButton
+            edge="end"
+            sx={{
+              position: "absolute",
+              top: "1.5rem",
+              right: "4rem",
+              color: "#E11000",
+              fontSize: "2rem",
+            }} // Updated size
+            onClick={toggleDrawer(false)}
+          >
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
           <List>
             {menuItems.map((item) => (
               <ListItem key={item.text} disablePadding>
@@ -96,12 +142,29 @@ const Header = () => {
                     primaryTypographyProps={{
                       fontWeight: "bold",
                       textTransform: "uppercase",
+                      textAlign: "center", // Center text horizontally
                     }}
                   />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
+          <Box sx={{ pb: 2 }}>
+            {socialLinks.map((link, index) => (
+              <ListItem key={index} disablePadding>
+                <ListItemButton component="a" href={link.uri}>
+                  <ListItemText
+                    primary={link.title.toUpperCase()}
+                    primaryTypographyProps={{
+                      textTransform: "uppercase",
+                      fontSize: "0.8rem",
+                      textAlign: "center", // Center text horizontally
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </Box>
         </Box>
       </Drawer>
     </Box>
