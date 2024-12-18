@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchFooterData } from "../redux/footerSlice";
 import ConnectCard from "../components/servicespage/components/ConnectCard";
 import "../assets/css/Footer.css";
+import Loading from "../components/common/Loading"; 
+import Error from "../components/common/Error"; 
 
 function Footer() {
   const dispatch = useDispatch();
@@ -12,15 +14,20 @@ function Footer() {
   const error = useSelector((state) => state.footer.error);
 
   useEffect(() => {
-    dispatch(fetchFooterData({ endpoint: "node/footer", includes: "field_footer_page_sections.field_connect_card" }));
+    dispatch(
+      fetchFooterData({
+        endpoint: "node/footer",
+        includes: "field_footer_page_sections.field_connect_card",
+      })
+    );
   }, [dispatch]);
 
   if (loading) {
-    return <Typography>Loading...</Typography>;
+    return <Loading />;
   }
 
   if (error) {
-    return <Typography>Error loading footer data</Typography>;
+    return <Error message={`Error: ${error}`} />;
   }
 
   if (!footerData.included) {
@@ -31,8 +38,12 @@ function Footer() {
     (item) => item.type === "paragraph--footer_section"
   );
 
-  const socialLinks = footerSection ? footerSection.attributes.field_social_media_link : [];
-  const menuLinks = footerSection ? footerSection.attributes.field_menu_links : [];
+  const socialLinks = footerSection
+    ? footerSection.attributes.field_social_media_link
+    : [];
+  const menuLinks = footerSection
+    ? footerSection.attributes.field_menu_links
+    : [];
 
   return (
     <footer style={{ backgroundColor: "#F6F6F6", padding: "2rem 0" }}>
