@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContentData } from "../redux/contentSlice";
 import { Box, Container, Typography } from "@mui/material";
 import Hero from "../components/common/Hero"; // Import the reusable component
 import ServiceCardSection from "../components/servicespage/components/ServiceCardSection";
-import ConnectCard from "../components/servicespage/components/ConnectCard";
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
 
@@ -39,9 +38,6 @@ const Services = () => {
       </Box>
       <Box>
         <ServiceCardSection data={data} />
-      </Box>
-      <Box>
-        <ConnectCard data={data} />
       </Box>
     </Container>
   );

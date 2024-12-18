@@ -92,7 +92,6 @@ const About = () => {
           imageUrl={paragraphCard.imageUrl}
         />
       )}
-      <ConnectCard data={data} />
     </Container>
   );
 };
