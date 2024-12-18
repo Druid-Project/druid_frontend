@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Container, Row, Col, Nav } from "react-bootstrap";
+import { Container, Grid, Typography, Link } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFooterData } from "../redux/footerSlice";
 import ConnectCard from "../components/servicespage/components/ConnectCard";
@@ -16,11 +16,11 @@ function Footer() {
   }, [dispatch]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Typography>Loading...</Typography>;
   }
 
   if (error) {
-    return <div>Error loading footer data</div>;
+    return <Typography>Error loading footer data</Typography>;
   }
 
   if (!footerData.included) {
@@ -35,46 +35,43 @@ function Footer() {
   const menuLinks = footerSection ? footerSection.attributes.field_menu_links : [];
 
   return (
-    <footer
-      className="text-dark py-5 border-top"
-      style={{ backgroundColor: "#F6F6F6" }}
-    >
+    <footer style={{ backgroundColor: "#F6F6F6", padding: "2rem 0" }}>
       <Container>
-        <Row className="align-items-center">
-          <Col md={12} className="d-flex align-items-center mb-4 mb-md-0">
+        <Grid container spacing={4} alignItems="center">
+          <Grid item xs={12}>
             <ConnectCard data={footerData} />
-          </Col>
-        </Row>
-        <Row className="align-items-center">
-          <Col md={6} className="text-center mb-4 mb-md-0">
-            <p className="fw-bold">Quick Links</p>
-            <Nav className="flex-row align-items-md-end align-items-center">
+          </Grid>
+        </Grid>
+        <Grid container spacing={4} alignItems="center">
+          <Grid item xs={12} md={6} textAlign="center">
+            <Typography variant="h6" gutterBottom>
+              Quick Links
+            </Typography>
+            <Grid container justifyContent="center">
               {menuLinks.map((link, index) => (
-                <Nav.Link
-                  key={index}
-                  href={link.uri}
-                  className="text-dark text-decoration-none mb-2"
-                >
-                  {link.title}
-                </Nav.Link>
+                <Grid item key={index} xs={12} sm={6}>
+                  <Link href={link.uri} underline="none" color="textPrimary">
+                    {link.title}
+                  </Link>
+                </Grid>
               ))}
-            </Nav>
-          </Col>
-          <Col md={6} className="text-center text-md-end">
-            <p className="fw-bold">Follow Us</p>
-            <Nav className="flex-row align-items-md-end align-items-center">
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={6} textAlign="center">
+            <Typography variant="h6" gutterBottom>
+              Follow Us
+            </Typography>
+            <Grid container justifyContent="center">
               {socialLinks.map((link, index) => (
-                <Nav.Link
-                  key={index}
-                  href={link.uri}
-                  className="text-dark text-decoration-none mb-2 d-flex align-items-center"
-                >
-                  {link.title}
-                </Nav.Link>
+                <Grid item key={index} xs={12} sm={6}>
+                  <Link href={link.uri} underline="none" color="textPrimary">
+                    {link.title}
+                  </Link>
+                </Grid>
               ))}
-            </Nav>
-          </Col>
-        </Row>
+            </Grid>
+          </Grid>
+        </Grid>
       </Container>
     </footer>
   );
