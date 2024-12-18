@@ -14,11 +14,7 @@ import { fetchAuthorDetails } from "../../../utils/fetchAuthorDetails";
 const SingleBlog = () => {
   const { blogId } = useParams();
   const dispatch = useDispatch();
-  const {
-    singleBlog: blog,
-    loading,
-    error,
-  } = useSelector((state) => state.blogs);
+  const { singleBlog: blog, loading, error } = useSelector((state) => state.blogs);
   const [paragraphs, setParagraphs] = useState([]);
   const [blockImageUrls, setBlockImageUrls] = useState({});
   const [authorDetails, setAuthorDetails] = useState(null);
@@ -34,9 +30,7 @@ const SingleBlog = () => {
     if (blog) {
       document.title = blog.attributes.title || "Blog";
       const fetchData = async () => {
-        const { paragraphData, imageUrlMap } = await fetchParagraphsAndImages(
-          blog
-        );
+        const { paragraphData, imageUrlMap } = await fetchParagraphsAndImages(blog);
         setParagraphs(paragraphData);
         setBlockImageUrls(imageUrlMap);
       };
@@ -69,8 +63,7 @@ const SingleBlog = () => {
   };
 
   if (loading) return <Typography>Loading blog...</Typography>;
-  if (error)
-    return <Typography color="error">Error loading blog: {error}</Typography>;
+  if (error) return <Typography color="error">Error loading blog: {error}</Typography>;
   if (!blog) return <Typography>Blog not found</Typography>;
 
   const { title, body, created } = blog.attributes;
@@ -83,9 +76,7 @@ const SingleBlog = () => {
           <Box key={section.id} mt={2}>
             <Typography
               dangerouslySetInnerHTML={{
-                __html: processInlineImages(
-                  section.attributes.field_text.processed
-                ),
+                __html: processInlineImages(section.attributes.field_text.processed),
               }}
             />
           </Box>
@@ -116,23 +107,11 @@ const SingleBlog = () => {
         );
       case "paragraph--image_block":
         return (
-          <Box
-            key={section.id}
-            mt={2}
-            display="flex"
-            flexWrap="wrap"
-            justifyContent="center"
-          >
+          <Box key={section.id} mt={2} display="flex" flexWrap="wrap" justifyContent="center">
             {section.relationships.field_image.data.map((image) => {
               const imageUrl = blockImageUrls[image.id];
               if (!imageUrl) return null;
-              return (
-                <ImageBlock
-                  key={image.id}
-                  imageUrl={imageUrl}
-                  altText={image.filename || "Block image"}
-                />
-              );
+              return <ImageBlock key={image.id} imageUrl={imageUrl} altText={image.filename || "Block image"} />;
             })}
           </Box>
         );
@@ -147,7 +126,7 @@ const SingleBlog = () => {
         <Typography variant="h3" component="h1" gutterBottom>
           {title}
         </Typography>
-        <Box sx={{borderBottom: "1px solid #ccc",}} >
+        <Box sx={{ borderBottom: "1px solid #ccc" }}>
           <Typography variant="caption" color="text.secondary">
             Published on: {formattedDate}
           </Typography>
@@ -158,7 +137,6 @@ const SingleBlog = () => {
               sx={{
                 textTransform: "capitalize",
                 padding: "10px",
-                
               }}
             >
               Author: {authorDetails.attributes.display_name}

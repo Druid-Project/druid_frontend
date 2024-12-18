@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useFetchImage from "../../../hooks/useFetchImage";
 import { fetchAuthorDetails } from "../../../utils/fetchAuthorDetails";
@@ -26,7 +25,6 @@ const BlogCard = ({ blog }) => {
   }, [authorId]);
 
   const formattedDate = new Date(created).toLocaleDateString();
-  const formattedTime = new Date(created).toLocaleTimeString();
 
   const handleCardClick = () => {
     navigate(`/blogs/${blog.id}`);
@@ -101,7 +99,7 @@ const BlogCard = ({ blog }) => {
             color="text.secondary"
             sx={{ fontSize: "0.8rem" }}
           >
-            Published on: {formattedDate} at {formattedTime}
+            Published on: {formattedDate}
           </Typography>
           <Typography
             variant="caption"
