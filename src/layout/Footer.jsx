@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
-import { Container, Grid, Typography, Link } from "@mui/material";
+import { useEffect } from "react";
+import { Container, Grid, Link } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFooterData } from "../redux/footerSlice";
 import ConnectCard from "../components/servicespage/components/ConnectCard";
 import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
+import sanitizeHtml from "../utils/sanitizeHtml"; // Add this import
 
 function Footer() {
   const dispatch = useDispatch();
@@ -63,8 +64,12 @@ function Footer() {
             <Grid container justifyContent="center">
               {socialLinks.map((link, index) => (
                 <Grid item key={index} xs={12} sm={2}>
-                  <Link href={link.uri} underline="none" color="textPrimary">
-                    {link.title.toUpperCase()}
+                  <Link
+                    href={sanitizeHtml(link.uri)}
+                    underline="none"
+                    color="textPrimary"
+                  >
+                    {sanitizeHtml(link.title).toUpperCase()}
                   </Link>
                 </Grid>
               ))}
@@ -74,8 +79,12 @@ function Footer() {
             <Grid container justifyContent="center">
               {menuLinks.map((link, index) => (
                 <Grid item key={index} xs={12} sm={3}>
-                  <Link href={link.uri} underline="none" color="textPrimary">
-                    {link.title.toUpperCase()}
+                  <Link
+                    href={sanitizeHtml(link.uri)}
+                    underline="none"
+                    color="textPrimary"
+                  >
+                    {sanitizeHtml(link.title).toUpperCase()}
                   </Link>
                 </Grid>
               ))}

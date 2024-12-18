@@ -1,37 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchImage } from "../../../utils/fetchImage";
-import { baseUrl } from "../../../config";
+import useFetchImage from "../../../hooks/useFetchImage";
+import { fetchAuthorDetails } from "../../../utils/fetchAuthorDetails";
 import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
+import sanitizeHtml from "../../../utils/sanitizeHtml"; // Add this import
 
 const BlogCard = ({ blog }) => {
   const navigate = useNavigate();
-  const { title, body, created, path } = blog.attributes;
+  const { title, body, created } = blog.attributes;
   const authorId = blog.relationships.field_author?.data?.id;
   const heroImageId = blog.relationships.field_hero_image?.data?.id;
 
-  const [imageUrl, setImageUrl] = useState("");
-
-  const author = useSelector((state) =>
-    state.blogs.blogs?.included?.find(
-      (item) => item.id === authorId && item.type === "user--user"
-    )
-  );
+  const imageUrl = useFetchImage(heroImageId);
+  const [authorDetails, setAuthorDetails] = useState(null);
 
   useEffect(() => {
-    const getImageUrl = async () => {
-      const url = await fetchImage(heroImageId, baseUrl);
-      setImageUrl(url);
+    const fetchAuthor = async () => {
+      if (authorId) {
+        const author = await fetchAuthorDetails(authorId);
+        setAuthorDetails(author);
+      }
     };
-
-    if (heroImageId) {
-      getImageUrl();
-    }
-  }, [heroImageId]);
+    fetchAuthor();
+  }, [authorId]);
 
   const formattedDate = new Date(created).toLocaleDateString();
-  const formattedTime = new Date(created).toLocaleTimeString();
 
   const handleCardClick = () => {
     navigate(`/blogs/${blog.id}`);
@@ -41,9 +35,8 @@ const BlogCard = ({ blog }) => {
     <Card
       onClick={handleCardClick}
       sx={{
-        width: 500, // Fixed width for uniformity
-        height: 550, // Fixed height for uniformity
-        // margin: "10px auto",
+        width: 500,
+        height: 550,
         borderRadius: 1,
         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
@@ -53,7 +46,7 @@ const BlogCard = ({ blog }) => {
         },
         backgroundColor: "#fff",
         overflow: "hidden",
-        cursor: "pointer", // Pointer cursor to indicate interactivity
+        cursor: "pointer",
       }}
     >
       {imageUrl && (
@@ -94,12 +87,12 @@ const BlogCard = ({ blog }) => {
             overflow: "hidden",
             textOverflow: "ellipsis",
             display: "-webkit-box",
-            WebkitLineClamp: 3, // Limit body to 3 lines
+            WebkitLineClamp: 3,
             WebkitBoxOrient: "vertical",
             fontSize: "0.9rem",
             color: "#555",
           }}
-          dangerouslySetInnerHTML={{ __html: body.processed }}
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(body.processed) }}
         />
         <Box mt={2}>
           <Typography
@@ -107,7 +100,7 @@ const BlogCard = ({ blog }) => {
             color="text.secondary"
             sx={{ fontSize: "0.8rem" }}
           >
-            Published on: {formattedDate} at {formattedTime}
+            Published on: {formattedDate}
           </Typography>
           <Typography
             variant="caption"
@@ -115,12 +108,37 @@ const BlogCard = ({ blog }) => {
             display="block"
             sx={{ fontSize: "0.8rem" }}
           >
-            Author: {author ? author.attributes.display_name : "Unknown"}
+            Author: {authorDetails ? authorDetails.attributes.display_name : "Unknown"}
           </Typography>
         </Box>
       </CardContent>
     </Card>
   );
+};
+
+BlogCard.propTypes = {
+  blog: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    attributes: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      body: PropTypes.shape({
+        processed: PropTypes.string.isRequired,
+      }).isRequired,
+      created: PropTypes.string.isRequired,
+    }).isRequired,
+    relationships: PropTypes.shape({
+      field_author: PropTypes.shape({
+        data: PropTypes.shape({
+          id: PropTypes.string,
+        }),
+      }),
+      field_hero_image: PropTypes.shape({
+        data: PropTypes.shape({
+          id: PropTypes.string,
+        }),
+      }),
+    }).isRequired,
+  }).isRequired,
 };
 
 export default BlogCard;

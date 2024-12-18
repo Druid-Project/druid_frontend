@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchBlogs } from "../redux/blogSlice";
 import BlogCard from "../components/blogspage/components/BlogCard";
 import { Box, Container, Grid, Typography } from "@mui/material";
+import sanitizeHtml from "../utils/sanitizeHtml"; // Add this import
 
 const Blogs = () => {
   const dispatch = useDispatch();
-
   const { blogs, loading, error } = useSelector((state) => state.blogs);
 
   useEffect(() => {
@@ -31,19 +31,15 @@ const Blogs = () => {
           variant="body1"
           sx={{ textAlign: "center" }}
           gutterBottom
-        >
-          What's on the minds of druids? Our writings on the subject and beyond
-          – our everyday life, our culture, and the world of software
-          development.
-        </Typography>
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml("What's on the minds of druids? Our writings on the subject and beyond – our everyday life, our culture, and the world of software development.") }}
+        />
       </Box>
       <Grid container spacing={4}>
-        {blogs &&
-          blogs.map((blog) => (
-            <Grid item xs={12} sm={6} md={6} key={blog.id}>
-              <BlogCard blog={blog} />
-            </Grid>
-          ))}
+        {blogs?.map((blog) => (
+          <Grid item xs={12} sm={6} md={6} key={blog.id}>
+            <BlogCard blog={blog} />
+          </Grid>
+        ))}
       </Grid>
     </Container>
   );
