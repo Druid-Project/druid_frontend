@@ -16,12 +16,19 @@ const Card = ({ content, placeholders }) => {
   const paragraphs = doc.querySelectorAll("p");
 
   return (
-    <MuiCard key={content.id} sx={{ marginBottom: 4, boxShadow: 3 }}>
+    <MuiCard
+      key={content.id}
+      sx={{
+        marginBottom: 4,
+        boxShadow: "none",
+        backgroundColor: "transparent",
+      }}
+    >
       <CardContent>
         <Typography
           variant="h5"
           gutterBottom
-          sx={{ fontWeight: "bold", color: "#3f51b5", textAlign: "center" }}
+          sx={{ fontWeight: "bold", textAlign: "center" }}
         >
           {content.name}
         </Typography>

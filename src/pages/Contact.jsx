@@ -8,6 +8,8 @@ import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import MauticForm from "../components/mautic/MauticForm";
 import serviceImg from "../assets/img/contact_image.jpg";
+import DynamicContent from "../components/mautic/DynamicContent";
+import Card from "../components/mautic/Card";
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -172,50 +174,7 @@ const Contact = () => {
       {/* New Image with Headline Overlay */}
       <Grid container spacing={0} style={{ marginTop: "4rem" }}>
         <Grid item xs={12}>
-          <Box
-            style={{
-              position: "relative",
-              width: "100%",
-              height: "400px", // Adjust height as needed
-              borderRadius: "30px", // Rounded corners for soft appearance
-              overflow: "hidden",
-              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)", // Soft shadow for depth
-            }}
-          >
-            <img
-              src={serviceImg}
-              alt="Services"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                position: "absolute",
-                top: 0,
-                left: 0,
-                filter: "brightness(70%)", // Subtle darkening for better text contrast
-              }}
-            />
-            <Box
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                color: "#fff",
-                textAlign: "center",
-                fontSize: "2.5rem", // Larger font size for emphasis
-                fontWeight: "bold", // Bold text for clarity
-                textShadow: "2px 2px 10px rgba(0, 0, 0, 0.5)", // Soft shadow for readability
-                letterSpacing: "1px", // Slightly increased spacing for elegance
-                lineHeight: "1.4", // Line height for better readability
-                padding: "0 20px", // Padding for responsiveness
-                maxWidth: "80%", // Limiting width for better visual balance
-                margin: "0 auto", // Centering the text
-              }}
-            >
-              Have a Look at Our Services
-            </Box>
-          </Box>
+            <DynamicContent/>
         </Grid>
       </Grid>
     </Container>
