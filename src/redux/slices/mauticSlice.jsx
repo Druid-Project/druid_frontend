@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { mauticContactsApiUrl } from "../config";
+import { mauticContactsApiUrl } from "../../config";
 
 export const fetchPersonalizedContent = createAsyncThunk(
   "mautic/fetchPersonalizedContent",
   async () => {
-    const response = await axios.get(`${mauticContactsApiUrl}/personalized-content`);
+    const response = await axios.get(
+      `${mauticContactsApiUrl}/personalized-content`
+    );
     return response.data;
   }
 );

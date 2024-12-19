@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Container, Typography, Box } from "@mui/material";
+import SnackbarAlert from "../common/SnackbarAlert";
 import "./MauticForm.css";
 import { mauticBaseUrl } from "../../config";
 
 const MauticForm = () => {
   const [formHtml, setFormHtml] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
 
   useEffect(() => {
     const loadMauticScript = () => {
@@ -20,7 +22,7 @@ const MauticForm = () => {
         script.type = "text/javascript";
         script.src = `${mauticBaseUrl}/media/js/mautic-form.js?vf9b8e99a`;
         script.async = true;
-        script.onload = () => resolve();
+        script.onload = resolve;
         script.onerror = () => reject(new Error("Failed to load Mautic script"));
         document.head.appendChild(script);
       });
@@ -30,18 +32,12 @@ const MauticForm = () => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
 
-      // Ensure messages are repositioned without altering form layout
       const messageDiv = doc.getElementById("mauticform_contactform_message");
       const errorDiv = doc.getElementById("mauticform_contactform_error");
 
-      if (messageDiv) {
-        messageDiv.style.display = "none";
-      }
-      if (errorDiv) {
-        errorDiv.style.display = "none";
-      }
+      if (messageDiv) messageDiv.style.display = "block";
+      if (errorDiv) errorDiv.style.display = "none";
 
-      // Add a container for messages, ensure it's independent of rows
       const messagesContainer = doc.createElement("div");
       messagesContainer.className = "mauticform-messages-container";
 
@@ -49,10 +45,7 @@ const MauticForm = () => {
       if (messageDiv) messagesContainer.appendChild(messageDiv);
 
       const form = doc.querySelector(".mauticform-innerform");
-      if (form) {
-        // Insert messages container at the top of the form
-        form.insertBefore(messagesContainer, form.firstChild);
-      }
+      if (form) form.insertBefore(messagesContainer, form.firstChild);
 
       return doc.documentElement.innerHTML;
     };
@@ -62,38 +55,18 @@ const MauticForm = () => {
       const form = event.target;
       if (!form.matches("#mauticform_contactform")) return;
 
-      const messageDiv = document.getElementById("mauticform_contactform_message");
-      const errorDiv = document.getElementById("mauticform_contactform_error");
-
-      // Simulate server response
       const response = {
         success: true,
         message: "Thank you for your submission!",
       };
 
-      if (response.success) {
-        if (messageDiv) {
-          messageDiv.textContent = response.message;
-          messageDiv.style.display = "block";
-        }
-        if (errorDiv) errorDiv.style.display = "none";
-        form.reset();
-      } else {
-        if (errorDiv) {
-          errorDiv.textContent = "Submission failed. Please try again.";
-          errorDiv.style.display = "block";
-        }
-        if (messageDiv) messageDiv.style.display = "none";
-      }
+      setSnackbar({
+        open: true,
+        message: response.success ? response.message : "Submission failed. Please try again.",
+        severity: response.success ? "success" : "error",
+      });
 
-      // Ensure the message container stays within its allocated space
-      const messagesContainer = document.querySelector(".mauticform-messages-container");
-      if (messagesContainer) {
-        messagesContainer.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }
+      if (response.success) form.reset();
     };
 
     const initializeMautic = async () => {
@@ -108,9 +81,7 @@ const MauticForm = () => {
         window.MauticDomain = mauticBaseUrl;
         window.MauticLang = { submittingMessage: "Wait..." };
 
-        if (window.MauticSDK) {
-          window.MauticSDK.onLoad();
-        }
+        if (window.MauticSDK) window.MauticSDK.onLoad();
 
         setTimeout(() => {
           document.addEventListener("submit", handleFormSubmit);
@@ -127,9 +98,7 @@ const MauticForm = () => {
     return () => {
       document.removeEventListener("submit", handleFormSubmit);
       const scriptTag = document.querySelector(`script[src="${mauticBaseUrl}/media/js/mautic-form.js?vf9b8e99a"]`);
-      if (scriptTag) {
-        scriptTag.remove();
-      }
+      if (scriptTag) scriptTag.remove();
     };
   }, []);
 
@@ -147,6 +116,12 @@ const MauticForm = () => {
           <div className="mauticform_wrapper" dangerouslySetInnerHTML={{ __html: formHtml }} />
         )}
       </Box>
+      <SnackbarAlert
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+      />
     </Container>
   );
 };

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchContentData } from "../redux/contentSlice";
+import { fetchContentData } from "../redux/slices/contentSlice";
 import { Box, Container, Typography } from "@mui/material";
 import Hero from "../components/common/Hero";
 import ServiceCardSection from "../components/servicespage/components/ServiceCardSection";

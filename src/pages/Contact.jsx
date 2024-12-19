@@ -54,7 +54,7 @@ const Contact = () => {
           lineHeight: "1.6",
         }}
       >
-        Any question or remarks? We’d love to hear from you! Please reach out
+        Any question or remarks? We&apos;d love to hear from you! Please reach out
         via the contact form or use the details below.
       </Typography>
       <Grid container spacing={4}>

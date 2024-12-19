@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchBlogs } from "../redux/blogSlice";
+import { fetchBlogs } from "../redux/slices/blogSlice";
 import BlogCard from "../components/blogspage/components/BlogCard";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import sanitizeHtml from "../utils/sanitizeHtml"; // Add this import

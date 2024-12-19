@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import PropTypes from "prop-types";
 import { Box, Typography, Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchImage } from "../../utils/fetchImage";
@@ -15,13 +16,12 @@ const Hero = ({ data }) => {
 
   const { baseUrl } = useSelector((state) => state.content);
   const dispatch = useDispatch();
-  const [images, setImages] = React.useState({});
-  const [matchedHeroes, setMatchedHeroes] = React.useState([]);
+  const [images, setImages] = useState({});
+  const [matchedHeroes, setMatchedHeroes] = useState([]);
 
   useEffect(() => {
     const fetchBackgroundImage = async (hero) => {
-      const backgroundImageData =
-        hero?.relationships?.field_background_image?.data;
+      const backgroundImageData = hero?.relationships?.field_background_image?.data;
       if (backgroundImageData) {
         const imageId = Array.isArray(backgroundImageData)
           ? backgroundImageData[0]?.id
@@ -39,11 +39,7 @@ const Hero = ({ data }) => {
     };
 
     const filterHeroes = async () => {
-      const matched = await filterMatchedHeroes(
-        heroSections,
-        dispatch,
-        fetchBackgroundImage
-      );
+      const matched = await filterMatchedHeroes(heroSections, dispatch, fetchBackgroundImage);
       setMatchedHeroes(matched);
     };
 
@@ -63,9 +59,7 @@ const Hero = ({ data }) => {
             position: "relative",
             width: "100%",
             height: { xs: "500px", md: "750px" },
-            backgroundImage: `url(${
-              images && images[hero.id] ? images[hero.id] : ""
-            })`,
+            backgroundImage: `url(${images[hero.id] || ""})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             display: "flex",
@@ -86,8 +80,7 @@ const Hero = ({ data }) => {
               left: 0,
               width: "100%",
               height: "100%",
-              background:
-                "linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%)",
+              background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%)",
               zIndex: 0,
             }}
           />
@@ -140,10 +133,7 @@ const Hero = ({ data }) => {
                   },
                 }}
                 onClick={() => {
-                  const uri = hero.attributes.field_cta_button.uri.replace(
-                    "internal:",
-                    ""
-                  );
+                  const uri = hero.attributes.field_cta_button.uri.replace("internal:", "");
                   window.location.href = uri;
                 }}
               >
@@ -155,6 +145,39 @@ const Hero = ({ data }) => {
       ))}
     </>
   );
+};
+
+Hero.propTypes = {
+  data: PropTypes.shape({
+    included: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired,
+        attributes: PropTypes.shape({
+          field_titile: PropTypes.string,
+          field_description: PropTypes.string,
+          field_cta_button: PropTypes.shape({
+            uri: PropTypes.string,
+            title: PropTypes.string,
+          }),
+        }),
+        relationships: PropTypes.shape({
+          field_background_image: PropTypes.shape({
+            data: PropTypes.oneOfType([
+              PropTypes.arrayOf(
+                PropTypes.shape({
+                  id: PropTypes.string,
+                })
+              ),
+              PropTypes.shape({
+                id: PropTypes.string,
+              }),
+            ]),
+          }),
+        }),
+      })
+    ),
+  }).isRequired,
 };
 
 export default Hero;

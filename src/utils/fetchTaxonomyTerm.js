@@ -1,4 +1,4 @@
-import { fetchTaxonomyTermData } from "../redux/contentSlice";
+import { fetchTaxonomyTermData } from "../redux/slices/contentSlice";
 
 export const fetchTaxonomyTerms = async (dispatch, taxonomyTermIds) => {
   if (!Array.isArray(taxonomyTermIds)) {
@@ -10,10 +10,10 @@ export const fetchTaxonomyTerms = async (dispatch, taxonomyTermIds) => {
     const terms = await Promise.all(
       taxonomyTermIds.map(async (id) => {
         const response = await dispatch(fetchTaxonomyTermData(id));
-        return { id, name: response.payload.data.attributes.name };
+        const { name } = response.payload.data.attributes;
+        return { id, name };
       })
     );
-    console.log("Fetched taxonomy terms:", terms);
     return terms;
   } catch (error) {
     console.error("Failed to fetch taxonomy terms:", error);

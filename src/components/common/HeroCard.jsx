@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import PropTypes from "prop-types";
 
@@ -52,7 +51,7 @@ const HeroCard = ({ title, description, ctaButton, imageUrl }) => {
         <Typography variant="h4" gutterBottom>
           {title}
         </Typography>
-        <Typography variant="body1" paragraph sx={{ flexGrow: 1 }}>
+        <Typography variant="body1"  sx={{ flexGrow: 1 }}>
           {description}
         </Typography>
         {ctaButton && (

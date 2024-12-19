@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSingleBlog } from "../../../redux/blogSlice";
+import { fetchSingleBlog } from "../../../redux/slices/blogSlice";
 import { Container, Typography, Box } from "@mui/material";
 import { baseUrl } from "../../../config";
 import MauticForm from "../../mautic/MauticForm";

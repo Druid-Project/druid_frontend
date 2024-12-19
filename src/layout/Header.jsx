@@ -1,27 +1,27 @@
-import React, { useEffect } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from "@mui/material/ListItemButton";
-import Typography from "@mui/material/Typography";
+import { useEffect, useState } from "react";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemButton,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
-import druidLogo from "../assets/img/druid_logo.png";
-import MenuIcon from "@mui/icons-material/Menu";
-import LanguageIcon from "@mui/icons-material/Language";
 import { useTheme } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFooterData } from "../redux/footerSlice";
-import { Grid } from "@mui/material";
+import { fetchFooterData } from "../redux/slices/footerSlice";
+import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import druidLogo from "../assets/img/druid_logo.png";
 import blackLogo from "../assets/img/logo_black.svg";
 
 const Header = () => {
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const theme = useTheme();
   const dispatch = useDispatch();
   const footerData = useSelector((state) => state.footer.data);
@@ -60,6 +60,56 @@ const Header = () => {
         .flatMap((section) => section.attributes.field_social_media_link)
     : [];
 
+  const drawerStyles = {
+    width: "100%",
+    height: "100%",
+    bgcolor: "#222",
+  };
+
+  const drawerContentStyles = {
+    bgcolor: "#000",
+    pt: 2,
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+  };
+
+  const logoStyles = {
+    position: "absolute",
+    top: "3rem",
+    left: "3rem",
+    display: "flex",
+    alignItems: "center",
+  };
+
+  const closeButtonStyles = {
+    position: "absolute",
+    top: "1rem",
+    right: "4.5rem",
+    color: "#E11000",
+    fontSize: "2rem",
+  };
+
+  const listItemTextStyles = {
+    fontWeight: "bold",
+    textTransform: "capitalize",
+    textAlign: "left",
+    color: "#fff",
+    fontSize: "3vw",
+    fontFamily: "Euclid, -apple-system, BlinkMacSystemFont",
+  };
+
+  const socialLinkStyles = {
+    textTransform: "uppercase",
+    fontSize: "0.8rem",
+    textAlign: "center",
+    color: "#838383",
+    fontFamily: "Euclid, -apple-system, BlinkMacSystemFont",
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -70,23 +120,16 @@ const Header = () => {
         }}
       >
         <Toolbar>
-          {/* Logo */}
           <Link to="/">
             <img src={druidLogo} width="100" height="30" alt="Logo" />
           </Link>
-
-          {/* Spacer */}
           <Box sx={{ flexGrow: 1 }} />
-
-          {/* Language Switcher */}
-          <IconButton edge="end" sx={{ mr: 2 }} color="" aria-label="language">
+          <IconButton edge="end" sx={{ mr: 2 }} aria-label="language">
             <Typography sx={{ ml: 1 }}>ENGLISH</Typography>
           </IconButton>
-
-          {/* Hamburger Menu */}
           <IconButton
             edge="end"
-            sx={{ color: "#222", marginRight: "2rem", fontSize: "2rem" }} // Updated size
+            sx={{ color: "#222", marginRight: "2rem", fontSize: "2rem" }}
             aria-label="menu"
             onClick={toggleDrawer(true)}
           >
@@ -95,43 +138,19 @@ const Header = () => {
         </Toolbar>
       </AppBar>
 
-      {/* Drawer */}
       <Drawer
         anchor="right"
         open={drawerOpen}
         onClose={toggleDrawer(false)}
-        PaperProps={{
-          sx: {
-            width: "100%", // Cover full window width
-            height: "100%", // Cover full window height
-            bgcolor: "#222", // Use dark theme color
-          },
-        }}
+        PaperProps={{ sx: drawerStyles }}
       >
         <Box
-          sx={{
-            bgcolor: "#000", // Use dark theme color
-            pt: 2,
-            display: "flex",
-            flexDirection: "column",
-            height: "100%",
-            justifyContent: "center", // Center vertically
-            alignItems: "center", // Center horizontally
-            position: "relative", // Add relative positioning
-          }}
+          sx={drawerContentStyles}
           role="presentation"
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
-          <Box
-            sx={{
-              position: "absolute",
-              top: "3rem",
-              left: "3rem",
-              display: "flex",
-              alignItems: "center", // Align items horizontally
-            }}
-          >
+          <Box sx={logoStyles}>
             <Link
               to="/"
               style={{
@@ -154,17 +173,7 @@ const Header = () => {
               </Typography>
             </Link>
           </Box>
-          <IconButton
-            edge="end"
-            sx={{
-              position: "absolute",
-              top: "1rem",
-              right: "4.5rem",
-              color: "#E11000",
-              fontSize: "2rem",
-            }} // Updated size
-            onClick={toggleDrawer(false)}
-          >
+          <IconButton sx={closeButtonStyles} onClick={toggleDrawer(false)}>
             <CloseIcon fontSize="inherit" />
           </IconButton>
           <List>
@@ -175,37 +184,27 @@ const Header = () => {
                   to={item.to}
                   sx={{
                     justifyContent: "flex-start",
-                    "&:hover .MuiTypography-root": {
-                      color: "#cf2e2e", // Change color on hover
-                    },
+                    "&:hover .MuiTypography-root": { color: "#cf2e2e" },
                   }}
                 >
                   <ListItemText
                     primary={item.text}
-                    primaryTypographyProps={{
-                      fontWeight: "bold",
-                      textTransform: "capitalize", // Use capitalize
-                      textAlign: "left", // Align text to the left
-                      color: "#fff", // Light color
-                      fontSize: "3vw", // Bigger size
-                      fontFamily: "Euclid, -apple-system, BlinkMacSystemFont",
-                    }}
+                    primaryTypographyProps={listItemTextStyles}
                   />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
-
           <Box
             sx={{
               position: "absolute",
               bottom: "2rem",
               right: "2rem",
               display: "flex",
-              flexDirection: "row", // Align items horizontally
-              gap: "1rem", // Add some space between items
-              paddingTop: "1rem", // Add padding at the top
-              borderTop: ".01px solid #838383", // Add border at the top
+              flexDirection: "row",
+              gap: "1rem",
+              paddingTop: "1rem",
+              borderTop: ".01px solid #838383",
             }}
           >
             {socialLinks.map((link, index) => (
@@ -213,21 +212,11 @@ const Header = () => {
                 <ListItemButton
                   component="a"
                   href={link.uri}
-                  sx={{
-                    "&:hover .MuiTypography-root": {
-                      color: "#fefefe", // Change color on hover
-                    },
-                  }}
+                  sx={{ "&:hover .MuiTypography-root": { color: "#fefefe" } }}
                 >
                   <ListItemText
                     primary={link.title.toUpperCase()}
-                    primaryTypographyProps={{
-                      textTransform: "uppercase",
-                      fontSize: "0.8rem",
-                      textAlign: "center", // Center text horizontally
-                      color: "#838383", // Light color
-                      fontFamily: "Euclid, -apple-system, BlinkMacSystemFont",
-                    }}
+                    primaryTypographyProps={socialLinkStyles}
                   />
                 </ListItemButton>
               </ListItem>

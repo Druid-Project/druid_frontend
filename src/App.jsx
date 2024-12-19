@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 import About from "./pages/About";
@@ -9,12 +10,10 @@ import Contact from "./pages/Contact";
 import SingleBlog from "./components/blogspage/components/SingleBlog";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import mautic from "./api/mautic_api_services";
 
-// Mautic tracking
 const pageTitle = {
   "/": "Home",
   "/about": "About",
@@ -24,29 +23,41 @@ const pageTitle = {
   "/contact": "Contact",
 };
 
-const title = pageTitle[location.pathname] || "No Title";
-document.title = title;
+const MauticTracking = () => {
+  const location = useLocation();
 
-// Track the page view in the Mautic
-mautic.pageView({
-  path: location.pathname,
-  title: document.title,
-});
+  useEffect(() => {
+    const title = pageTitle[location.pathname] || "No Title";
+    document.title = title;
+
+    mautic.pageView({
+      path: location.pathname,
+      title: document.title,
+    });
+  }, [location]);
+
+  return null;
+};
+
+const AppRoutes = () => (
+  <Routes>
+    <Route path="/" element={<Layout />}>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/blogs" element={<Blogs />} />
+      <Route path="/blogs/:blogId" element={<SingleBlog />} />
+      <Route path="/career" element={<Career />} />
+      <Route path="/contact" element={<Contact />} />
+    </Route>
+  </Routes>
+);
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blogs/:blogId" element={<SingleBlog />} />
-          <Route path="/career" element={<Career />} />
-          <Route path="/contact" element={<Contact />} />
-        </Route>
-      </Routes>
+      <MauticTracking />
+      <AppRoutes />
     </BrowserRouter>
   );
 };

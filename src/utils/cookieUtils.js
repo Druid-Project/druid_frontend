@@ -1,12 +1,10 @@
-// src/utils/cookieUtils.js
 import Cookies from "js-cookie";
 
-// Get mtc_id cookie
-export const getMtcId = () => Cookies.get("mtc_id");
+const COOKIE_NAME = "mtc_id";
+const COOKIE_OPTIONS = { path: "/", secure: true };
 
-// Set mtc_id cookie (useful for testing)
-export const setMtcId = (value) =>
-  Cookies.set("mtc_id", value, { path: "/", secure: true });
+export const getMtcId = () => Cookies.get(COOKIE_NAME);
 
-// Delete mtc_id cookie
-export const deleteMtcId = () => Cookies.remove("mtc_id");
+export const setMtcId = (value) => Cookies.set(COOKIE_NAME, value, COOKIE_OPTIONS);
+
+export const deleteMtcId = () => Cookies.remove(COOKIE_NAME);
