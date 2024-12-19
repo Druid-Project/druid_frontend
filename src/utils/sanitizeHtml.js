@@ -1,7 +1,5 @@
 import DOMPurify from "dompurify";
 
-const sanitizeHtml = (html) => {
-  return DOMPurify.sanitize(html);
-};
+const sanitizeHtml = (html) => DOMPurify.sanitize(html);
 
 export default sanitizeHtml;
