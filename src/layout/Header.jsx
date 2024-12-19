@@ -98,7 +98,7 @@ const Header = () => {
     textTransform: "capitalize",
     textAlign: "left",
     color: "#fff",
-    fontSize: "3vw",
+    fontSize: { xs: "1.5rem", md: "2.5vw" },
     fontFamily: "Euclid, -apple-system, BlinkMacSystemFont",
   };
 
@@ -201,7 +201,8 @@ const Header = () => {
               bottom: "2rem",
               right: "2rem",
               display: "flex",
-              flexDirection: "row",
+              flexDirection: { xs: "column", md: "row" },
+
               gap: "1rem",
               paddingTop: "1rem",
               borderTop: ".01px solid #838383",
