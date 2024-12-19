@@ -36,7 +36,7 @@ export const sendMtcIdToBackend = async () => {
   const mtcId = getMtcId();
 
   if (!mtcId) {
-    console.error("No mtc_id available to send");
+    
     return [];
   }
 
