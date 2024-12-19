@@ -35,8 +35,8 @@ const BlogCard = ({ blog }) => {
     <Card
       onClick={handleCardClick}
       sx={{
-        width: 500,
-        height: 550,
+        width: { xs: '100%', sm: 500 },
+        height: { xs: 'auto', sm: 550 },
         borderRadius: 1,
         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
         transition: "transform 0.3s ease, box-shadow 0.3s ease",

@@ -17,8 +17,8 @@ const Blogs = () => {
   if (error) return <Typography>Error loading blogs: {error}</Typography>;
 
   return (
-    <Container sx={{ padding: 10 }}>
-      <Box padding={20}>
+    <Container sx={{ padding: { xs: 2, md: 10 } }}>
+      <Box padding={{ xs: 2, md: 20 }}>
         <Typography
           variant="h3"
           component="h1"
@@ -34,9 +34,9 @@ const Blogs = () => {
           dangerouslySetInnerHTML={{ __html: sanitizeHtml("What's on the minds of druids? Our writings on the subject and beyond – our everyday life, our culture, and the world of software development.") }}
         />
       </Box>
-      <Grid container spacing={4}>
+      <Grid container spacing={2}>
         {blogs?.map((blog) => (
-          <Grid item xs={12} sm={6} md={6} key={blog.id}>
+          <Grid item xs={12} sm={12} md={6} key={blog.id}>
             <BlogCard blog={blog} />
           </Grid>
         ))}
