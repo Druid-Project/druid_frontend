@@ -51,8 +51,7 @@ const FeatureCard = ({ card, index }) => (
     }}
   >
     <Card
-      title={card.attributes.field_card_title}
-      description={card.attributes.field_card_description}
+      description={card.attributes.field_card_title.toUpperCase()}
       customStyles={{
         flex: 1,
         height: "200px",
@@ -64,6 +63,7 @@ const FeatureCard = ({ card, index }) => (
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        fontSize: "2.5rem",
       }}
       contentStyles={{
         textAlign: "center",

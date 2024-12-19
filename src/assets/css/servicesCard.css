@@ -72,3 +72,20 @@
   margin-left: 8px; /* Add some space between the text and the arrow */
   font-size: 1.2em; /* Adjust the size of the arrow */
 }
+
+.responsive-card {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 600px) {
+  .responsive-card {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 600px) {
+  .services-card-horizontal {
+    height: auto; /* Adjust height for mobile version */
+  }
+}

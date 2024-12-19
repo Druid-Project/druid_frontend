@@ -20,15 +20,13 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
- <a href="https://github.com/Druid-Project/druid_frontend">
-    <img src="./src/assets/img/druid_logo.png"
-         alt="Logo"
-         width="200"
-         height="80"
-         style="background-color: #999;padding:20px; border-radius:5px">
-</a>
-
-
+<div align="center" style="display: inline-block; text-align:center;">
+    <img src="./src/assets/img/logo_black.svg"
+          alt="Logo" height="60px" style="padding: 0;margin:0" />
+      <p style="margin-to: -10; color: #fefefe; font-size: 4rem;display:inline-block">
+          Druid
+      </p>
+</div>
   <h3 align="center">REACT24K TEAM-5</h3>
 
   <p align="center">
@@ -74,7 +72,7 @@
 
 ## About The Project
 
-[![druid.fi](./src/assets/img/home_screenshot.png)](https://github.com/Druid-Project/druid_frontend)
+[![druid.fi](./src/assets/img/homepage.png)](https://github.com/Druid-Project/druid_frontend)
 
 Final team project for REACT24K batch of [![Business College Helsinki][BCH]][BCH-url] in collaboration with druid.fi.
 This repository contains the frontend code for the new website of **Druid**, developed with **React**, **Redux**, **Material UI (MUI)**, and connected to the **Drupal 10** backend using **JSON API** and **Paragraph modules**. The site is designed to deliver a smooth and modern user experience, showcasing Druid's projects, team, and services.

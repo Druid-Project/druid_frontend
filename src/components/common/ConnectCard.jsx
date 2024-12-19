@@ -29,16 +29,31 @@ const ConnectCard = ({ data }) => {
   };
 
   return (
-    <Container sx={{ padding: "2rem 0", textAlign: "left", display: "flex" }}>
-      <Grid sx={{ flex: "4" }}>
-        <Typography variant="h4" gutterBottom>
-          {field_card_title}
-        </Typography>
-      </Grid>
-      <Grid sx={{ flex: "1" }}>
-        {descriptionLines.map((line, index) => (
+    <Container sx={{ padding: "2rem 0", textAlign: "left" }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={4}>
+          <Typography variant="h4" gutterBottom>
+            {field_card_title}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          {descriptionLines.map((line, index) => (
+            <Typography
+              key={index}
+              variant="body1"
+              sx={{
+                marginBottom: "0.5rem",
+                lineHeight: "1.6",
+                fontSize: "1rem",
+                color: "text.secondary",
+              }}
+            >
+              {line}
+            </Typography>
+          ))}
+        </Grid>
+        <Grid item xs={12} md={4}>
           <Typography
-            key={index}
             variant="body1"
             sx={{
               marginBottom: "0.5rem",
@@ -47,44 +62,31 @@ const ConnectCard = ({ data }) => {
               color: "text.secondary",
             }}
           >
-            {line}
+            {email}
           </Typography>
-        ))}
-      </Grid>
-      <Grid sx={{ flex: "1" }}>
-        <Typography
-          variant="body1"
-          sx={{
-            marginBottom: "0.5rem",
-            lineHeight: "1.6",
-            fontSize: "1rem",
-            color: "text.secondary",
-          }}
-        >
-          {email}
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            marginBottom: "0.5rem",
-            lineHeight: "1.6",
-            fontSize: "1rem",
-            color: "text.secondary",
-          }}
-        >
-          {phone}
-        </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              marginBottom: "0.5rem",
+              lineHeight: "1.6",
+              fontSize: "1rem",
+              color: "text.secondary",
+            }}
+          >
+            {phone}
+          </Typography>
 
-        <Button
-          onClick={handleButtonClick}
-          sx={{
-            color: "#202020",
-            textTransform: "capitalize",
-          }}
-        >
-          <ArrowRightAltIcon sx={{ color: "#cf2e2e" }} />{" "}
-          {field_card_cta_button.title}
-        </Button>
+          <Button
+            onClick={handleButtonClick}
+            sx={{
+              color: "#202020",
+              textTransform: "capitalize",
+            }}
+          >
+            <ArrowRightAltIcon sx={{ color: "#cf2e2e" }} />{" "}
+            {field_card_cta_button.title}
+          </Button>
+        </Grid>
       </Grid>
     </Container>
   );

@@ -30,7 +30,7 @@ const Card = ({
         isServicesVariant && reverse ? "services-card-horizontal.reverse" : ""
       } ${isCardComponentVariant ? "card-component" : ""} ${
         isServiceCardVariant ? "service-card" : ""
-      }`}
+      } responsive-card`}
       sx={{
         display: "flex",
         flexDirection: layout === "horizontal" ? "row" : "column",
@@ -38,6 +38,9 @@ const Card = ({
         boxShadow: isServicesVariant ? "none" : "0 2px 8px rgba(0,0,0,0.1)",
         backgroundColor: isServicesVariant ? "transparent" : "#fff",
         ...customStyles,
+        '@media (max-width: 600px)': {
+          flexDirection: 'column',
+        },
       }}
     >
       {imageUrl && (
@@ -73,7 +76,12 @@ const Card = ({
           justifyContent: isServiceCardVariant ? "center" : "space-between",
           padding: "16px",
           position: "relative",
+          '@media (max-width: 600px)': {
+            flexDirection: 'column',
+          },
         }}
+        xs={{flexDirection:"column"}} md={12}
+
       >
         <Box
           sx={{
@@ -83,7 +91,11 @@ const Card = ({
             justifyContent: "center",
             textAlign: "center",
             padding: "16px",
+            '@media (max-width: 600px)': {
+              padding: "8px",
+            },
           }}
+          xs={6} md={12}
         >
           <Typography
             variant="body1"
@@ -93,7 +105,7 @@ const Card = ({
             {description}
           </Typography>
         </Box>
-        <Box sx={{ display: "flex",flex:isServicesVariant ? "1": "0"  , justifyContent: "center", marginTop: isServiceCardVariant ? "auto" : "0" }}>
+        <Box xs={6} md={12} sx={{ display: "flex",flex:isServicesVariant ? "1": "0"  , justifyContent: "center", marginTop: isServiceCardVariant ? "auto" : "0", '@media (max-width: 600px)': { marginTop: "8px" } }}>
           {ctaButton && (
             <Button
               variant="contained"
@@ -108,7 +120,6 @@ const Card = ({
                 "&:hover": {
                   backgroundColor: "#ddd",
                 },
-                maxWidth: "200px",
                 alignSelf: "center",
               }}
             >

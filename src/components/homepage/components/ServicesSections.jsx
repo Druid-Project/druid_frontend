@@ -50,6 +50,7 @@ const ServicesSections = ({ data }) => {
               padding: "16px",
             }}
             variant="services"
+            className="responsive-card"
           />
         </Grid>
       ))}
