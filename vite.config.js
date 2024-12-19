@@ -1,19 +1,17 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
       "/form": {
-        target: "https://mautic-lando.lndo.site/",
-        changeOrigin: true, // This modifies the origin of the request
-        secure: false, // Use this if Mautic is using self-signed certificates
+        target: import.meta.env.VITE_MAUTIC_HOST_URL,
+        changeOrigin: true,
+        secure: false,
         rewrite: (path) => path.replace(/^\/form/, ""),
         onProxyRes: (proxyRes) => {
-          // Optionally log or modify the response headers here if needed
-          proxyRes.headers["Access-Control-Allow-Origin"] = "*"; // Allow any origin (or set to localhost:5173)
+          proxyRes.headers["Access-Control-Allow-Origin"] = "*";
         },
       },
     },
